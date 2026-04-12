@@ -1282,16 +1282,109 @@
     max-width: 720px;
   }
 
+  /* ============ HAMBURGER MENU (mobile only) ============ */
+  .hamburger {
+    display: none;
+    background: transparent;
+    border: 1px solid var(--rule);
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--brand);
+    position: relative;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+
+  .hamburger span::before,
+  .hamburger span::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 22px;
+    height: 2px;
+    background: var(--brand);
+    transition: transform 0.2s, top 0.2s;
+  }
+
+  .hamburger span::before { top: -7px; }
+  .hamburger span::after  { top:  7px; }
+
+  body.nav-open .hamburger span { background: transparent; }
+  body.nav-open .hamburger span::before { top: 0; transform: rotate(45deg); }
+  body.nav-open .hamburger span::after  { top: 0; transform: rotate(-45deg); }
+
   /* ============ RESPONSIVE TIGHTENING ============ */
   @media (max-width: 720px) {
     .inst-bar .left a:nth-child(n+4) { display: none; }
-    .utility-nav a:not(.give):nth-child(n+3) { display: none; }
-    .main-nav a { padding: 14px 12px; font-size: 12px; }
-    .masthead .row { flex-direction: column; align-items: flex-start; }
-    .brand-mark img { width: 75px; }
-    .brand-mark .text h1 { font-size: 20px; }
     .panel { padding: 28px 24px; }
     .hero { height: 460px; }
+
+    /* Show hamburger, compact masthead */
+    .hamburger { display: flex; }
+
+    .masthead { padding: 14px 0; }
+    .masthead .row {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand-mark { gap: 12px; flex: 1; min-width: 0; }
+    .brand-mark img { width: 50px; }
+    .brand-logo { gap: 2px; }
+    .brand-est { font-size: 8px; letter-spacing: 0.15em; }
+    .brand-mark .text h1 { font-size: 18px; margin-bottom: 0; }
+
+    /* Collapse navs by default; show when body.nav-open */
+    .utility-nav,
+    .main-nav {
+      display: none;
+    }
+
+    body.nav-open .utility-nav,
+    body.nav-open .main-nav {
+      display: block;
+    }
+
+    /* When open: stack utility nav full-width below masthead */
+    body.nav-open .utility-nav {
+      width: 100%;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--rule);
+    }
+    body.nav-open .utility-nav a {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--rule);
+      font-size: 14px;
+    }
+    body.nav-open .utility-nav a:last-child { border-bottom: none; }
+
+    /* Main nav stacks */
+    body.nav-open .main-nav .row {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+    body.nav-open .main-nav a {
+      padding: 14px 16px;
+      font-size: 13px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      text-align: left;
+    }
+    body.nav-open .main-nav a:last-child { border-bottom: none; }
   }
 </style>
 </head>
@@ -1316,6 +1409,9 @@
         <a href="#">Calendar</a>
         <a href="#">Help</a>
       </nav>
+      <button class="hamburger" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+      </button>
     </div>
   </div>
 </header>
@@ -1496,7 +1592,7 @@
       <a href="#" class="primary">Fund the Cause</a>
     </div>
     <div class="give-note">
-      Learn more about <a href="#">The Memorial Debate Competition</a> or reach us at <a href="#">philanthropy@timpany.edu</a> &middot; 1.617.555.0190
+      Learn more about <a href="#">The Memorial Debate Competition</a> or reach us at <a href="#"><span class="__cf_email__" data-cfemail="97e7fffefbf6f9e3ffe5f8e7eed7e3fefae7f6f9eeb9f2f3e2">[email&#160;protected]</span></a> &middot; 1.617.555.0190
     </div>
   </div>
 </section>
@@ -1583,6 +1679,17 @@
     </div>
   </div>
 </footer>
+
+<script>
+  (function () {
+    var btn = document.getElementById('navToggle');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var isOpen = document.body.classList.toggle('nav-open');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  })();
+</script>
 
 </body>
 </html>
