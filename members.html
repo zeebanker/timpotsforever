@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Members — Timpots Forever</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,500;1,700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand: #7a1420;
+    --brand-dark: #4a0810;
+    --ink: #1a1a1a;
+    --ink-soft: #555;
+    --ink-muted: #888;
+    --bg-soft: #f7f4ee;
+    --bg-warm: #f0e9d8;
+    --rule: #e5e0d4;
+    --gold: #b5894a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    color: var(--ink);
+    background: var(--bg-soft);
+    min-height: 100vh;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  .members-header {
+    background: var(--brand);
+    padding: 18px 0;
+    color: #fff;
+  }
+  .members-header .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .members-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 500;
+  }
+  .members-header h2 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .logout-btn {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.4);
+    color: #fff;
+    padding: 6px 18px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .logout-btn:hover { background: rgba(255,255,255,0.15); }
+
+  .dashboard {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 0 24px;
+  }
+  .welcome-card {
+    background: #fff;
+    border: 1px solid var(--rule);
+    padding: 40px 36px;
+    margin-bottom: 30px;
+  }
+  .welcome-card h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+  .welcome-card h1 em {
+    color: var(--brand);
+    font-style: italic;
+  }
+  .welcome-card p {
+    font-size: 16px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .member-email {
+    font-weight: 600;
+    color: var(--brand);
+  }
+  .quick-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 600px) {
+    .quick-links { grid-template-columns: 1fr; }
+  }
+  .quick-link {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--brand);
+    padding: 24px 28px;
+    text-decoration: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    display: block;
+  }
+  .quick-link:hover {
+    border-left-color: var(--gold);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  }
+  .quick-link h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .quick-link p {
+    font-size: 13px;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+  .coming-soon {
+    display: inline-block;
+    background: var(--bg-warm);
+    color: var(--ink-muted);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    margin-top: 8px;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="members-header">
+  <div class="wrap">
+    <h2>Timpots <em>Forever</em> — Members</h2>
+    <button class="logout-btn" onclick="handleLogout()">Logout</button>
+  </div>
+</div>
+
+<div class="dashboard">
+  <div class="welcome-card">
+    <h1>Welcome back, <em>Timpot.</em></h1>
+    <p>You're logged in as <span class="member-email" id="user-email">loading...</span></p>
+    <p style="margin-top: 12px;">This is the members-only area. The directory, forums, and more features are being built — check back soon!</p>
+  </div>
+
+  <div class="quick-links">
+    <a href="#" class="quick-link">
+      <h3>Alumni Directory</h3>
+      <p>Search for classmates by name, batch year, city, or profession.</p>
+      <span class="coming-soon">Coming Soon</span>
+    </a>
+    <a href="#" class="quick-link">
+      <h3>Forums</h3>
+      <p>Reconnect with old friends. Share stories. Plan meetups.</p>
+      <span class="coming-soon">Coming Soon</span>
+    </a>
+    <a href="#" class="quick-link">
+      <h3>Photo Gallery</h3>
+      <p>Upload and browse photos from school days and reunions.</p>
+      <span class="coming-soon">Coming Soon</span>
+    </a>
+    <a href="#" class="quick-link">
+      <h3>Update Your Profile</h3>
+      <p>Keep your contact info current so classmates can find you.</p>
+      <span class="coming-soon">Coming Soon</span>
+    </a>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/protect.js"></script>
+<script>
+  (async function() {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session && session.user) {
+      document.getElementById('user-email').textContent = session.user.email;
+    }
+  })();
+</script>
+</body>
+</html>

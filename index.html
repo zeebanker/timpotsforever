@@ -106,10 +106,92 @@
   }
 
   .masthead .row {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
     gap: 30px;
+  }
+
+  .masthead-left  { justify-self: start; }
+  .brand-mark     { justify-self: center; }
+  .masthead-right {
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  /* ── User affordance (login / signed-in) ──────────────── */
+  .user-affordance {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--ink);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 8px 10px;
+    transition: color 0.15s;
+  }
+  .user-affordance:hover { color: var(--brand); text-decoration: none; }
+  .user-affordance .user-icon { width: 22px; height: 22px; flex-shrink: 0; }
+  .user-affordance .user-initial {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--brand);
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0;
+    text-transform: none;
+    flex-shrink: 0;
+  }
+  .user-affordance.signed-in .user-icon    { display: none; }
+  .user-affordance.signed-in .user-initial { display: inline-flex; }
+
+  /* ── Hamburger (mobile only) ──────────────────────────── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 22px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  .hamburger span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: var(--ink);
+    transform-origin: center;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+  }
+  body.menu-open .hamburger span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
+  body.menu-open .hamburger span:nth-child(2) { opacity: 0; }
+  body.menu-open .hamburger span:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
+
+  /* ── Locked protected nav items (logged out) ──────────── */
+  .main-nav a.protected-link.locked::before {
+    content: '';
+    display: inline-block;
+    width: 11px;
+    height: 13px;
+    margin-right: 7px;
+    vertical-align: -1px;
+    background-color: currentColor;
+    -webkit-mask: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 16'%3E%3Cpath fill='black' d='M7 0a4 4 0 0 0-4 4v3H2a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1h-1V4a4 4 0 0 0-4-4Zm0 2a2 2 0 0 1 2 2v3H5V4a2 2 0 0 1 2-2Z'/%3E%3C/svg%3E") no-repeat center / contain;
+            mask: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 16'%3E%3Cpath fill='black' d='M7 0a4 4 0 0 0-4 4v3H2a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1h-1V4a4 4 0 0 0-4-4Zm0 2a2 2 0 0 1 2 2v3H5V4a2 2 0 0 1 2-2Z'/%3E%3C/svg%3E") no-repeat center / contain;
+    opacity: 0.75;
   }
 
   .brand-mark {
@@ -1319,9 +1401,36 @@
     .inst-bar .left a:nth-child(n+4) { display: none; }
     .utility-nav a:not(.give):nth-child(n+3) { display: none; }
     .main-nav a { padding: 14px 12px; font-size: 12px; }
-    .masthead .row { flex-direction: column; align-items: flex-start; }
-    .brand-mark img { width: 75px; }
-    .brand-mark .text h1 { font-size: 36px; }
+    .masthead .row {
+      grid-template-columns: auto 1fr auto;
+      gap: 10px;
+    }
+    .brand-mark img { width: 60px; }
+    .brand-mark .text h1 { font-size: 28px; }
+
+    .hamburger { display: flex; }
+    .user-affordance .user-label { display: none; }
+    .user-affordance { padding: 6px; }
+
+    /* Mobile nav: collapse to a drawer below the masthead */
+    .main-nav {
+      position: static;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.3s ease;
+    }
+    body.menu-open .main-nav { max-height: 80vh; }
+    .main-nav .row {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .main-nav a {
+      text-align: center;
+      width: 100%;
+      padding: 16px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .main-nav a:last-child { border-bottom: none; }
     .panel { padding: 28px 24px; }
     .hero { height: 460px; }
   }
@@ -1437,6 +1546,7 @@
     for (const section of sections) {
       await loadSection(section);
     }
+    document.dispatchEvent(new CustomEvent('sectionsLoaded'));
   }
 
   // Start loading sections when DOM is ready
@@ -1447,28 +1557,47 @@
   }
 </script>
 
-<!-- Protected link event handler (from original file) -->
+<!-- Hamburger toggle (event delegation — works regardless of section load order) -->
 <script>
-  // Protected links: check for session before navigating
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.protected-link').forEach(link => {
-      link.addEventListener('click', async (e) => {
-        e.preventDefault();
-        // Note: This requires supabase-config.js to be loaded in one of the sections
-        // or available globally. If using Supabase, ensure it's initialized before clicking.
-        if (typeof supabase !== 'undefined') {
-          const { data: { session } } = await supabase.auth.getSession();
-          if (session) {
-            window.location.href = link.dataset.dest;
-          } else {
-            window.location.href = 'login.html';
-          }
-        } else {
-          console.warn('Supabase not initialized. Protected links will not work.');
-          window.location.href = 'login.html';
-        }
-      });
-    });
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('.hamburger')) {
+      const btn = e.target.closest('.hamburger');
+      const isOpen = document.body.classList.toggle('menu-open');
+      btn.setAttribute('aria-expanded', String(isOpen));
+      return;
+    }
+    if (e.target.closest('.main-nav a')) {
+      document.body.classList.remove('menu-open');
+      const btn = document.getElementById('hamburger');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && document.body.classList.contains('menu-open')) {
+      document.body.classList.remove('menu-open');
+      const btn = document.getElementById('hamburger');
+      if (btn) btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+</script>
+
+<!-- Supabase + auth (must come BEFORE protected-link handler so `supabase` is defined) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/auth.js"></script>
+
+<!-- Protected link event handler (delegated, so it works after async section load) -->
+<script>
+  document.addEventListener('click', async function(e) {
+    const link = e.target.closest('.protected-link');
+    if (!link) return;
+    e.preventDefault();
+    if (typeof supabase === 'undefined') {
+      window.location.href = 'login.html';
+      return;
+    }
+    const { data: { session } } = await supabase.auth.getSession();
+    window.location.href = session ? link.dataset.dest : 'login.html';
   });
 </script>
 
