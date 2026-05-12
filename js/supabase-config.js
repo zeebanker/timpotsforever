@@ -11,4 +11,7 @@
 const SUPABASE_URL  = 'https://gamyvktzqjkboldlcgns.supabase.co';
 const SUPABASE_ANON = 'sb_publishable_UXwy1bYGlzMEd0rZAZUbCA_kNofLFuB';
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+// Note: this intentionally REPLACES window.supabase (the SDK's namespace)
+// with the created client instance. Don't change to `const supabase = ...` —
+// that collides with the SDK's global and throws a duplicate-variable error.
+window.supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
