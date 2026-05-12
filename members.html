@@ -35,6 +35,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 16px;
   }
   .members-header h2 {
     font-family: 'Playfair Display', serif;
@@ -45,6 +46,23 @@
     font-style: italic;
     color: var(--gold);
   }
+  .members-header .actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .public-site-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-decoration: none;
+    opacity: 0.8;
+    padding: 6px;
+    transition: opacity 0.15s;
+  }
+  .public-site-link:hover { opacity: 1; }
+  .public-site-link svg { display: block; }
   .logout-btn {
     background: none;
     border: 1px solid rgba(255,255,255,0.4);
@@ -142,7 +160,15 @@
 <div class="members-header">
   <div class="wrap">
     <h2>Timpots <em>Forever</em> — Members</h2>
-    <button class="logout-btn" onclick="handleLogout()">Logout</button>
+    <div class="actions">
+      <a href="index.html" class="public-site-link" aria-label="Home" title="Home">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 10.5 12 3l9 7.5V21H3z"/>
+          <path d="M9 21v-7h6v7"/>
+        </svg>
+      </a>
+      <button class="logout-btn" onclick="handleLogout()">Logout</button>
+    </div>
   </div>
 </div>
 
