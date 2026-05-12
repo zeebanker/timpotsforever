@@ -8,7 +8,7 @@
  * SUPABASE_ANON  = the "anon / public" key (NOT the service_role key)
  */
 
-const SUPABASE_URL  = 'https://YOUR-PROJECT-ID.supabase.co';
-const SUPABASE_ANON = 'YOUR-ANON-KEY-HERE';
+const SUPABASE_URL  = 'https://gamyvktzqjkboldlcgns.supabase.co';
+const SUPABASE_ANON = 'sb_publishable_UXwy1bYGlzMEd0rZAZUbCA_kNofLFuB';
 
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
