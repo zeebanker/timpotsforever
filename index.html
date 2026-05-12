@@ -196,20 +196,18 @@
 
   .brand-mark {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 18px;
+    gap: 6px;
   }
 
   .brand-logo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-  }
-
-  .brand-mark img {
-    width: 95px;
-    height: auto;
+    display: block;
+    height: 56px;
+    aspect-ratio: 724 / 366;
+    background-color: var(--brand);
+    -webkit-mask: url('images/logo.png') no-repeat center / contain;
+            mask: url('images/logo.png') no-repeat center / contain;
   }
 
   .brand-est {
@@ -1405,7 +1403,7 @@
       grid-template-columns: auto 1fr auto;
       gap: 10px;
     }
-    .brand-mark img { width: 60px; }
+    .brand-logo { height: 28px; }
     .brand-mark .text h1 { font-size: 28px; }
 
     .hamburger { display: flex; }
