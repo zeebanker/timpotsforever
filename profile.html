@@ -406,7 +406,7 @@
 
   <div id="loading-state" class="loading">Loading your profile…</div>
 
-  <form id="profile-form" style="display:none;" onsubmit="event.preventDefault(); handleSave();">
+  <form id="profile-form" style="display:none;" onsubmit="event.preventDefault(); handleSaveAll();">
 
     <!-- ── About you ──────────────────────────────────── -->
     <div class="card">
@@ -538,33 +538,30 @@
       </div>
     </div>
 
+    <!-- ── Year-by-year at Timpany (auto-populated; saved with the main button) ── -->
+    <div class="card" id="attendance-card" style="margin-top:30px;">
+      <h3>Year-by-year at Timpany</h3>
+      <p class="card-help">One row per year you were at school. Standard auto-fills based on the Beginning Standard above — adjust any year if you repeated or skipped. Section and Class teacher are optional.</p>
+      <div id="attendance-empty" class="attendance-empty">Enter Beginning Year and Ending Year above and rows will appear here.</div>
+      <table class="attendance" id="attendance-table" style="display:none;">
+        <thead>
+          <tr>
+            <th>Year</th>
+            <th>Standard</th>
+            <th>Section</th>
+            <th>Class teacher</th>
+          </tr>
+        </thead>
+        <tbody id="attendance-tbody"></tbody>
+      </table>
+    </div>
+
+    <!-- ── Single Save button (saves profile + attendance together) ── -->
     <div class="save-row">
-      <button type="submit" class="save-btn" id="save-btn">Save profile</button>
+      <button type="submit" class="save-btn" id="save-btn">Save</button>
       <span id="save-status" style="font-size:13px; color:var(--ink-muted);"></span>
     </div>
   </form>
-
-  <!-- ── Attendance history (renders after save, when both years set) ── -->
-  <div class="card" id="attendance-card" style="display:none; margin-top:30px;">
-    <h3>Year-by-year at Timpany</h3>
-    <p class="card-help">For each year you were at school, fill in your standard, section, and class teacher. Rows are generated automatically from your beginning and ending years above. Save your basic profile first to populate this table.</p>
-    <div id="attendance-empty" class="attendance-empty">No attendance rows yet — save beginning and ending years above first.</div>
-    <table class="attendance" id="attendance-table" style="display:none;">
-      <thead>
-        <tr>
-          <th>Year</th>
-          <th>Standard</th>
-          <th>Section</th>
-          <th>Class teacher</th>
-        </tr>
-      </thead>
-      <tbody id="attendance-tbody"></tbody>
-    </table>
-    <div class="save-row" id="attendance-save-row" style="display:none;">
-      <button type="button" class="save-btn" id="save-attendance-btn" onclick="handleSaveAttendance()">Save year details</button>
-      <span id="attendance-status" style="font-size:13px; color:var(--ink-muted);"></span>
-    </div>
-  </div>
 
 </div>
 
@@ -738,16 +735,151 @@
     if (suggestionsEl.children.length) suggestionsEl.classList.add('show');
   }
 
-  // ── Save profile ───────────────────────────────────────────
-  async function handleSave() {
+  // ── Attendance: load existing DB rows ──────────────────────
+  async function loadAttendance() {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) return;
+
+    const { data, error } = await supabase
+      .from('attendance_records')
+      .select('*')
+      .eq('profile_id', session.user.id)
+      .order('year', { ascending: true });
+
+    if (error) {
+      console.warn('Attendance load failed', error);
+      return;
+    }
+    attendanceRows = data || [];
+    renderAttendance();
+  }
+
+  // ── Attendance: render from current FORM state ─────────────
+  // Sources merged in priority order: form input > DB row > auto-computed
+  function renderAttendance() {
+    const tbody  = document.getElementById('attendance-tbody');
+    const table  = document.getElementById('attendance-table');
+    const empty  = document.getElementById('attendance-empty');
+
+    // Read year range from the form, not from currentProfile, so the table
+    // updates live as the user types Beginning/Ending Year.
+    const beginYear  = parseInt(document.getElementById('beginning_year').value, 10);
+    const endYear    = parseInt(document.getElementById('ending_year').value, 10);
+    const beginGrade = document.getElementById('beginning_grade').value;
+    const begIdx     = beginGrade ? GRADES.indexOf(beginGrade) : -1;
+
+    // Capture any in-flight edits so a re-render doesn't lose them
+    const formValues = {};
+    document.querySelectorAll('#attendance-tbody tr').forEach(tr => {
+      const y = parseInt(tr.dataset.year, 10);
+      formValues[y] = {
+        grade:         tr.querySelector('[data-field="grade"]').value || null,
+        section:       tr.querySelector('[data-field="section"]').value || null,
+        class_teacher: tr.querySelector('[data-field="class_teacher"]').value || null,
+      };
+    });
+
+    // Index DB rows by year for quick lookup
+    const dbByYear = {};
+    attendanceRows.forEach(r => dbByYear[r.year] = r);
+
+    tbody.innerHTML = '';
+
+    if (!beginYear || !endYear || endYear < beginYear) {
+      empty.style.display = 'block';
+      table.style.display = 'none';
+      return;
+    }
+
+    for (let yr = beginYear; yr <= endYear; yr++) {
+      // Auto-computed grade based on beginning_grade math (one standard per year)
+      let autoGrade = null;
+      if (begIdx !== -1) {
+        const idx = begIdx + (yr - beginYear);
+        if (idx >= 0 && idx < GRADES.length) autoGrade = GRADES[idx];
+      }
+
+      const fv = formValues[yr] || {};
+      const db = dbByYear[yr]  || {};
+
+      // Precedence: form value (if explicitly set) > DB value > auto-computed
+      const gradeVal   = (fv.grade   !== undefined && fv.grade   !== null) ? fv.grade   : (db.grade   ?? autoGrade ?? '');
+      const sectionVal = (fv.section !== undefined && fv.section !== null) ? fv.section : (db.section ?? '');
+      const teacherVal = (fv.class_teacher !== undefined && fv.class_teacher !== null) ? fv.class_teacher : (db.class_teacher ?? '');
+
+      const tr = document.createElement('tr');
+      tr.dataset.year = yr;
+      tr.innerHTML = `
+        <td class="year-cell">${yr}</td>
+        <td>
+          <select data-field="grade" aria-label="Standard for ${yr}">
+            <option value="">—</option>
+            ${GRADES.map(g => `<option value="${g}"${gradeVal === g ? ' selected' : ''}>${g}</option>`).join('')}
+          </select>
+        </td>
+        <td>
+          <select data-field="section" aria-label="Section for ${yr}">
+            <option value="">—</option>
+            ${['A','B','C','D','E','F','None'].map(s => `<option value="${s}"${sectionVal === s ? ' selected' : ''}>${s}</option>`).join('')}
+          </select>
+        </td>
+        <td>
+          <input type="text" data-field="class_teacher" value="${escapeHtml(teacherVal)}" placeholder="Class teacher">
+        </td>
+      `;
+      tbody.appendChild(tr);
+    }
+
+    empty.style.display = 'none';
+    table.style.display = 'table';
+  }
+
+  function escapeHtml(s) {
+    if (s === null || s === undefined) return '';
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  // Re-render attendance live whenever the year range or beginning standard changes
+  ['beginning_year', 'ending_year', 'beginning_grade'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('input',  renderAttendance);
+      el.addEventListener('change', renderAttendance);
+    }
+  });
+
+  // ── Save everything (profile + attendance) in one go ───────
+  async function handleSaveAll() {
     clearBanners();
     const btn = document.getElementById('save-btn');
     btn.disabled = true;
     document.getElementById('save-status').textContent = 'Saving…';
 
     const { data: { session } } = await supabase.auth.getSession();
-    if (!session) { showError('Not signed in.'); btn.disabled = false; return; }
+    if (!session) {
+      showError('Not signed in.');
+      btn.disabled = false;
+      document.getElementById('save-status').textContent = '';
+      return;
+    }
 
+    // 1. Capture attendance form state BEFORE updating the profile
+    //    (the profile update fires a DB trigger that may reshape the rows)
+    const attendanceFormValues = {};
+    document.querySelectorAll('#attendance-tbody tr').forEach(tr => {
+      const yr = parseInt(tr.dataset.year, 10);
+      attendanceFormValues[yr] = {
+        grade:         tr.querySelector('[data-field="grade"]').value || null,
+        section:       tr.querySelector('[data-field="section"]').value || null,
+        class_teacher: tr.querySelector('[data-field="class_teacher"]').value || null,
+      };
+    });
+
+    // 2. Build profile payload
     const payload = {
       first_name:      document.getElementById('first_name').value.trim(),
       last_name:       document.getElementById('last_name').value.trim(),
@@ -765,155 +897,80 @@
       bio:             document.getElementById('bio').value.trim() || null,
       visibility:      document.querySelector('input[name="visibility"]:checked').value,
     };
-
-    // Location: only set if user picked from autocomplete (or kept existing values)
     if (citySelected) {
       payload.city      = citySelected.city;
       payload.country   = citySelected.country;
       payload.latitude  = citySelected.lat;
       payload.longitude = citySelected.lon;
     }
-    // else: don't include city/country/lat/lon in payload so existing values are kept
 
-    const { data, error } = await supabase
+    // 3. Save profile
+    const { data: profile, error: profileErr } = await supabase
       .from('profiles')
       .update(payload)
       .eq('id', session.user.id)
       .select()
       .single();
 
+    if (profileErr) {
+      btn.disabled = false;
+      document.getElementById('save-status').textContent = '';
+      showError('Save failed: ' + profileErr.message);
+      return;
+    }
+    currentProfile = profile;
+
+    // 4. Save attendance (only if both years are set; otherwise nothing to save)
+    if (profile.beginning_year && profile.ending_year) {
+      // Fetch fresh DB rows — the trigger may have inserted/deleted rows based on new year range
+      const { data: dbRows, error: fetchErr } = await supabase
+        .from('attendance_records')
+        .select('*')
+        .eq('profile_id', session.user.id)
+        .order('year');
+
+      if (fetchErr) {
+        btn.disabled = false;
+        document.getElementById('save-status').textContent = '';
+        showError('Could not refresh attendance: ' + fetchErr.message);
+        return;
+      }
+
+      // Merge form values into DB rows
+      const upsertPayload = (dbRows || []).map(r => {
+        const fv = attendanceFormValues[r.year] || {};
+        return {
+          profile_id:    session.user.id,
+          year:          r.year,
+          grade:         (fv.grade   !== undefined ? fv.grade   : r.grade)   || null,
+          section:       (fv.section !== undefined ? fv.section : r.section) || null,
+          class_teacher: (fv.class_teacher !== undefined ? fv.class_teacher : r.class_teacher) || null,
+        };
+      });
+
+      if (upsertPayload.length > 0) {
+        const { error: attErr } = await supabase
+          .from('attendance_records')
+          .upsert(upsertPayload, { onConflict: 'profile_id,year' });
+        if (attErr) {
+          btn.disabled = false;
+          document.getElementById('save-status').textContent = '';
+          showError('Year details save failed: ' + attErr.message);
+          return;
+        }
+      }
+
+      // Reload to reflect the saved state
+      await loadAttendance();
+    } else {
+      // Years cleared — just re-render the empty state
+      attendanceRows = [];
+      renderAttendance();
+    }
+
     btn.disabled = false;
     document.getElementById('save-status').textContent = '';
-
-    if (error) {
-      showError('Save failed: ' + error.message);
-      return;
-    }
-    currentProfile = data;
     showSuccess('Profile saved.');
-
-    // Refresh attendance section if years are set
-    if (data.beginning_year && data.ending_year) {
-      await loadAttendance();
-    }
-  }
-
-  // ── Attendance: load & render ──────────────────────────────
-  async function loadAttendance() {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) return;
-
-    const { data, error } = await supabase
-      .from('attendance_records')
-      .select('*')
-      .eq('profile_id', session.user.id)
-      .order('year', { ascending: true });
-
-    if (error) {
-      console.warn('Attendance load failed', error);
-      return;
-    }
-    attendanceRows = data;
-    renderAttendance();
-  }
-
-  function renderAttendance() {
-    const tbody = document.getElementById('attendance-tbody');
-    const table = document.getElementById('attendance-table');
-    const empty = document.getElementById('attendance-empty');
-    const saveRow = document.getElementById('attendance-save-row');
-
-    tbody.innerHTML = '';
-    if (!attendanceRows.length) {
-      empty.style.display = 'block';
-      table.style.display = 'none';
-      saveRow.style.display = 'none';
-      return;
-    }
-
-    attendanceRows.forEach((row, idx) => {
-      const tr = document.createElement('tr');
-
-      const tdYear = document.createElement('td');
-      tdYear.className = 'year-cell';
-      tdYear.textContent = row.year;
-      tr.appendChild(tdYear);
-
-      const tdGrade = document.createElement('td');
-      const gradeSel = document.createElement('select');
-      gradeSel.dataset.idx = idx;
-      gradeSel.dataset.field = 'grade';
-      gradeSel.innerHTML = '<option value="">—</option>' +
-        GRADES.map(g => `<option value="${g}"${row.grade === g ? ' selected' : ''}>${g}</option>`).join('');
-      tdGrade.appendChild(gradeSel);
-      tr.appendChild(tdGrade);
-
-      const tdSection = document.createElement('td');
-      const sectionInp = document.createElement('input');
-      sectionInp.type = 'text';
-      sectionInp.value = row.section || '';
-      sectionInp.placeholder = 'e.g. A';
-      sectionInp.dataset.idx = idx;
-      sectionInp.dataset.field = 'section';
-      tdSection.appendChild(sectionInp);
-      tr.appendChild(tdSection);
-
-      const tdTeacher = document.createElement('td');
-      const teacherInp = document.createElement('input');
-      teacherInp.type = 'text';
-      teacherInp.value = row.class_teacher || '';
-      teacherInp.placeholder = 'Class teacher';
-      teacherInp.dataset.idx = idx;
-      teacherInp.dataset.field = 'class_teacher';
-      tdTeacher.appendChild(teacherInp);
-      tr.appendChild(tdTeacher);
-
-      tbody.appendChild(tr);
-    });
-
-    empty.style.display = 'none';
-    table.style.display = 'table';
-    saveRow.style.display = 'flex';
-  }
-
-  // ── Attendance: save ───────────────────────────────────────
-  async function handleSaveAttendance() {
-    clearBanners();
-    const btn = document.getElementById('save-attendance-btn');
-    btn.disabled = true;
-    document.getElementById('attendance-status').textContent = 'Saving…';
-
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) { showError('Not signed in.'); btn.disabled = false; return; }
-
-    // Read current values from inputs into attendanceRows
-    document.querySelectorAll('#attendance-tbody select, #attendance-tbody input').forEach(el => {
-      const idx = parseInt(el.dataset.idx, 10);
-      const field = el.dataset.field;
-      attendanceRows[idx][field] = el.value || null;
-    });
-
-    // Upsert all rows
-    const payload = attendanceRows.map(r => ({
-      profile_id: session.user.id,
-      year:       r.year,
-      grade:      r.grade || null,
-      section:    r.section || null,
-      class_teacher: r.class_teacher || null,
-    }));
-
-    const { error } = await supabase
-      .from('attendance_records')
-      .upsert(payload, { onConflict: 'profile_id,year' });
-
-    btn.disabled = false;
-    document.getElementById('attendance-status').textContent = '';
-
-    if (error) {
-      showError('Year details save failed: ' + error.message);
-      return;
-    }
-    showSuccess('Year details saved.');
   }
 
   // ── Kick off ───────────────────────────────────────────────
