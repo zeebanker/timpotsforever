@@ -119,3 +119,17 @@ document.addEventListener('sectionsLoaded', refreshAuthUI);
 if (window.supabase && supabase.auth && supabase.auth.onAuthStateChange) {
   supabase.auth.onAuthStateChange(refreshAuthUI);
 }
+
+// ── Password show/hide toggle (works for any .password-toggle button on any page)
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.password-toggle');
+  if (!btn) return;
+  const input = document.getElementById(btn.dataset.target);
+  if (!input) return;
+  const showing = input.type === 'text';
+  input.type = showing ? 'password' : 'text';
+  btn.classList.toggle('visible', !showing);
+  const label = showing ? 'Show password' : 'Hide password';
+  btn.setAttribute('aria-label', label);
+  btn.setAttribute('title', label);
+});
