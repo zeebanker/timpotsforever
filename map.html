@@ -175,11 +175,37 @@
     font-size: 12px;
   }
 
+  /* ── Map title overlay ──────────────────────────────────────── */
+  .map-title {
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 700;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 44px;
+    font-weight: 700;
+    color: var(--brand);
+    text-shadow:
+      0 1px 0 rgba(255,255,255,0.9),
+      0 0 12px rgba(255,255,255,0.7);
+    pointer-events: none;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+    line-height: 1;
+  }
+  .map-title em {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--gold);
+  }
+
   /* ── Responsive ─────────────────────────────────────────────── */
   @media (max-width: 600px) {
     .members-header h2 { font-size: 16px; }
     .user-affordance { padding: 6px; }
     .user-affordance .user-label { display: none; }
+    .map-title { font-size: 28px; top: 12px; }
   }
 </style>
 </head>
@@ -252,6 +278,7 @@
 <!-- ── Map ─────────────────────────────────────────────────────── -->
 <main>
   <div id="map"></div>
+  <div class="map-title" aria-hidden="true">Timpots <em>Worldwide</em></div>
   <div id="status-banner" class="status-banner">Loading alumni…</div>
 </main>
 
@@ -374,11 +401,28 @@
   }
 
   const clusterGroup = L.markerClusterGroup({
-    iconCreateFunction:       (c) => clusterIconForChildren(c.getAllChildMarkers()),
-    showCoverageOnHover:      false,
-    maxClusterRadius:         50,
-    spiderfyDistanceMultiplier: 1.6
+    iconCreateFunction:         (c) => clusterIconForChildren(c.getAllChildMarkers()),
+    showCoverageOnHover:        false,
+    maxClusterRadius:           50,
+    spiderfyDistanceMultiplier: 1.6,
+    zoomToBoundsOnClick:        false, // we handle this so we can cap maxZoom
+    spiderfyOnMaxZoom:          false  // and trigger spiderfy explicitly
   }).addTo(map);
+
+  // Clicking a cluster: fly toward it but cap zoom so we don't dive to street level.
+  // Once at the cap, additional clicks fan out the pins (spiderfy).
+  const MAX_CLUSTER_CLICK_ZOOM = 6;
+  clusterGroup.on('clusterclick', (e) => {
+    const cluster      = e.layer;
+    const currentZoom  = map.getZoom();
+    const naturalZoom  = map.getBoundsZoom(cluster.getBounds());
+    const targetZoom   = Math.min(naturalZoom, MAX_CLUSTER_CLICK_ZOOM);
+    if (targetZoom > currentZoom) {
+      map.flyTo(cluster.getLatLng(), targetZoom, { duration: 0.5 });
+    } else {
+      cluster.spiderfy();
+    }
+  });
 
   // ════════════════════════════════════════════════════════════
   // Status banner helpers
@@ -410,7 +454,7 @@
     try {
       const { data, error } = await window.supabase
         .from('public_alumni_map')
-        .select('first_name, last_initial, house, latitude, longitude');
+        .select('first_name, last_initial, house, city, country, latitude, longitude');
 
       if (error) throw error;
       if (!data || data.length === 0) {
@@ -432,9 +476,10 @@
         });
         const initial = (row.last_initial || '').toString().slice(0, 1).toUpperCase();
         const name    = escapeHtml(row.first_name || '') + (initial ? ' ' + initial + '.' : '');
-        const popupHtml =
-          '<strong>' + (name || 'A Timpot') + '</strong>' +
-          '<br><em>' + escapeHtml(HOUSES[house].label) + '</em>';
+        const location = [row.city, row.country].filter(Boolean).map(escapeHtml).join(', ');
+        let popupHtml = '<strong>' + (name || 'A Timpot') + '</strong>';
+        if (location) popupHtml += '<br>' + location;
+        popupHtml += '<br><em>' + escapeHtml(HOUSES[house].label) + '</em>';
         marker.bindPopup(popupHtml);
         markers.push(marker);
       }
