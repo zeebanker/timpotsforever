@@ -453,10 +453,10 @@
         <label for="house">House</label>
         <select id="house">
           <option value="">Pick a house…</option>
-          <option value="pluto">Pluto / Venus (Red)</option>
-          <option value="mercury">Mercury (Yellow)</option>
-          <option value="jupiter">Jupiter (Blue)</option>
-          <option value="neptune">Neptune (Green)</option>
+          <option value="pluto">Pluto / Venus</option>
+          <option value="mercury">Mercury</option>
+          <option value="jupiter">Jupiter</option>
+          <option value="neptune">Neptune</option>
         </select>
       </div>
     </div>
@@ -563,6 +563,34 @@
     </div>
   </form>
 
+  <!-- ── Account & security (separate form so it doesn't share the main Save button) ── -->
+  <div class="card" style="margin-top:30px;">
+    <h3>Account &amp; security</h3>
+    <p class="card-help">Change your login password. Your login email is shown below — it can't be changed from here yet; contact <a href="mailto:admin@timpotsforever.org" style="color:var(--brand);">admin@timpotsforever.org</a> if you need to update it.</p>
+
+    <div class="field full" style="margin-bottom:18px;">
+      <label>Login email</label>
+      <input type="email" id="login-email-readonly" readonly style="background:var(--bg-soft); color:var(--ink-muted); cursor:not-allowed;">
+    </div>
+
+    <form id="password-form" onsubmit="event.preventDefault(); handlePasswordChange();">
+      <div class="field-grid">
+        <div class="field">
+          <label for="new_password">New password</label>
+          <input type="password" id="new_password" autocomplete="new-password" minlength="8" placeholder="At least 8 characters">
+        </div>
+        <div class="field">
+          <label for="confirm_password">Confirm new password</label>
+          <input type="password" id="confirm_password" autocomplete="new-password" minlength="8" placeholder="Re-enter the new password">
+        </div>
+      </div>
+      <div class="save-row" style="margin-top:18px;">
+        <button type="submit" class="save-btn" id="password-btn">Change password</button>
+        <span id="password-status" style="font-size:13px; color:var(--ink-muted);"></span>
+      </div>
+    </form>
+  </div>
+
 </div>
 
 <!-- ── Scripts ───────────────────────────────────────────────── -->
@@ -600,10 +628,16 @@
   }
 
   // ── Populate grade dropdowns ───────────────────────────────
+  // DB enum values stay as 'ICSE' / 'ISC'; only the display labels differ.
+  function gradeLabel(g) {
+    if (g === 'ICSE') return '10/ICSE';
+    if (g === 'ISC')  return '12/ISC';
+    return g;
+  }
   function fillGradeOptions(selectEl) {
     GRADES.forEach(g => {
       const opt = document.createElement('option');
-      opt.value = g; opt.textContent = g;
+      opt.value = g; opt.textContent = gradeLabel(g);
       selectEl.appendChild(opt);
     });
   }
@@ -628,6 +662,8 @@
     }
     currentProfile = data;
     populateForm(data);
+    // Show login email in the read-only field of the Account & security card
+    document.getElementById('login-email-readonly').value = session.user.email || '';
     document.getElementById('loading-state').style.display = 'none';
     document.getElementById('profile-form').style.display = 'block';
     document.getElementById('attendance-card').style.display = 'block';
@@ -814,7 +850,7 @@
         <td>
           <select data-field="grade" aria-label="Standard for ${yr}">
             <option value="">—</option>
-            ${GRADES.map(g => `<option value="${g}"${gradeVal === g ? ' selected' : ''}>${g}</option>`).join('')}
+            ${GRADES.map(g => `<option value="${g}"${gradeVal === g ? ' selected' : ''}>${gradeLabel(g)}</option>`).join('')}
           </select>
         </td>
         <td>
@@ -971,6 +1007,41 @@
     btn.disabled = false;
     document.getElementById('save-status').textContent = '';
     showSuccess('Profile saved.');
+  }
+
+  // ── Password change ────────────────────────────────────────
+  async function handlePasswordChange() {
+    const newPw     = document.getElementById('new_password').value;
+    const confirmPw = document.getElementById('confirm_password').value;
+    const status    = document.getElementById('password-status');
+    const btn       = document.getElementById('password-btn');
+
+    function setStatus(msg, kind /* 'error' | 'success' | 'muted' */) {
+      status.textContent = msg;
+      status.style.color = kind === 'error'   ? '#991b1b'
+                         : kind === 'success' ? '#166534'
+                         :                      '#888';
+    }
+
+    if (!newPw || !confirmPw) { setStatus('Please fill in both fields.', 'error'); return; }
+    if (newPw.length < 8)     { setStatus('Password must be at least 8 characters.', 'error'); return; }
+    if (newPw !== confirmPw)  { setStatus('Passwords do not match.', 'error'); return; }
+
+    btn.disabled = true;
+    setStatus('Updating…', 'muted');
+
+    const { error } = await supabase.auth.updateUser({ password: newPw });
+
+    btn.disabled = false;
+
+    if (error) {
+      setStatus('Failed: ' + error.message, 'error');
+      return;
+    }
+    document.getElementById('new_password').value     = '';
+    document.getElementById('confirm_password').value = '';
+    setStatus('Password updated.', 'success');
+    setTimeout(() => { if (status.textContent === 'Password updated.') setStatus('', 'muted'); }, 4000);
   }
 
   // ── Kick off ───────────────────────────────────────────────
