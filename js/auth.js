@@ -28,7 +28,7 @@ async function handleLogin(e) {
   if (!email || !password) { showError('Please enter both email and password.'); return; }
   const { error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) { showError(error.message); }
-  else       { window.location.href = 'members.html'; }
+  else       { window.location.href = 'profile.html'; }
 }
 
 async function handleSignup(e) {
@@ -51,7 +51,7 @@ async function handleForgotPassword(e) {
   const email = document.getElementById('forgot-email').value.trim();
   if (!email) { showError('Please enter your email address.'); return; }
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: window.location.origin + '/members.html'
+    redirectTo: window.location.origin + '/profile.html'
   });
   if (error) { showError(error.message); }
   else       { showSuccess('Password reset link sent! Check your email.'); }
@@ -90,10 +90,10 @@ async function updateMastheadAuth() {
   if (session && session.user) {
     const email = session.user.email || '';
     const initial = (email[0] || '?').toUpperCase();
-    aff.href = 'members.html';
-    aff.setAttribute('aria-label', 'My account');
+    aff.href = 'profile.html';
+    aff.setAttribute('aria-label', 'My profile');
     aff.classList.add('signed-in');
-    aff.innerHTML = `<span class="user-initial">${initial}</span><span class="user-label">My account</span>`;
+    aff.innerHTML = `<span class="user-initial">${initial}</span><span class="user-label">My profile</span>`;
   } else {
     aff.href = 'login.html';
     aff.setAttribute('aria-label', 'Sign in');

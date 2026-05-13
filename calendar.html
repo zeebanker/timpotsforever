@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendar — Timpots Forever</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,500;1,700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand: #7a1420;
+    --brand-dark: #4a0810;
+    --ink: #1a1a1a;
+    --ink-soft: #555;
+    --ink-muted: #888;
+    --bg-soft: #f7f4ee;
+    --bg-warm: #f0e9d8;
+    --rule: #e5e0d4;
+    --gold: #b5894a;
+    --gold-bright: #f0c579;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    color: var(--ink);
+    background: var(--bg-soft);
+    min-height: 100vh;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Header bar ────────────────────────────────────────── */
+  .page-header {
+    background: var(--brand);
+    padding: 18px 0;
+    color: #fff;
+  }
+  .page-header .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .page-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 500;
+  }
+  .page-header h2 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .page-header .actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .icon-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-decoration: none;
+    opacity: 0.85;
+    padding: 6px;
+    transition: opacity 0.15s;
+  }
+  .icon-link:hover { opacity: 1; }
+  .icon-link svg { display: block; }
+
+  /* ── Page content ──────────────────────────────────────── */
+  .page-body {
+    max-width: 860px;
+    margin: 50px auto;
+    padding: 0 24px;
+  }
+  .page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .page-title em {
+    color: var(--brand);
+    font-style: italic;
+  }
+  .page-intro {
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1.55;
+    margin-bottom: 36px;
+  }
+
+  /* ── Event card ────────────────────────────────────────── */
+  .events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .event-card {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 24px;
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--brand);
+    padding: 24px 28px;
+    transition: box-shadow 0.15s, border-left-color 0.15s;
+  }
+  .event-card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    border-left-color: var(--gold);
+  }
+  .event-card.past {
+    opacity: 0.6;
+    border-left-color: var(--rule);
+  }
+  .event-date {
+    text-align: center;
+    border-right: 1px solid var(--rule);
+    padding-right: 18px;
+    align-self: start;
+  }
+  .event-month {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brand);
+  }
+  .event-day {
+    font-family: 'Playfair Display', serif;
+    font-size: 44px;
+    font-weight: 500;
+    line-height: 1;
+    color: var(--ink);
+    margin: 4px 0;
+  }
+  .event-year {
+    font-size: 13px;
+    color: var(--ink-muted);
+  }
+  .event-body h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .event-body h3 em {
+    font-style: italic;
+    color: var(--brand);
+  }
+  .event-meta {
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-bottom: 10px;
+    letter-spacing: 0.02em;
+  }
+  .event-meta strong { color: var(--ink-soft); font-weight: 600; }
+  .event-body p {
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  .event-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 3px 8px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  /* ── Empty state ───────────────────────────────────────── */
+  .empty-note {
+    background: var(--bg-warm);
+    border: 1px dashed var(--rule);
+    padding: 40px 28px;
+    text-align: center;
+    color: var(--ink-muted);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ── Section heading ───────────────────────────────────── */
+  .section-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+    margin: 36px 0 14px 0;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section-heading:first-child { margin-top: 0; }
+
+  @media (max-width: 600px) {
+    .page-title { font-size: 28px; }
+    .event-card { grid-template-columns: 70px 1fr; gap: 14px; padding: 18px 18px; }
+    .event-date { padding-right: 12px; }
+    .event-day { font-size: 28px; }
+    .event-body h3 { font-size: 18px; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ── Header ───────────────────────────────────────────────── -->
+<div class="page-header">
+  <div class="wrap">
+    <h2>Timpots <em>Forever</em> — Calendar</h2>
+    <div class="actions">
+      <a href="index.html" class="icon-link" aria-label="Home" title="Home">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 10.5 12 3l9 7.5V21H3z"/>
+          <path d="M9 21v-7h6v7"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ── Body ─────────────────────────────────────────────────── -->
+<div class="page-body">
+
+  <h1 class="page-title">Calendar &amp; <em>Events</em></h1>
+  <p class="page-intro">
+    Reunions, gatherings, debates, fundraisers, classroom visits — everything Timpots Forever is doing. If you're organizing something, email
+    <a href="mailto:hello@timpotsforever.org" style="color:var(--brand);">hello@timpotsforever.org</a>
+    and we'll add it here.
+  </p>
+
+  <!-- ─────────────────────────────────────────────────────────
+       To add an event: copy any <article class="event-card"> below,
+       paste it in the right section (Upcoming or Past), and edit
+       the date, title, meta line, and body paragraph.
+
+       For a past event, add the "past" class to the card to dim it.
+       For a featured/special event, add <span class="event-tag">FEATURED</span>
+       (or any short label) after the <h3>.
+       ───────────────────────────────────────────────────────── -->
+
+  <h2 class="section-heading">Upcoming</h2>
+  <div class="events-list">
+
+    <!-- EXAMPLE: replace with real events -->
+    <article class="event-card">
+      <div class="event-date">
+        <div class="event-month">Mar</div>
+        <div class="event-day">22</div>
+        <div class="event-year">2027</div>
+      </div>
+      <div class="event-body">
+        <h3>Jazz Memorial — <em>First Anniversary</em></h3>
+        <p class="event-meta"><strong>10:00 AM IST</strong> · Timpany School campus, Waltair</p>
+        <p>A gathering to mark one year since Dr. Mercy Jeyaraja Rao passed. Open to all alumni, staff, and friends of the school. Tea and remembrances afterward.</p>
+      </div>
+    </article>
+
+    <article class="event-card">
+      <div class="event-date">
+        <div class="event-month">Aug</div>
+        <div class="event-day">15</div>
+        <div class="event-year">2027</div>
+      </div>
+      <div class="event-body">
+        <h3>The Jeyaraja Rao <em>Memorial Debate Competition</em> &nbsp;<span class="event-tag">Inaugural</span></h3>
+        <p class="event-meta"><strong>All day</strong> · Timpany School, Waltair</p>
+        <p>The inaugural year of the annual debate competition. Schools across Andhra Pradesh sending teams. Volunteers and visiting alumni judges welcome — get in touch if you'd like to participate.</p>
+      </div>
+    </article>
+
+  </div>
+
+  <h2 class="section-heading">Past</h2>
+  <div class="events-list">
+
+    <article class="event-card past">
+      <div class="event-date">
+        <div class="event-month">Mar</div>
+        <div class="event-day">22</div>
+        <div class="event-year">2026</div>
+      </div>
+      <div class="event-body">
+        <h3>Memorial Service — Dr. Mercy Jeyaraja Rao</h3>
+        <p class="event-meta">Visakhapatnam · alumni from four continents attended</p>
+        <p>Celebrating the life of "Jazz" — forty-eight years of service to Timpany School, generations of Timpots shaped by her care.</p>
+      </div>
+    </article>
+
+  </div>
+
+</div>
+
+</body>
+</html>

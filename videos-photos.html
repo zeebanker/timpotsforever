@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Videos &amp; Photos — Timpots Forever</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,500;1,700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand: #7a1420;
+    --brand-dark: #4a0810;
+    --ink: #1a1a1a;
+    --ink-soft: #555;
+    --ink-muted: #888;
+    --bg-soft: #f7f4ee;
+    --bg-warm: #f0e9d8;
+    --rule: #e5e0d4;
+    --gold: #b5894a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    color: var(--ink);
+    background: var(--bg-soft);
+    min-height: 100vh;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  .page-header {
+    background: var(--brand);
+    padding: 18px 0;
+    color: #fff;
+  }
+  .page-header .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .page-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 500;
+  }
+  .page-header h2 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .icon-link {
+    display: inline-flex;
+    align-items: center;
+    color: #fff;
+    text-decoration: none;
+    opacity: 0.85;
+    padding: 6px;
+  }
+  .icon-link:hover { opacity: 1; }
+
+  .page-body {
+    max-width: 700px;
+    margin: 80px auto;
+    padding: 0 24px;
+    text-align: center;
+  }
+  .page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .page-title em {
+    color: var(--brand);
+    font-style: italic;
+  }
+  .page-intro {
+    color: var(--ink-soft);
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 36px;
+  }
+  .placeholder-card {
+    background: #fff;
+    border: 1px dashed var(--rule);
+    padding: 48px 32px;
+    color: var(--ink-muted);
+  }
+  .placeholder-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+  }
+  .placeholder-card p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  .placeholder-card a {
+    color: var(--brand);
+    text-decoration: underline;
+  }
+  @media (max-width: 600px) {
+    .page-title { font-size: 28px; }
+    .page-body  { margin: 50px auto; }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="page-header">
+  <div class="wrap">
+    <h2>Timpots <em>Forever</em> — Videos &amp; Photos</h2>
+    <a href="index.html" class="icon-link" aria-label="Home" title="Home">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 10.5 12 3l9 7.5V21H3z"/>
+        <path d="M9 21v-7h6v7"/>
+      </svg>
+    </a>
+  </div>
+</div>
+
+<div class="page-body">
+  <h1 class="page-title">Videos &amp; <em>Photos</em></h1>
+  <p class="page-intro">
+    A growing archive of Timpany classroom days, reunions, milestones, and tributes.
+  </p>
+
+  <div class="placeholder-card">
+    <h3>Coming soon</h3>
+    <p>
+      We're putting this section together. It will include alumni photos, classroom-era shots,
+      reunion galleries, and embedded YouTube videos of tributes and events.
+    </p>
+    <p>
+      Have media to contribute? Email
+      <a href="mailto:hello@timpotsforever.org?subject=Photos%2FVideos%20Contribution">hello@timpotsforever.org</a>
+      — we'd love to include it.
+    </p>
+  </div>
+</div>
+
+</body>
+</html>
