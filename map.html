@@ -292,15 +292,31 @@
 
 <script>
   // ════════════════════════════════════════════════════════════
-  // House definitions (must match the timpany_house enum values)
+  // House definitions
+  //   - HOUSES: 5 enum values, each pointing to a color group.
+  //     Pluto and Venus share the 'red' group (same pin color),
+  //     but the popup shows the user's actual house label.
+  //   - COLOR_GROUPS: 4 visual identities for pins, clusters, banner.
   // ════════════════════════════════════════════════════════════
   const HOUSES = {
-    pluto:   { label: 'Pluto / Venus', mid: '#a83040', dark: '#3a0810' },
-    mercury: { label: 'Mercury',       mid: '#d4a017', dark: '#7a5328' },
-    jupiter: { label: 'Jupiter',       mid: '#2f5a9e', dark: '#0a2548' },
-    neptune: { label: 'Neptune',       mid: '#2d7a3f', dark: '#0a3a18' }
+    jupiter: { label: 'Jupiter', colorGroup: 'blue'   },
+    mercury: { label: 'Mercury', colorGroup: 'yellow' },
+    neptune: { label: 'Neptune', colorGroup: 'green'  },
+    pluto:   { label: 'Pluto',   colorGroup: 'red'    },
+    venus:   { label: 'Venus',   colorGroup: 'red'    }
   };
-  const HOUSE_KEYS = ['pluto', 'mercury', 'jupiter', 'neptune'];
+  const COLOR_GROUPS = {
+    blue:   { label: 'Jupiter',       gradientId: 'jupiter', mid: '#2f5a9e', dark: '#0a2548' },
+    yellow: { label: 'Mercury',       gradientId: 'mercury', mid: '#d4a017', dark: '#7a5328' },
+    green:  { label: 'Neptune',       gradientId: 'neptune', mid: '#2d7a3f', dark: '#0a3a18' },
+    red:    { label: 'Pluto / Venus', gradientId: 'pluto',   mid: '#a83040', dark: '#3a0810' }
+  };
+  // Order for banner breakdown and cluster pie wedges (alphabetical by house label)
+  const COLOR_KEYS_ORDERED = ['blue', 'yellow', 'green', 'red'];
+
+  function colorGroupOf(house) {
+    return (HOUSES[house] && HOUSES[house].colorGroup) || 'red';
+  }
 
   // ════════════════════════════════════════════════════════════
   // Map setup — Visakhapatnam-centered, no tile layer (uses country
@@ -350,12 +366,11 @@
   // Pin SVG (ball-head pushpin) and cluster donut-pie icon
   // ════════════════════════════════════════════════════════════
   function pinIconForHouse(house) {
-    const h    = HOUSES[house] ? house : 'pluto';
-    const dark = HOUSES[h].dark;
+    const cg   = COLOR_GROUPS[colorGroupOf(house)];
     const svg =
       '<svg width="24" height="36" viewBox="0 0 24 36" xmlns="http://www.w3.org/2000/svg">' +
       '<polygon points="11,14 13,14 12,35" fill="url(#spike)" stroke="#555" stroke-width="0.3"/>' +
-      '<circle cx="12" cy="8.5" r="7.5" fill="url(#' + h + ')" stroke="' + dark + '" stroke-width="0.4"/>' +
+      '<circle cx="12" cy="8.5" r="7.5" fill="url(#' + cg.gradientId + ')" stroke="' + cg.dark + '" stroke-width="0.4"/>' +
       '<ellipse cx="9.8" cy="6" rx="2" ry="1.2" fill="white" opacity="0.55"/>' +
       '</svg>';
     return L.divIcon({
@@ -368,20 +383,22 @@
   }
 
   function clusterIconForChildren(children) {
-    const counts = { pluto: 0, mercury: 0, jupiter: 0, neptune: 0 };
-    for (const m of children) counts[m.options.house || 'pluto']++;
-    const total = children.length;
-    const present = HOUSE_KEYS.filter(h => counts[h] > 0);
+    // Count children by COLOR GROUP (Pluto and Venus both fall into 'red').
+    const counts = { red: 0, yellow: 0, blue: 0, green: 0 };
+    for (const m of children) counts[colorGroupOf(m.options.house)]++;
+    const total   = children.length;
+    const present = COLOR_KEYS_ORDERED.filter(k => counts[k] > 0);
 
     let svg = '<svg width="40" height="40" viewBox="-20 -20 40 40" xmlns="http://www.w3.org/2000/svg">';
     if (present.length === 1) {
-      const h = present[0];
-      svg += '<circle cx="0" cy="0" r="16" fill="' + HOUSES[h].mid + '" stroke="' + HOUSES[h].dark + '" stroke-width="0.6"/>';
+      const cg = COLOR_GROUPS[present[0]];
+      svg += '<circle cx="0" cy="0" r="16" fill="' + cg.mid + '" stroke="' + cg.dark + '" stroke-width="0.6"/>';
     } else {
       let a0 = -Math.PI / 2;
-      for (const h of HOUSE_KEYS) {
-        const c = counts[h];
+      for (const k of COLOR_KEYS_ORDERED) {
+        const c = counts[k];
         if (c === 0) continue;
+        const cg = COLOR_GROUPS[k];
         const a1 = a0 + (c / total) * Math.PI * 2;
         const x1 = (16 * Math.cos(a0)).toFixed(2);
         const y1 = (16 * Math.sin(a0)).toFixed(2);
@@ -389,7 +406,7 @@
         const y2 = (16 * Math.sin(a1)).toFixed(2);
         const large = (a1 - a0) > Math.PI ? 1 : 0;
         svg += '<path d="M0,0 L' + x1 + ',' + y1 + ' A16,16 0 ' + large + ',1 ' + x2 + ',' + y2 + ' Z" ' +
-               'fill="' + HOUSES[h].mid + '" stroke="' + HOUSES[h].dark + '" stroke-width="0.5"/>';
+               'fill="' + cg.mid + '" stroke="' + cg.dark + '" stroke-width="0.5"/>';
         a0 = a1;
       }
     }
@@ -479,6 +496,7 @@
         const location = [row.city, row.country].filter(Boolean).map(escapeHtml).join(', ');
         let popupHtml = '<strong>' + (name || 'A Timpot') + '</strong>';
         if (location) popupHtml += '<br>' + location;
+        // Popup shows the actual house (Pluto or Venus), not the merged color label
         popupHtml += '<br><em>' + escapeHtml(HOUSES[house].label) + '</em>';
         marker.bindPopup(popupHtml);
         markers.push(marker);
@@ -487,13 +505,13 @@
       clusterGroup.addLayers(markers);
       // (No fitBounds — keep the default Visakhapatnam-centered view per design.)
 
-      // Count by house for the banner breakdown
-      const houseCounts = { pluto: 0, mercury: 0, jupiter: 0, neptune: 0 };
+      // Count by COLOR GROUP for the banner breakdown (Pluto + Venus merged into 'red')
+      const colorCounts = { red: 0, yellow: 0, blue: 0, green: 0 };
       for (const row of data) {
-        if (HOUSES[row.house]) houseCounts[row.house]++;
+        if (HOUSES[row.house]) colorCounts[colorGroupOf(row.house)]++;
       }
-      const breakdown = HOUSE_KEYS
-        .map(h => houseCounts[h] + ' ' + HOUSES[h].label)
+      const breakdown = COLOR_KEYS_ORDERED
+        .map(k => colorCounts[k] + ' ' + COLOR_GROUPS[k].label)
         .join('  ·  ');
 
       setBanner(markers.length + ' Timpots worldwide  ·  ' + breakdown);

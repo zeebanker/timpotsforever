@@ -217,6 +217,16 @@
     color: var(--ink-soft);
     margin-top: 6px;
   }
+
+  /* ── Phone field: country-code dropdown + number input ─── */
+  .phone-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 10px;
+  }
+  @media (max-width: 640px) {
+    .phone-row { grid-template-columns: 1fr; }
+  }
   .inline-check input { width: auto; }
 
   /* ── Tenure (two-row pair: beginning + ending) ───────────── */
@@ -442,7 +452,7 @@
           <input type="text" id="first_name" autocomplete="given-name" required>
         </div>
         <div class="field">
-          <label for="last_name">Last name</label>
+          <label for="last_name">Surname / Last name</label>
           <input type="text" id="last_name" autocomplete="family-name" required>
         </div>
         <div class="field full">
@@ -477,10 +487,11 @@
         <label for="house">House</label>
         <select id="house">
           <option value="">Pick a house…</option>
-          <option value="pluto">Pluto / Venus</option>
-          <option value="mercury">Mercury</option>
           <option value="jupiter">Jupiter</option>
+          <option value="mercury">Mercury</option>
           <option value="neptune">Neptune</option>
+          <option value="pluto">Pluto</option>
+          <option value="venus">Venus</option>
         </select>
       </div>
     </div>
@@ -488,7 +499,7 @@
     <!-- ── Where you are now ──────────────────────────── -->
     <div class="card">
       <h3>Where you are now</h3>
-      <p class="card-help">Only city and country are stored. We use OpenStreetMap to standardize the city name.</p>
+      <p class="card-help">Only city and country are stored.</p>
 
       <div class="field full">
         <label for="city">City</label>
@@ -507,8 +518,11 @@
       <p class="card-help">Your login email is used automatically. Phone is optional and hidden by default.</p>
       <div class="field-grid">
         <div class="field full">
-          <label for="phone">Phone <span style="font-weight:400; color:var(--ink-muted); letter-spacing:0; text-transform:none;">(optional, for future WhatsApp features)</span></label>
-          <input type="tel" id="phone" placeholder="+91 98xxx xxxxx" autocomplete="tel">
+          <label for="phone_country_code">Phone <span style="font-weight:400; color:var(--ink-muted); letter-spacing:0; text-transform:none;">(optional, for future WhatsApp features)</span></label>
+          <div class="phone-row">
+            <select id="phone_country_code" aria-label="Country code"></select>
+            <input type="tel" id="phone_number" placeholder="Phone number" autocomplete="tel-national" inputmode="tel">
+          </div>
           <label class="inline-check">
             <input type="checkbox" id="hide_phone" checked>
             Hide my phone number from other alumni
@@ -536,27 +550,25 @@
     <!-- ── Privacy ────────────────────────────────────── -->
     <div class="card">
       <h3>Who can see your profile</h3>
-      <p class="card-help">You can change this later.</p>
+      <p class="card-help">
+        Your first name, last initial, house, and city always appear on the public
+        <a href="map.html" style="color:var(--brand);">Find Timpots</a> map.
+        This setting controls who can see your <strong>Time at Timpany</strong>,
+        <strong>Contact &amp; web</strong>, and <strong>Year-by-year</strong> details.
+      </p>
       <div class="visibility-options">
         <label class="vis-opt">
           <input type="radio" name="visibility" value="members" checked>
           <div>
             <div class="vis-name">Members only</div>
-            <div class="vis-desc">Logged-in Timpots can see your profile. You also appear on the alumni map (first name + initial + house pin only).</div>
-          </div>
-        </label>
-        <label class="vis-opt">
-          <input type="radio" name="visibility" value="public">
-          <div>
-            <div class="vis-name">Public</div>
-            <div class="vis-desc">Anyone visiting the site can see your full profile, not just members.</div>
+            <div class="vis-desc">Logged-in alumni can see your full profile details. (Default.)</div>
           </div>
         </label>
         <label class="vis-opt">
           <input type="radio" name="visibility" value="private">
           <div>
             <div class="vis-name">Private</div>
-            <div class="vis-desc">Only you can see your profile. You won't appear in directory listings or the alumni map.</div>
+            <div class="vis-desc">Only you can see your full profile details.</div>
           </div>
         </label>
       </div>
@@ -656,6 +668,83 @@
   const GRADES = ['Pre-KG','KG','1','2','3','4','5','6','7','8','9','ICSE','11','ISC'];
   const NOMINATIM_URL = 'https://nominatim.openstreetmap.org/search';
 
+  // Phone country codes — India first (default), then alphabetical.
+  // Phone is stored as a single string in the DB (e.g. "+91 9876543210").
+  const COUNTRY_CODES = [
+    { code: '+91',  label: 'India' },
+    { code: '+54',  label: 'Argentina' },
+    { code: '+61',  label: 'Australia' },
+    { code: '+973', label: 'Bahrain' },
+    { code: '+880', label: 'Bangladesh' },
+    { code: '+32',  label: 'Belgium' },
+    { code: '+55',  label: 'Brazil' },
+    { code: '+56',  label: 'Chile' },
+    { code: '+86',  label: 'China' },
+    { code: '+45',  label: 'Denmark' },
+    { code: '+20',  label: 'Egypt' },
+    { code: '+358', label: 'Finland' },
+    { code: '+33',  label: 'France' },
+    { code: '+49',  label: 'Germany' },
+    { code: '+30',  label: 'Greece' },
+    { code: '+852', label: 'Hong Kong' },
+    { code: '+62',  label: 'Indonesia' },
+    { code: '+98',  label: 'Iran' },
+    { code: '+353', label: 'Ireland' },
+    { code: '+972', label: 'Israel' },
+    { code: '+39',  label: 'Italy' },
+    { code: '+81',  label: 'Japan' },
+    { code: '+254', label: 'Kenya' },
+    { code: '+965', label: 'Kuwait' },
+    { code: '+60',  label: 'Malaysia' },
+    { code: '+52',  label: 'Mexico' },
+    { code: '+31',  label: 'Netherlands' },
+    { code: '+64',  label: 'New Zealand' },
+    { code: '+234', label: 'Nigeria' },
+    { code: '+47',  label: 'Norway' },
+    { code: '+968', label: 'Oman' },
+    { code: '+92',  label: 'Pakistan' },
+    { code: '+63',  label: 'Philippines' },
+    { code: '+351', label: 'Portugal' },
+    { code: '+974', label: 'Qatar' },
+    { code: '+7',   label: 'Russia / Kazakhstan' },
+    { code: '+966', label: 'Saudi Arabia' },
+    { code: '+65',  label: 'Singapore' },
+    { code: '+27',  label: 'South Africa' },
+    { code: '+82',  label: 'South Korea' },
+    { code: '+34',  label: 'Spain' },
+    { code: '+94',  label: 'Sri Lanka' },
+    { code: '+46',  label: 'Sweden' },
+    { code: '+41',  label: 'Switzerland' },
+    { code: '+66',  label: 'Thailand' },
+    { code: '+90',  label: 'Turkey' },
+    { code: '+971', label: 'UAE' },
+    { code: '+44',  label: 'United Kingdom' },
+    { code: '+1',   label: 'USA / Canada' },
+    { code: '+84',  label: 'Vietnam' }
+  ];
+
+  // Populate the country-code dropdown
+  (function fillCountryCodes() {
+    const sel = document.getElementById('phone_country_code');
+    if (!sel) return;
+    COUNTRY_CODES.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c.code;
+      opt.textContent = c.code + '  ' + c.label;
+      sel.appendChild(opt);
+    });
+    sel.value = '+91';
+  })();
+
+  // Parse a stored phone string into country code + national number
+  function parsePhone(phone) {
+    if (!phone) return { code: '+91', number: '' };
+    const s = String(phone).trim();
+    const m = s.match(/^(\+\d{1,4})[\s\-\.]*(.*)$/);
+    if (m) return { code: m[1], number: m[2].trim() };
+    return { code: '+91', number: s };
+  }
+
   let currentProfile = null;
   let attendanceRows = []; // [{year, grade, section, class_teacher}]
 
@@ -741,13 +830,25 @@
       resolved.textContent = `Locked: ${p.city}, ${p.country}` + (p.latitude ? ` (${p.latitude.toFixed(3)}, ${p.longitude.toFixed(3)})` : '');
       resolved.classList.add('show');
     }
-    document.getElementById('phone').value         = p.phone || '';
+    // Phone: split stored "+CC NNNNN" into code dropdown + number input
+    const { code: pCode, number: pNumber } = parsePhone(p.phone);
+    const codeSel = document.getElementById('phone_country_code');
+    if (!Array.from(codeSel.options).some(o => o.value === pCode)) {
+      // Existing user has a code not in our list — preserve it
+      const opt = document.createElement('option');
+      opt.value = pCode; opt.textContent = pCode + '  (other)';
+      codeSel.appendChild(opt);
+    }
+    codeSel.value = pCode;
+    document.getElementById('phone_number').value = pNumber;
     document.getElementById('hide_phone').checked  = p.hide_phone !== false;
     document.getElementById('linkedin_url').value  = p.linkedin_url || '';
     document.getElementById('personal_url').value  = p.personal_url || '';
     document.getElementById('profession').value    = p.profession || '';
     document.getElementById('bio').value           = p.bio || '';
-    const vis = p.visibility || 'members';
+    // 'public' is no longer a user choice — fall back to 'members' for any legacy value
+    let vis = p.visibility || 'members';
+    if (vis !== 'members' && vis !== 'private') vis = 'members';
     const visRadio = document.querySelector(`input[name="visibility"][value="${vis}"]`);
     if (visRadio) visRadio.checked = true;
   }
@@ -977,7 +1078,12 @@
       ending_grade:    document.getElementById('ending_grade').value || null,
       ending_year:     parseInt(document.getElementById('ending_year').value, 10) || null,
       house:           document.getElementById('house').value || null,
-      phone:           document.getElementById('phone').value.trim() || null,
+      phone:           (function(){
+        const num = document.getElementById('phone_number').value.trim();
+        if (!num) return null;
+        const cc  = document.getElementById('phone_country_code').value || '+91';
+        return cc + ' ' + num;
+      })(),
       hide_phone:      document.getElementById('hide_phone').checked,
       linkedin_url:    document.getElementById('linkedin_url').value.trim() || null,
       personal_url:    document.getElementById('personal_url').value.trim() || null,
