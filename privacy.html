@@ -30,19 +30,37 @@
   .members-header {
     background: var(--brand);
     color: #fff;
-    padding: 16px 24px;
+    padding: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+  .members-header .wrap {
+    flex: 1;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+  }
+  .members-header h2 {
     font-family: 'Playfair Display', serif;
-    font-size: 20px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+    border: none;
+    padding: 0;
+    margin-top: 0;
+  }
+  .members-header h2 em {
+    color: var(--gold-bright);
+    font-style: italic;
     font-weight: 600;
   }
-  .members-header .title { flex: 1; }
   .members-header .actions {
     display: flex;
     gap: 16px;
     align-items: center;
+    padding-right: 24px;
   }
   .members-header a {
     color: #fff;
@@ -50,48 +68,72 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     transition: background 0.2s;
   }
   .members-header a:hover { background: rgba(255,255,255,0.1); }
-  .home-icon { display: flex; align-items: center; justify-content: center; }
-  .home-icon svg { width: 20px; height: 20px; }
+  .public-site-link { display: flex; align-items: center; justify-content: center; }
+  .public-site-link svg { width: 22px; height: 22px; }
 
-  .content-wrapper {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 40px 24px 80px;
+  .privacy-page {
+    max-width: 760px;
+    margin: 50px auto;
+    padding: 0 24px;
     flex: 1;
   }
-
-  h1 {
+  .page-title {
     font-family: 'Playfair Display', serif;
-    font-size: 32px;
+    font-size: 34px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .page-title em {
+    color: var(--brand);
+    font-style: italic;
+  }
+  .page-intro {
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1.55;
+    margin-bottom: 28px;
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--rule);
+    padding: 30px 32px;
+    margin-bottom: 24px;
+  }
+  .card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
     font-weight: 600;
     color: var(--ink);
-    margin-bottom: 8px;
-  }
-  .effective-date {
-    font-size: 13px;
-    color: var(--ink-muted);
-    margin-bottom: 32px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+    margin-top: 0;
+    border: none;
+    padding: 0;
   }
 
   h2 {
     font-family: 'Playfair Display', serif;
     font-size: 20px;
     font-weight: 600;
-    color: var(--brand);
-    margin-top: 32px;
-    margin-bottom: 16px;
-    border-top: 1px solid var(--rule);
-    padding-top: 24px;
+    color: var(--ink);
+    margin-bottom: 4px;
   }
-  h2:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-top: 20px;
+    margin-bottom: 12px;
+  }
 
   p {
     line-height: 1.65;
@@ -125,234 +167,281 @@
   a:hover { text-decoration: underline; }
 
   footer { margin-top: 80px; border-top: 1px solid var(--rule); padding-top: 40px; }
+
+  /* ── Responsive ──────────────────────────────────────────── */
+  @media (max-width: 640px) {
+    .privacy-page { padding: 0 20px; }
+    .page-title { font-size: 28px; }
+    .card { padding: 24px 20px; }
+    .members-header .wrap { padding: 16px 20px; }
+    .members-header .actions { padding-right: 20px; }
+  }
 </style>
 </head>
 <body>
 
 <div class="members-header">
-  <div class="title">Privacy Policy</div>
-  <div class="actions">
-    <a href="index.html" class="home-icon" title="Home" aria-label="Home">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M3 9L12 3l9 6v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-        <polyline points="9 22 9 12 15 12 15 22"/>
-      </svg>
-    </a>
+  <div class="wrap">
+    <h2>Timpots <em>Forever</em> — Privacy Policy</h2>
+    <div class="actions">
+      <a href="index.html" class="public-site-link" aria-label="Home" title="Home">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 10.5 12 3l9 7.5V21H3z"/>
+          <path d="M9 21v-7h6v7"/>
+        </svg>
+      </a>
+    </div>
   </div>
 </div>
 
-<div class="content-wrapper">
-  <h1>Timpots Forever Privacy Policy</h1>
-  <div class="effective-date">Effective May 13, 2026</div>
+<div class="privacy-page">
+  <h1 class="page-title">Privacy <em>Policy</em></h1>
+  <p class="page-intro" style="margin-bottom: 6px;">Effective May 13, 2026</p>
 
-  <h2>1. Introduction</h2>
-  <p>Timpots Forever ("we," "us," "our," or "Company") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website <a href="https://timpotsforever.org">https://timpotsforever.org</a> (the "Site") and use our services.</p>
-  <p>Please read this Privacy Policy carefully. If you do not agree with our policies and practices, please do not use our Site.</p>
+  <div class="card">
+    <h2>1. Introduction</h2>
+    <p>Timpots Forever ("we," "us," "our," or "Company") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website <a href="https://timpotsforever.org">https://timpotsforever.org</a> (the "Site") and use our services.</p>
+    <p>Please read this Privacy Policy carefully. If you do not agree with our policies and practices, please do not use our Site.</p>
+  </div>
 
-  <h2>2. Information We Collect</h2>
+  <div class="card">
+    <h2>2. Information We Collect</h2>
 
-  <h3>A. Information You Provide Directly</h3>
-  <p>We collect information you voluntarily provide when you:</p>
-  <ul>
-    <li><strong>Create an account:</strong> Name, email address, password (hashed and encrypted)</li>
-    <li><strong>Complete your profile:</strong> School tenure (grades and years), house affiliation, location (city, country, latitude, longitude), phone number, LinkedIn URL, personal website URL, profession, biography, and preferred name</li>
-    <li><strong>Contact us:</strong> Any information you provide when sending emails or messages through the Site</li>
-    <li><strong>Verify membership:</strong> Identity verification documents and proof of Timpany School attendance</li>
-  </ul>
+    <h3>A. Information You Provide Directly</h3>
+    <p>We collect information you voluntarily provide when you:</p>
+    <ul>
+      <li><strong>Create an account:</strong> Name, email address, password (hashed and encrypted)</li>
+      <li><strong>Complete your profile:</strong> School tenure (grades and years), house affiliation, location (city, country, latitude, longitude), phone number, LinkedIn URL, personal website URL, profession, biography, and preferred name</li>
+      <li><strong>Contact us:</strong> Any information you provide when sending emails or messages through the Site</li>
+      <li><strong>Verify membership:</strong> Identity verification documents and proof of Timpany School attendance</li>
+    </ul>
 
-  <h3>B. Information Collected Automatically</h3>
-  <p>When you visit our Site, we automatically collect certain information:</p>
-  <ul>
-    <li><strong>Usage data:</strong> Pages visited, time spent on pages, links clicked, referring URL</li>
-    <li><strong>Device information:</strong> Browser type, operating system, device type, IP address</li>
-    <li><strong>Authentication data:</strong> Login timestamps, session tokens (via Supabase)</li>
-    <li><strong>Location data:</strong> Approximate location based on IP address (for analytics only)</li>
-  </ul>
+    <h3>B. Information Collected Automatically</h3>
+    <p>When you visit our Site, we automatically collect certain information:</p>
+    <ul>
+      <li><strong>Usage data:</strong> Pages visited, time spent on pages, links clicked, referring URL</li>
+      <li><strong>Device information:</strong> Browser type, operating system, device type, IP address</li>
+      <li><strong>Authentication data:</strong> Login timestamps, session tokens (via Supabase)</li>
+      <li><strong>Location data:</strong> Approximate location based on IP address (for analytics only)</li>
+    </ul>
 
-  <h3>C. Information from Third Parties</h3>
-  <p>We may receive information from:</p>
-  <ul>
-    <li><strong>Authentication providers:</strong> Supabase provides verified email and authentication status</li>
-    <li><strong>Analytics services:</strong> Cloudflare provides traffic and security data</li>
-  </ul>
+    <h3>C. Information from Third Parties</h3>
+    <p>We may receive information from:</p>
+    <ul>
+      <li><strong>Authentication providers:</strong> Supabase provides verified email and authentication status</li>
+      <li><strong>Analytics services:</strong> Cloudflare provides traffic and security data</li>
+    </ul>
+  </div>
 
-  <h2>3. How We Use Your Information</h2>
-  <p>We use the information we collect for the following purposes:</p>
-  <ul>
-    <li><strong>Account management:</strong> Creating and managing your account, authentication, and password resets</li>
-    <li><strong>Profile management:</strong> Displaying your profile in the Alumni Directory and Alumni Map according to your privacy settings</li>
-    <li><strong>Membership verification:</strong> Verifying you are a genuine member of the Timpany School alumni community</li>
-    <li><strong>Communication:</strong> Sending transactional emails (confirmations, password resets, important updates)</li>
-    <li><strong>Site improvement:</strong> Understanding how users interact with the Site to improve functionality and user experience</li>
-    <li><strong>Security:</strong> Detecting, preventing, and addressing fraud, abuse, and security issues</li>
-    <li><strong>Legal compliance:</strong> Complying with applicable laws and legal obligations</li>
-    <li><strong>Analytics:</strong> Analyzing trends, traffic patterns, and user behavior (in aggregated, anonymized form)</li>
-  </ul>
+  <div class="card">
+    <h2>3. How We Use Your Information</h2>
+    <p>We use the information we collect for the following purposes:</p>
+    <ul>
+      <li><strong>Account management:</strong> Creating and managing your account, authentication, and password resets</li>
+      <li><strong>Profile management:</strong> Displaying your profile in the Alumni Directory and Alumni Map according to your privacy settings</li>
+      <li><strong>Membership verification:</strong> Verifying you are a genuine member of the Timpany School alumni community</li>
+      <li><strong>Communication:</strong> Sending transactional emails (confirmations, password resets, important updates)</li>
+      <li><strong>Site improvement:</strong> Understanding how users interact with the Site to improve functionality and user experience</li>
+      <li><strong>Security:</strong> Detecting, preventing, and addressing fraud, abuse, and security issues</li>
+      <li><strong>Legal compliance:</strong> Complying with applicable laws and legal obligations</li>
+      <li><strong>Analytics:</strong> Analyzing trends, traffic patterns, and user behavior (in aggregated, anonymized form)</li>
+    </ul>
+  </div>
 
-  <h2>4. Privacy Controls and Visibility Settings</h2>
-  <p>Timpots Forever gives you control over how your information is shared:</p>
+  <div class="card">
+    <h2>4. Privacy Controls and Visibility Settings</h2>
+    <p>Timpots Forever gives you control over how your information is shared:</p>
 
-  <h3>A. Profile Visibility</h3>
-  <p>You can choose one of the following visibility levels for your profile:</p>
-  <ul>
-    <li><strong>Private:</strong> Your profile is visible only to you. Your information does not appear in the Alumni Directory. Your basic data (first name, last initial, house, city, country) still appears on the Alumni Map as public data.</li>
-    <li><strong>Members:</strong> Your full profile is visible to logged-in alumni members. This is the default setting.</li>
-  </ul>
+    <h3>A. Profile Visibility</h3>
+    <p>You can choose one of the following visibility levels for your profile:</p>
+    <ul>
+      <li><strong>Private:</strong> Your profile is visible only to you. Your information does not appear in the Alumni Directory. Your basic data (first name, last initial, house, city, country) still appears on the Alumni Map as public data.</li>
+      <li><strong>Members:</strong> Your full profile is visible to logged-in alumni members. This is the default setting.</li>
+    </ul>
 
-  <h3>B. Alumni Map Data</h3>
-  <p>The following information always appears on the publicly accessible Alumni Map, regardless of your visibility setting:</p>
-  <ul>
-    <li>First name</li>
-    <li>Last initial (not full last name)</li>
-    <li>House affiliation</li>
-    <li>City and country</li>
-    <li>Location coordinates (latitude/longitude)</li>
-  </ul>
-  <p>This information is intentionally limited to protect your privacy while allowing members to find you geographically.</p>
+    <h3>B. Alumni Map Data</h3>
+    <p>The following information always appears on the publicly accessible Alumni Map, regardless of your visibility setting:</p>
+    <ul>
+      <li>First name</li>
+      <li>Last initial (not full last name)</li>
+      <li>House affiliation</li>
+      <li>City and country</li>
+      <li>Location coordinates (latitude/longitude)</li>
+    </ul>
+    <p>This information is intentionally limited to protect your privacy while allowing members to find you geographically.</p>
 
-  <h3>C. Contact Information Privacy</h3>
-  <p>You can choose to hide your phone number from other members by checking the "Hide phone" option in your profile settings. Your email address is never displayed to other users.</p>
+    <h3>C. Contact Information Privacy</h3>
+    <p>You can choose to hide your phone number from other members by checking the "Hide phone" option in your profile settings. Your email address is never displayed to other users.</p>
+  </div>
 
-  <h2>5. Data Sharing and Disclosure</h2>
+  <div class="card">
+    <h2>5. Data Sharing and Disclosure</h2>
 
-  <h3>A. No Sale of Data</h3>
-  <p>We do <strong>not</strong> sell, trade, or rent your personal information to third parties.</p>
+    <h3>A. No Sale of Data</h3>
+    <p>We do <strong>not</strong> sell, trade, or rent your personal information to third parties.</p>
 
-  <h3>B. Service Providers</h3>
-  <p>We share limited information with third-party service providers to operate the Site. These providers are contractually bound to use your information only as necessary to provide services:</p>
-  <ul>
-    <li><strong>Supabase:</strong> Stores your account data, profile information, and authentication credentials. Data is encrypted in transit and at rest.</li>
-    <li><strong>Cloudflare:</strong> Hosts our website, handles email routing, and provides security services. Cloudflare has access to traffic data and may collect analytics.</li>
-    <li><strong>Resend:</strong> Sends transactional emails (confirmations, password resets). Resend receives your email address and sends information only.</li>
-  </ul>
+    <h3>B. Service Providers</h3>
+    <p>We share limited information with third-party service providers to operate the Site. These providers are contractually bound to use your information only as necessary to provide services:</p>
+    <ul>
+      <li><strong>Supabase:</strong> Stores your account data, profile information, and authentication credentials. Data is encrypted in transit and at rest.</li>
+      <li><strong>Cloudflare:</strong> Hosts our website, handles email routing, and provides security services. Cloudflare has access to traffic data and may collect analytics.</li>
+      <li><strong>Resend:</strong> Sends transactional emails (confirmations, password resets). Resend receives your email address and sends information only.</li>
+    </ul>
 
-  <h3>C. Legal Requirements</h3>
-  <p>We may disclose your information if required by law or if we believe in good faith that disclosure is necessary to:</p>
-  <ul>
-    <li>Comply with legal processes (subpoena, court order, government request)</li>
-    <li>Enforce our Terms and Conditions</li>
-    <li>Protect the safety, rights, and property of Timpots Forever, our users, or the public</li>
-  </ul>
+    <h3>C. Legal Requirements</h3>
+    <p>We may disclose your information if required by law or if we believe in good faith that disclosure is necessary to:</p>
+    <ul>
+      <li>Comply with legal processes (subpoena, court order, government request)</li>
+      <li>Enforce our Terms and Conditions</li>
+      <li>Protect the safety, rights, and property of Timpots Forever, our users, or the public</li>
+    </ul>
 
-  <h3>D. Business Transfers</h3>
-  <p>If Timpots Forever is acquired or merged with another entity, your information may be transferred as part of that transaction. You will be notified of any such change.</p>
+    <h3>D. Business Transfers</h3>
+    <p>If Timpots Forever is acquired or merged with another entity, your information may be transferred as part of that transaction. You will be notified of any such change.</p>
+  </div>
 
-  <h2>6. Data Security</h2>
-  <p>We implement industry-standard security measures to protect your personal information:</p>
-  <ul>
-    <li>All data transmitted to the Site uses HTTPS encryption</li>
-    <li>Passwords are hashed using industry-standard algorithms and never stored in plaintext</li>
-    <li>Access to personal data is restricted to authorized personnel only</li>
-    <li>Supabase provides role-based access controls (RLS) to prevent unauthorized access</li>
-    <li>Regular security audits and updates are performed</li>
-  </ul>
-  <p>However, no security system is impenetrable. While we strive to protect your information, we cannot guarantee absolute security.</p>
+  <div class="card">
+    <h2>6. Data Security</h2>
+    <p>We implement industry-standard security measures to protect your personal information:</p>
+    <ul>
+      <li>All data transmitted to the Site uses HTTPS encryption</li>
+      <li>Passwords are hashed using industry-standard algorithms and never stored in plaintext</li>
+      <li>Access to personal data is restricted to authorized personnel only</li>
+      <li>Supabase provides role-based access controls (RLS) to prevent unauthorized access</li>
+      <li>Regular security audits and updates are performed</li>
+    </ul>
+    <p>However, no security system is impenetrable. While we strive to protect your information, we cannot guarantee absolute security.</p>
+  </div>
 
-  <h2>7. Data Retention and Deletion</h2>
+  <div class="card">
+    <h2>7. Data Retention and Deletion</h2>
 
-  <h3>A. Retention Period</h3>
-  <p>We retain your personal information as long as your account is active or as needed to provide services. You can request deletion at any time.</p>
+    <h3>A. Retention Period</h3>
+    <p>We retain your personal information as long as your account is active or as needed to provide services. You can request deletion at any time.</p>
 
-  <h3>B. Account Deletion</h3>
-  <p>To delete your account and personal information:</p>
-  <ul>
-    <li>Log into your account and select "Delete Account" in your profile settings, OR</li>
-    <li>Contact us at <a href="mailto:admin@timpotsforever.org">admin@timpotsforever.org</a> with the subject "Account Deletion Request"</li>
-  </ul>
-  <p>Upon deletion:</p>
-  <ul>
-    <li>Your profile will be removed from the Alumni Directory and Alumni Map</li>
-    <li>Your account will be deactivated</li>
-    <li>Your personal data will be deleted from our systems within 30 days</li>
-    <li>We may retain anonymized, aggregated data for analytics purposes</li>
-    <li>Backup copies may be retained for up to 90 days for disaster recovery purposes</li>
-  </ul>
+    <h3>B. Account Deletion</h3>
+    <p>To delete your account and personal information:</p>
+    <ul>
+      <li>Log into your account and select "Delete Account" in your profile settings, OR</li>
+      <li>Contact us at <a href="mailto:admin@timpotsforever.org">admin@timpotsforever.org</a> with the subject "Account Deletion Request"</li>
+    </ul>
+    <p>Upon deletion:</p>
+    <ul>
+      <li>Your profile will be removed from the Alumni Directory and Alumni Map</li>
+      <li>Your account will be deactivated</li>
+      <li>Your personal data will be deleted from our systems within 30 days</li>
+      <li>We may retain anonymized, aggregated data for analytics purposes</li>
+      <li>Backup copies may be retained for up to 90 days for disaster recovery purposes</li>
+    </ul>
 
-  <h3>C. Legal Holds</h3>
-  <p>We may retain your information longer if required by law or if we have a legitimate legal reason to do so.</p>
+    <h3>C. Legal Holds</h3>
+    <p>We may retain your information longer if required by law or if we have a legitimate legal reason to do so.</p>
+  </div>
 
-  <h2>8. Cookies and Tracking Technologies</h2>
+  <div class="card">
+    <h2>8. Cookies and Tracking Technologies</h2>
 
-  <h3>A. Session Cookies</h3>
-  <p>We use session cookies to maintain your login state and authenticate your identity. These cookies are deleted when you close your browser.</p>
+    <h3>A. Session Cookies</h3>
+    <p>We use session cookies to maintain your login state and authenticate your identity. These cookies are deleted when you close your browser.</p>
 
-  <h3>B. Analytics</h3>
-  <p>Cloudflare may set cookies or use similar tracking technologies to collect analytics data. This information is used only to understand Site traffic and improve performance.</p>
+    <h3>B. Analytics</h3>
+    <p>Cloudflare may set cookies or use similar tracking technologies to collect analytics data. This information is used only to understand Site traffic and improve performance.</p>
 
-  <h3>C. Cookie Control</h3>
-  <p>You can control cookies through your browser settings. Disabling cookies may limit your ability to use certain features of the Site.</p>
+    <h3>C. Cookie Control</h3>
+    <p>You can control cookies through your browser settings. Disabling cookies may limit your ability to use certain features of the Site.</p>
+  </div>
 
-  <h2>9. Third-Party Links and Services</h2>
-  <p>The Site may contain links to external websites and services operated by third parties (including LinkedIn). This Privacy Policy does not apply to external sites. We are not responsible for the privacy practices of third-party websites. Please review their privacy policies independently.</p>
+  <div class="card">
+    <h2>9. Third-Party Links and Services</h2>
+    <p>The Site may contain links to external websites and services operated by third parties (including LinkedIn). This Privacy Policy does not apply to external sites. We are not responsible for the privacy practices of third-party websites. Please review their privacy policies independently.</p>
+  </div>
 
-  <h2>10. Children's Privacy</h2>
-  <p>Timpots Forever is not intended for users under the age of 18. We do not knowingly collect personal information from children. If we become aware that a child has provided information, we will delete it immediately and may terminate the account. If you believe a child has provided information, please contact us at <a href="mailto:admin@timpotsforever.org">admin@timpotsforever.org</a>.</p>
+  <div class="card">
+    <h2>10. Children's Privacy</h2>
+    <p>Timpots Forever is not intended for users under the age of 18. We do not knowingly collect personal information from children. If we become aware that a child has provided information, we will delete it immediately and may terminate the account. If you believe a child has provided information, please contact us at <a href="mailto:admin@timpotsforever.org">admin@timpotsforever.org</a>.</p>
+  </div>
 
-  <h2>11. International Users and Data Transfers</h2>
-  <p>Timpots Forever is operated from the United States. If you access the Site from outside the United States, your information will be transferred to, stored in, and processed in the United States. By using the Site, you consent to this transfer. Our data processors (Supabase, Cloudflare) may have data centers in multiple countries.</p>
+  <div class="card">
+    <h2>11. International Users and Data Transfers</h2>
+    <p>Timpots Forever is operated from the United States. If you access the Site from outside the United States, your information will be transferred to, stored in, and processed in the United States. By using the Site, you consent to this transfer. Our data processors (Supabase, Cloudflare) may have data centers in multiple countries.</p>
+  </div>
 
-  <h2>12. Your Privacy Rights</h2>
+  <div class="card">
+    <h2>12. Your Privacy Rights</h2>
 
-  <h3>A. Access Your Information</h3>
-  <p>You can access, review, and update your personal information by logging into your account at any time.</p>
+    <h3>A. Access Your Information</h3>
+    <p>You can access, review, and update your personal information by logging into your account at any time.</p>
 
-  <h3>B. Correct Your Information</h3>
-  <p>You can modify your profile information directly in your account settings. Changes take effect immediately.</p>
+    <h3>B. Correct Your Information</h3>
+    <p>You can modify your profile information directly in your account settings. Changes take effect immediately.</p>
 
-  <h3>C. Export Your Data</h3>
-  <p>You can request a copy of your personal data in a portable format. Contact <a href="mailto:admin@timpotsforever.org">admin@timpotsforever.org</a> with the subject "Data Export Request."</p>
+    <h3>C. Export Your Data</h3>
+    <p>You can request a copy of your personal data in a portable format. Contact <a href="mailto:admin@timpotsforever.org">admin@timpotsforever.org</a> with the subject "Data Export Request."</p>
 
-  <h3>D. Opt-Out of Communications</h3>
-  <p>You can opt out of non-essential emails. However, transactional emails (password resets, account confirmations) cannot be disabled as they are necessary for account management.</p>
+    <h3>D. Opt-Out of Communications</h3>
+    <p>You can opt out of non-essential emails. However, transactional emails (password resets, account confirmations) cannot be disabled as they are necessary for account management.</p>
 
-  <h3>E. Minnesota Privacy Rights</h3>
-  <p>As a Minnesota resident, you may have additional privacy rights under Minnesota state law. Please contact us if you have questions about your rights.</p>
+    <h3>E. Minnesota Privacy Rights</h3>
+    <p>As a Minnesota resident, you may have additional privacy rights under Minnesota state law. Please contact us if you have questions about your rights.</p>
+  </div>
 
-  <h2>13. California Privacy Rights (CCPA)</h2>
-  <p>If you are a California resident, you have the right to:</p>
-  <ul>
-    <li>Know what personal information is collected, used, shared, or sold</li>
-    <li>Access your personal information</li>
-    <li>Request deletion of your personal information</li>
-    <li>Opt-out of the sale or sharing of your personal information</li>
-    <li>Not receive discriminatory treatment for exercising your rights</li>
-  </ul>
-  <p>To exercise these rights, contact <a href="mailto:admin@timpotsforever.org">admin@timpotsforever.org</a>.</p>
+  <div class="card">
+    <h2>13. California Privacy Rights (CCPA)</h2>
+    <p>If you are a California resident, you have the right to:</p>
+    <ul>
+      <li>Know what personal information is collected, used, shared, or sold</li>
+      <li>Access your personal information</li>
+      <li>Request deletion of your personal information</li>
+      <li>Opt-out of the sale or sharing of your personal information</li>
+      <li>Not receive discriminatory treatment for exercising your rights</li>
+    </ul>
+    <p>To exercise these rights, contact <a href="mailto:admin@timpotsforever.org">admin@timpotsforever.org</a>.</p>
+  </div>
 
-  <h2>14. European Users and GDPR</h2>
-  <p>If you are located in the European Union or other jurisdictions with similar privacy laws, you have additional rights:</p>
-  <ul>
-    <li><strong>Right of Access:</strong> Obtain a copy of your personal data</li>
-    <li><strong>Right to Rectification:</strong> Correct inaccurate information</li>
-    <li><strong>Right to Erasure:</strong> Request deletion of your data</li>
-    <li><strong>Right to Restrict Processing:</strong> Limit how we use your data</li>
-    <li><strong>Right to Data Portability:</strong> Receive your data in a portable format</li>
-    <li><strong>Right to Object:</strong> Object to certain processing activities</li>
-    <li><strong>Right to Lodge Complaints:</strong> File a complaint with your local data protection authority</li>
-  </ul>
-  <p>To exercise these rights, contact <a href="mailto:admin@timpotsforever.org">admin@timpotsforever.org</a>.</p>
+  <div class="card">
+    <h2>14. European Users and GDPR</h2>
+    <p>If you are located in the European Union or other jurisdictions with similar privacy laws, you have additional rights:</p>
+    <ul>
+      <li><strong>Right of Access:</strong> Obtain a copy of your personal data</li>
+      <li><strong>Right to Rectification:</strong> Correct inaccurate information</li>
+      <li><strong>Right to Erasure:</strong> Request deletion of your data</li>
+      <li><strong>Right to Restrict Processing:</strong> Limit how we use your data</li>
+      <li><strong>Right to Data Portability:</strong> Receive your data in a portable format</li>
+      <li><strong>Right to Object:</strong> Object to certain processing activities</li>
+      <li><strong>Right to Lodge Complaints:</strong> File a complaint with your local data protection authority</li>
+    </ul>
+    <p>To exercise these rights, contact <a href="mailto:admin@timpotsforever.org">admin@timpotsforever.org</a>.</p>
+  </div>
 
-  <h2>15. Do Not Track Signals</h2>
-  <p>Some browsers include a "Do Not Track" feature. Currently, there is no industry-wide standard for recognizing Do Not Track signals. We do not currently respond to Do Not Track signals, but you can use your browser's privacy settings to limit tracking.</p>
+  <div class="card">
+    <h2>15. Do Not Track Signals</h2>
+    <p>Some browsers include a "Do Not Track" feature. Currently, there is no industry-wide standard for recognizing Do Not Track signals. We do not currently respond to Do Not Track signals, but you can use your browser's privacy settings to limit tracking.</p>
+  </div>
 
-  <h2>16. Changes to This Privacy Policy</h2>
-  <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated "Effective Date." Continued use of the Site after changes constitutes your acceptance of the updated policy. It is your responsibility to review this policy periodically.</p>
+  <div class="card">
+    <h2>16. Changes to This Privacy Policy</h2>
+    <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated "Effective Date." Continued use of the Site after changes constitutes your acceptance of the updated policy. It is your responsibility to review this policy periodically.</p>
+  </div>
 
-  <h2>17. Contact Information</h2>
-  <p>If you have questions or concerns about this Privacy Policy or our privacy practices, please contact us:</p>
-  <p>
-    <strong>Timpots Forever</strong><br>
-    Email: <a href="mailto:admin@timpotsforever.org">admin@timpotsforever.org</a><br>
-    Website: <a href="https://timpotsforever.org">https://timpotsforever.org</a>
-  </p>
+  <div class="card">
+    <h2>17. Contact Information</h2>
+    <p>If you have questions or concerns about this Privacy Policy or our privacy practices, please contact us:</p>
+    <p>
+      <strong>Timpots Forever</strong><br>
+      Email: <a href="mailto:admin@timpotsforever.org">admin@timpotsforever.org</a><br>
+      Website: <a href="https://timpotsforever.org">https://timpotsforever.org</a>
+    </p>
+  </div>
 
-  <h2>18. Compliance with Third-Party Policies</h2>
-  <p>Please also review the privacy policies of our service providers:</p>
-  <ul>
-    <li><a href="https://supabase.com/privacy" target="_blank">Supabase Privacy Policy</a></li>
-    <li><a href="https://www.cloudflare.com/privacypolicy/" target="_blank">Cloudflare Privacy Policy</a></li>
-    <li><a href="https://resend.com/privacy" target="_blank">Resend Privacy Policy</a></li>
-  </ul>
+  <div class="card">
+    <h2>18. Compliance with Third-Party Policies</h2>
+    <p>Please also review the privacy policies of our service providers:</p>
+    <ul>
+      <li><a href="https://supabase.com/privacy" target="_blank">Supabase Privacy Policy</a></li>
+      <li><a href="https://www.cloudflare.com/privacypolicy/" target="_blank">Cloudflare Privacy Policy</a></li>
+      <li><a href="https://resend.com/privacy" target="_blank">Resend Privacy Policy</a></li>
+    </ul>
+  </div>
 
   <footer>
     <p style="font-size: 13px; color: var(--ink-muted); text-align: center;">

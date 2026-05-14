@@ -30,19 +30,37 @@
   .members-header {
     background: var(--brand);
     color: #fff;
-    padding: 16px 24px;
+    padding: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+  .members-header .wrap {
+    flex: 1;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+  }
+  .members-header h2 {
     font-family: 'Playfair Display', serif;
-    font-size: 20px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+    border: none;
+    padding: 0;
+    margin-top: 0;
+  }
+  .members-header h2 em {
+    color: var(--gold-bright);
+    font-style: italic;
     font-weight: 600;
   }
-  .members-header .title { flex: 1; }
   .members-header .actions {
     display: flex;
     gap: 16px;
     align-items: center;
+    padding-right: 24px;
   }
   .members-header a {
     color: #fff;
@@ -50,48 +68,63 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     transition: background 0.2s;
   }
   .members-header a:hover { background: rgba(255,255,255,0.1); }
-  .home-icon { display: flex; align-items: center; justify-content: center; }
-  .home-icon svg { width: 20px; height: 20px; }
+  .public-site-link { display: flex; align-items: center; justify-content: center; }
+  .public-site-link svg { width: 22px; height: 22px; }
 
-  .content-wrapper {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 40px 24px 80px;
+  .accessibility-page {
+    max-width: 760px;
+    margin: 50px auto;
+    padding: 0 24px;
     flex: 1;
   }
-
-  h1 {
+  .page-title {
     font-family: 'Playfair Display', serif;
-    font-size: 32px;
+    font-size: 34px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .page-title em {
+    color: var(--brand);
+    font-style: italic;
+  }
+  .page-intro {
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1.55;
+    margin-bottom: 28px;
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--rule);
+    padding: 30px 32px;
+    margin-bottom: 24px;
+  }
+  .card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
     font-weight: 600;
     color: var(--ink);
-    margin-bottom: 8px;
-  }
-  .effective-date {
-    font-size: 13px;
-    color: var(--ink-muted);
-    margin-bottom: 32px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+    margin-top: 0;
+    border: none;
+    padding: 0;
   }
 
   h2 {
     font-family: 'Playfair Display', serif;
     font-size: 20px;
     font-weight: 600;
-    color: var(--brand);
-    margin-top: 32px;
-    margin-bottom: 16px;
-    border-top: 1px solid var(--rule);
-    padding-top: 24px;
+    color: var(--ink);
+    margin-bottom: 4px;
   }
-  h2:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
 
   p {
     line-height: 1.65;
@@ -125,14 +158,25 @@
   a:hover { text-decoration: underline; }
 
   footer { margin-top: 80px; border-top: 1px solid var(--rule); padding-top: 40px; }
+
+  /* ── Responsive ──────────────────────────────────────────── */
+  @media (max-width: 640px) {
+    .accessibility-page { padding: 0 20px; }
+    .page-title { font-size: 28px; }
+    .card { padding: 24px 20px; }
+    .members-header .wrap { padding: 16px 20px; }
+    .members-header .actions { padding-right: 20px; }
+  }
 </style>
 </head>
 <body>
 
 <div class="members-header">
-  <div class="title">Accessibility Statement</div>
+  <div class="wrap">
+    <h2>Timpots <em>Forever</em> — Accessibility</h2>
+  </div>
   <div class="actions">
-    <a href="index.html" class="home-icon" title="Home" aria-label="Home">
+    <a href="index.html" class="public-site-link" title="Home" aria-label="Home">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M3 9L12 3l9 6v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
         <polyline points="9 22 9 12 15 12 15 22"/>
@@ -141,89 +185,109 @@
   </div>
 </div>
 
-<div class="content-wrapper">
-  <h1>Accessibility at Timpots Forever</h1>
-  <div class="effective-date">Effective May 13, 2026</div>
+<div class="accessibility-page">
+  <h1 class="page-title">Accessibility <em>Statement</em></h1>
+  <p class="page-intro" style="margin-bottom: 6px;">Effective May 13, 2026</p>
 
-  <h2>Our Commitment</h2>
-  <p>Timpots Forever is committed to ensuring that our website is accessible to all users, including those with disabilities. We strive to meet <strong>Web Content Accessibility Guidelines (WCAG) 2.1 Level AA</strong> standards and continuously work to improve the accessibility of our digital experience.</p>
+  <div class="card">
+    <h2>Our Commitment</h2>
+    <p>Timpots Forever is committed to ensuring that our website is accessible to all users, including those with disabilities. We strive to meet <strong>Web Content Accessibility Guidelines (WCAG) 2.1 Level AA</strong> standards and continuously work to improve the accessibility of our digital experience.</p>
+  </div>
 
-  <h2>Accessibility Features</h2>
-  <p>Timpots Forever includes the following accessibility features:</p>
-  <ul>
-    <li><strong>Semantic HTML:</strong> The site uses proper HTML structure for screen reader compatibility</li>
-    <li><strong>Keyboard Navigation:</strong> All interactive elements are accessible via keyboard</li>
-    <li><strong>Color Contrast:</strong> Text and interactive elements meet minimum contrast ratio standards</li>
-    <li><strong>Responsive Design:</strong> The site is fully responsive and works on all device sizes</li>
-    <li><strong>Form Labels:</strong> All form fields are properly labeled for screen readers</li>
-    <li><strong>Alt Text:</strong> Images include descriptive alt text where applicable</li>
-    <li><strong>Skip Links:</strong> Navigation elements can be skipped for keyboard users</li>
-    <li><strong>Font Sizing:</strong> Text can be resized without loss of functionality</li>
-  </ul>
+  <div class="card">
+    <h2>Accessibility Features</h2>
+    <p>Timpots Forever includes the following accessibility features:</p>
+    <ul>
+      <li><strong>Semantic HTML:</strong> The site uses proper HTML structure for screen reader compatibility</li>
+      <li><strong>Keyboard Navigation:</strong> All interactive elements are accessible via keyboard</li>
+      <li><strong>Color Contrast:</strong> Text and interactive elements meet minimum contrast ratio standards</li>
+      <li><strong>Responsive Design:</strong> The site is fully responsive and works on all device sizes</li>
+      <li><strong>Form Labels:</strong> All form fields are properly labeled for screen readers</li>
+      <li><strong>Alt Text:</strong> Images include descriptive alt text where applicable</li>
+      <li><strong>Skip Links:</strong> Navigation elements can be skipped for keyboard users</li>
+      <li><strong>Font Sizing:</strong> Text can be resized without loss of functionality</li>
+    </ul>
+  </div>
 
-  <h2>Screen Reader Compatibility</h2>
-  <p>Timpots Forever is compatible with major screen readers including:</p>
-  <ul>
-    <li>NVDA (Windows)</li>
-    <li>JAWS (Windows)</li>
-    <li>VoiceOver (macOS and iOS)</li>
-    <li>TalkBack (Android)</li>
-  </ul>
+  <div class="card">
+    <h2>Screen Reader Compatibility</h2>
+    <p>Timpots Forever is compatible with major screen readers including:</p>
+    <ul>
+      <li>NVDA (Windows)</li>
+      <li>JAWS (Windows)</li>
+      <li>VoiceOver (macOS and iOS)</li>
+      <li>TalkBack (Android)</li>
+    </ul>
+  </div>
 
-  <h2>Browser and Assistive Technology Support</h2>
-  <p>The site is optimized for the following browsers and assistive technologies:</p>
-  <ul>
-    <li>Chrome (latest versions)</li>
-    <li>Firefox (latest versions)</li>
-    <li>Safari (latest versions)</li>
-    <li>Edge (latest versions)</li>
-  </ul>
+  <div class="card">
+    <h2>Browser and Assistive Technology Support</h2>
+    <p>The site is optimized for the following browsers and assistive technologies:</p>
+    <ul>
+      <li>Chrome (latest versions)</li>
+      <li>Firefox (latest versions)</li>
+      <li>Safari (latest versions)</li>
+      <li>Edge (latest versions)</li>
+    </ul>
+  </div>
 
-  <h2>Known Accessibility Limitations</h2>
-  <p>We are aware of and actively working to address the following:</p>
-  <ul>
-    <li><strong>Interactive Maps:</strong> The Alumni Map uses Leaflet.js, which has limited keyboard accessibility for individual markers. We are exploring solutions to improve this.</li>
-    <li><strong>Third-Party Services:</strong> Supabase authentication and Cloudflare services may have their own accessibility limitations beyond our control.</li>
-  </ul>
+  <div class="card">
+    <h2>Known Accessibility Limitations</h2>
+    <p>We are aware of and actively working to address the following:</p>
+    <ul>
+      <li><strong>Interactive Maps:</strong> The Alumni Map uses Leaflet.js, which has limited keyboard accessibility for individual markers. We are exploring solutions to improve this.</li>
+      <li><strong>Third-Party Services:</strong> Supabase authentication and Cloudflare services may have their own accessibility limitations beyond our control.</li>
+    </ul>
+  </div>
 
-  <h2>Accessibility Settings</h2>
-  <p>You can use your browser and operating system settings to customize your experience:</p>
-  <ul>
-    <li><strong>High Contrast Mode:</strong> Enable your system's high contrast setting for better visibility</li>
-    <li><strong>Text Size:</strong> Most browsers allow you to zoom or change text size (Ctrl/Cmd + Plus/Minus)</li>
-    <li><strong>Dark Mode:</strong> Use your browser or system dark mode settings</li>
-    <li><strong>Screen Reader Settings:</strong> Configure your screen reader to read content as needed</li>
-  </ul>
+  <div class="card">
+    <h2>Accessibility Settings</h2>
+    <p>You can use your browser and operating system settings to customize your experience:</p>
+    <ul>
+      <li><strong>High Contrast Mode:</strong> Enable your system's high contrast setting for better visibility</li>
+      <li><strong>Text Size:</strong> Most browsers allow you to zoom or change text size (Ctrl/Cmd + Plus/Minus)</li>
+      <li><strong>Dark Mode:</strong> Use your browser or system dark mode settings</li>
+      <li><strong>Screen Reader Settings:</strong> Configure your screen reader to read content as needed</li>
+    </ul>
+  </div>
 
-  <h2>Report Accessibility Issues</h2>
-  <p>If you encounter any accessibility barriers while using Timpots Forever, we want to know. Please contact us with:</p>
-  <ul>
-    <li>The page or feature where you encountered the issue</li>
-    <li>A description of the accessibility problem</li>
-    <li>Your browser and assistive technology (if applicable)</li>
-    <li>Steps to reproduce the issue</li>
-  </ul>
-  <p>Email us at: <a href="mailto:admin@timpotsforever.org">admin@timpotsforever.org</a></p>
-  <p>We will respond to accessibility concerns within 5 business days and work toward a resolution.</p>
+  <div class="card">
+    <h2>Report Accessibility Issues</h2>
+    <p>If you encounter any accessibility barriers while using Timpots Forever, we want to know. Please contact us with:</p>
+    <ul>
+      <li>The page or feature where you encountered the issue</li>
+      <li>A description of the accessibility problem</li>
+      <li>Your browser and assistive technology (if applicable)</li>
+      <li>Steps to reproduce the issue</li>
+    </ul>
+    <p>Email us at: <a href="mailto:admin@timpotsforever.org">admin@timpotsforever.org</a></p>
+    <p>We will respond to accessibility concerns within 5 business days and work toward a resolution.</p>
+  </div>
 
-  <h2>Accessibility Resources</h2>
-  <p>For more information about web accessibility, visit:</p>
-  <ul>
-    <li><a href="https://www.w3.org/WAI/" target="_blank">W3C Web Accessibility Initiative (WAI)</a></li>
-    <li><a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank">WCAG 2.1 Quick Reference</a></li>
-    <li><a href="https://webaim.org/" target="_blank">WebAIM Accessibility Resources</a></li>
-  </ul>
+  <div class="card">
+    <h2>Accessibility Resources</h2>
+    <p>For more information about web accessibility, visit:</p>
+    <ul>
+      <li><a href="https://www.w3.org/WAI/" target="_blank">W3C Web Accessibility Initiative (WAI)</a></li>
+      <li><a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank">WCAG 2.1 Quick Reference</a></li>
+      <li><a href="https://webaim.org/" target="_blank">WebAIM Accessibility Resources</a></li>
+    </ul>
+  </div>
 
-  <h2>Third-Party Content</h2>
-  <p>While we strive for accessibility, some third-party services and integrations may not meet accessibility standards. These include:</p>
-  <ul>
-    <li><strong>Supabase Authentication:</strong> Login and signup forms from Supabase</li>
-    <li><strong>Cloudflare Services:</strong> Email routing and CDN services</li>
-  </ul>
-  <p>We are actively exploring ways to improve accessibility for all third-party integrations.</p>
+  <div class="card">
+    <h2>Third-Party Content</h2>
+    <p>While we strive for accessibility, some third-party services and integrations may not meet accessibility standards. These include:</p>
+    <ul>
+      <li><strong>Supabase Authentication:</strong> Login and signup forms from Supabase</li>
+      <li><strong>Cloudflare Services:</strong> Email routing and CDN services</li>
+    </ul>
+    <p>We are actively exploring ways to improve accessibility for all third-party integrations.</p>
+  </div>
 
-  <h2>Continuous Improvement</h2>
-  <p>Accessibility is an ongoing commitment. We regularly test our site with accessibility tools and user feedback to identify and fix issues. Thank you for helping us make Timpots Forever accessible to everyone.</p>
+  <div class="card">
+    <h2>Continuous Improvement</h2>
+    <p>Accessibility is an ongoing commitment. We regularly test our site with accessibility tools and user feedback to identify and fix issues. Thank you for helping us make Timpots Forever accessible to everyone.</p>
+  </div>
 
   <footer>
     <p style="font-size: 13px; color: var(--ink-muted); text-align: center;">
