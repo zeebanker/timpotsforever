@@ -140,6 +140,9 @@ Items previously here but removed:
 | `map.html` | public | ✅ Premium | Alumni map; Leaflet + cluster visualization |
 | `calendar.html` | public | ✅ Premium | Event cards; uses canonical `.members-header` |
 | `videos-photos.html` | public | ✅ Premium | Coming-soon placeholder card with icon; canonical header |
+| `newsletter.html` | public | ✅ Premium | Coming-soon placeholder — future home for issue archives |
+| `memory-lane.html` | public | ✅ Premium | Coming-soon placeholder — future home for alumni stories |
+| `school-history.html` | public | ✅ Premium | Coming-soon placeholder — future home for archive (1931→) |
 | `terms.html` | public | ✅ Premium | T&Cs; card-based layout |
 | `privacy.html` | public | ✅ Premium | Privacy policy; card-based layout |
 | `accessibility.html` | public | ✅ Premium | Accessibility statement; card-based layout |

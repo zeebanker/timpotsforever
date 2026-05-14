@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>School History — Timpots Forever</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,500;1,700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand: #7a1420;
+    --brand-dark: #4a0810;
+    --ink: #1a1a1a;
+    --ink-soft: #555;
+    --ink-muted: #888;
+    --bg-soft: #f7f4ee;
+    --bg-warm: #f0e9d8;
+    --rule: #e5e0d4;
+    --gold: #b5894a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    color: var(--ink);
+    background: var(--bg-soft);
+    min-height: 100vh;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Header bar (shared standalone-page pattern) ─────────── */
+  .members-header {
+    background: var(--brand);
+    padding: 18px 0;
+    color: #fff;
+  }
+  .members-header .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .members-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 500;
+  }
+  .members-header h2 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .members-header .actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .public-site-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-decoration: none;
+    opacity: 0.8;
+    padding: 6px;
+    transition: opacity 0.15s;
+  }
+  .public-site-link:hover { opacity: 1; }
+  .public-site-link svg { display: block; }
+
+  .page-body {
+    max-width: 700px;
+    margin: 80px auto;
+    padding: 0 24px;
+    text-align: center;
+  }
+  .page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .page-title em {
+    color: var(--brand);
+    font-style: italic;
+  }
+  .page-intro {
+    color: var(--ink-soft);
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 36px;
+  }
+  .placeholder-card {
+    background: #fff;
+    border: 1px solid var(--rule);
+    padding: 56px 36px;
+    color: var(--ink-soft);
+  }
+  .placeholder-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 20px;
+    color: var(--gold);
+  }
+  .placeholder-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .placeholder-card h3 em {
+    font-style: italic;
+    color: var(--brand);
+  }
+  .placeholder-card p {
+    font-size: 15px;
+    line-height: 1.65;
+    margin-bottom: 14px;
+    color: var(--ink-soft);
+  }
+  .placeholder-card p:last-child { margin-bottom: 0; }
+  .placeholder-card a {
+    color: var(--brand);
+    text-decoration: none;
+    border-bottom: 1px solid var(--brand);
+    transition: opacity 0.15s;
+  }
+  .placeholder-card a:hover { opacity: 0.7; }
+  @media (max-width: 640px) {
+    .page-title { font-size: 28px; }
+    .page-body  { margin: 50px auto; }
+    .members-header h2 { font-size: 18px; }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="members-header">
+  <div class="wrap">
+    <h2>Timpots <em>Forever</em> — School History</h2>
+    <div class="actions">
+      <a href="index.html" class="public-site-link" aria-label="Home" title="Home">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 10.5 12 3l9 7.5V21H3z"/>
+          <path d="M9 21v-7h6v7"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+  <h1 class="page-title">School <em>History</em></h1>
+  <p class="page-intro">
+    Founded in 1931 by Reverend A.E. Timpany of the Canadian Baptist Mission — a single small room in Kakinada that became a landmark institution in Vizag.
+  </p>
+
+  <div class="placeholder-card">
+    <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+      <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+    </svg>
+    <h3>Coming <em>soon</em></h3>
+    <p>
+      The archive is being assembled — founding documents, photographs of the original campus in Asilmetta, the 1964 move to Waltair, class photos across the decades, headmaster portraits, and the voices of alumni who carry Timpany with them across the world.
+    </p>
+    <p>
+      If you have historical photographs, documents, or recollections to contribute, please email
+      <a href="mailto:admin@timpotsforever.org?subject=School%20History%20Contribution">admin@timpotsforever.org</a>
+      — every piece helps complete the picture.
+    </p>
+  </div>
+</div>
+
+</body>
+</html>
