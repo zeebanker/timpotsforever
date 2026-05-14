@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Giving Back — Timpots Forever</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,500;1,700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand: #7a1420;
+    --brand-dark: #4a0810;
+    --ink: #1a1a1a;
+    --ink-soft: #555;
+    --ink-muted: #888;
+    --bg: #fff;
+    --bg-soft: #f7f4ee;
+    --rule: #e5e0d4;
+    --gold: #b5894a;
+    --gold-bright: #f0c579;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .members-header {
+    background: var(--brand);
+    color: #fff;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .members-header .title { flex: 1; }
+  .members-header .actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+  .members-header a {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: background 0.2s;
+  }
+  .members-header a:hover { background: rgba(255,255,255,0.1); }
+  .home-icon::before { content: "🏠"; font-size: 20px; }
+
+  .content-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+    flex: 1;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 24px;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--brand);
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-top: 1px solid var(--rule);
+    padding-top: 24px;
+  }
+  h2:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-top: 24px;
+    margin-bottom: 12px;
+  }
+
+  p {
+    line-height: 1.65;
+    margin-bottom: 16px;
+    color: var(--ink-soft);
+  }
+
+  .intro-section {
+    background: linear-gradient(135deg, rgba(122,20,32,0.05) 0%, rgba(181,137,74,0.05) 100%);
+    padding: 32px;
+    border-radius: 4px;
+    margin-bottom: 40px;
+  }
+  .intro-section p { color: var(--ink); margin-bottom: 0; }
+
+  .featured-cause {
+    background: #fff;
+    border: 2px solid var(--brand);
+    padding: 32px;
+    border-radius: 4px;
+    margin: 32px 0;
+  }
+  .featured-cause h3 {
+    margin-top: 0;
+    color: var(--brand);
+  }
+  .featured-cause .cause-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .featured-cause .led-by {
+    font-size: 13px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 20px;
+  }
+  .featured-cause a {
+    display: inline-block;
+    background: var(--brand);
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 2px;
+    margin-top: 16px;
+    transition: background 0.2s;
+  }
+  .featured-cause a:hover { background: var(--brand-dark); }
+
+  .form-section {
+    background: var(--bg-soft);
+    padding: 32px;
+    border-radius: 4px;
+    margin: 32px 0;
+  }
+  .form-section h3 { margin-top: 0; }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+  }
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--rule);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    border-radius: 2px;
+  }
+  .form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgba(122,20,32,0.1);
+  }
+
+  .submit-btn {
+    background: var(--brand);
+    color: #fff;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 2px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .submit-btn:hover { background: var(--brand-dark); }
+
+  .categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .category-tag {
+    background: #fff;
+    border: 1px solid var(--rule);
+    padding: 16px;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--brand);
+    transition: all 0.2s;
+  }
+  .category-tag:hover {
+    background: var(--bg-soft);
+    border-color: var(--brand);
+  }
+
+  .stories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin: 24px 0;
+  }
+  .story-card {
+    background: #fff;
+    border: 1px solid var(--rule);
+    padding: 24px;
+    border-radius: 4px;
+  }
+  .story-card .name {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--brand);
+    margin-bottom: 8px;
+  }
+  .story-card .category {
+    font-size: 12px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+  }
+  .story-card p {
+    margin-bottom: 0;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  ul {
+    margin-left: 24px;
+    margin-bottom: 16px;
+  }
+  li {
+    margin-bottom: 10px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+
+  a { color: var(--brand); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  footer { margin-top: 80px; border-top: 1px solid var(--rule); padding-top: 40px; }
+
+  @media (max-width: 600px) {
+    .featured-cause, .form-section { padding: 20px; }
+    .categories { grid-template-columns: 1fr; }
+    .stories-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="members-header">
+  <div class="title">Giving Back</div>
+  <div class="actions">
+    <a href="index.html" class="home-icon" title="Home"></a>
+  </div>
+</div>
+
+<div class="content-wrapper">
+  <h1>Giving Back to What We Believe In</h1>
+
+  <div class="intro-section">
+    <p>Timpots Forever is built on the bonds we share as alumni of Timpany School. That connection naturally extends beyond ourselves — to the causes and communities we care about. This is where we celebrate those commitments and inspire each other to make a difference in the world.</p>
+    <p style="margin-top: 16px;">Whether you're already making an impact or thinking about where your passion lies, this space is for sharing ideas, learning from fellow alumni, and discovering how we can support each other&#x2019;s visions for a better world.</p>
+  </div>
+
+  <h2>Featured Cause</h2>
+  <div class="featured-cause">
+    <div class="cause-name">[Cause Name TBD]</div>
+    <div class="led-by">Led by [Alumnus Name] · Class of [Year]</div>
+    <p>This is where the featured cause story goes. A brief description of what the cause is about, why it matters, and how alumni can get involved — whether through support, volunteering, advocacy, or simply learning more.</p>
+    <p>Each quarter, we spotlight a cause championed by one of our alumni. If you&#x2019;re spearheading something meaningful and want to share it with the Timpots community, let us know!</p>
+    <a href="#">Learn More</a>
+  </div>
+
+  <h2>Suggest a Cause You Believe In</h2>
+  <div class="form-section">
+    <p>Have a cause or initiative you&#x2019;re passionate about? We want to hear about it. Share what you&#x2019;re working on or what matters to you, and inspire fellow alumni to get involved.</p>
+    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <div class="form-group">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="cause">Cause or Initiative Name</label>
+        <input type="text" id="cause" name="cause" placeholder="e.g., Clean Water for Rural Schools" required>
+      </div>
+      <div class="form-group">
+        <label for="category">Primary Category</label>
+        <select name="category" id="category" style="width: 100%; padding: 12px 14px; border: 1px solid var(--rule); font-family: 'Source Sans 3', sans-serif; font-size: 14px; border-radius: 2px;">
+          <option value="">Select a category</option>
+          <option value="Education">Education Access</option>
+          <option value="Environment">Environment &amp; Sustainability</option>
+          <option value="Health">Health &amp; Wellness</option>
+          <option value="Community">Community Development</option>
+          <option value="Arts">Arts &amp; Culture</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="description">Tell Us About It</label>
+        <textarea id="description" name="description" placeholder="What is this cause? Why does it matter to you? How are you involved?" required></textarea>
+      </div>
+      <button type="submit" class="submit-btn">Submit Suggestion</button>
+    </form>
+  </div>
+
+  <h2>Cause Categories</h2>
+  <div class="categories">
+    <div class="category-tag">🎓 Education Access</div>
+    <div class="category-tag">🌍 Environment &amp; Sustainability</div>
+    <div class="category-tag">❤️ Health &amp; Wellness</div>
+    <div class="category-tag">🏘️ Community Development</div>
+    <div class="category-tag">🎨 Arts &amp; Culture</div>
+  </div>
+
+  <h2>Alumni Making a Difference</h2>
+  <p>Meet fellow Timpots alumni who are actively engaged in causes they believe in.</p>
+  <div class="stories-grid">
+    <div class="story-card">
+      <div class="name">Priya Sharma</div>
+      <div class="category">Education Access</div>
+      <p>Founded a nonprofit providing scholarships to first-generation college students. &#x201C;I wanted to give back the opportunity I was given.&#x201D;</p>
+    </div>
+    <div class="story-card">
+      <div class="name">Rajesh Kumar</div>
+      <div class="category">Environment &amp; Sustainability</div>
+      <p>Leads a reforestation initiative in India, partnering with local communities to plant 100,000 trees by 2027.</p>
+    </div>
+    <div class="story-card">
+      <div class="name">Anjali Menon</div>
+      <div class="category">Arts &amp; Culture</div>
+      <p>Curates cultural exchange programs connecting Indian and diaspora artists. Believes art builds bridges across communities.</p>
+    </div>
+    <div class="story-card">
+      <div class="name">Vikram Patel</div>
+      <div class="category">Health &amp; Wellness</div>
+      <p>Volunteers as a doctor with Doctors Without Borders, providing medical care in underserved regions.</p>
+    </div>
+  </div>
+
+  <h2>Resources and Links</h2>
+  <p>We&#x2019;re curating vetted organizations aligned with causes our alumni care about. Coming soon: a searchable resource library organized by category.</p>
+  <p>In the meantime, if you know of an organization making real impact, <a href="mailto:admin@timpotsforever.org?subject=Resource%20Suggestion%20for%20Giving%20Back">send us a suggestion</a>.</p>
+
+  <footer>
+    <p style="font-size: 13px; color: var(--ink-muted); text-align: center;">
+      © 2026 Timpots Forever &middot; Seek Truth<br>
+      Not affiliated with Timpany School or Timpany Schools in Visakhapatnam, India
+    </p>
+  </footer>
+</div>
+
+</body>
+</html>
