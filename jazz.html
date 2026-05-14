@@ -140,6 +140,126 @@
   .bio-text p em { color: var(--gold-bright); font-style: italic; }
   .bio-text p:last-child { margin-bottom: 0; }
 
+  /* ── Memorial Service (video) ─────────────────────────── */
+  .memorial-video-section { padding: 72px 0 32px; }
+  .memorial-video-section .video-frame {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    background: #000;
+    max-width: 900px;
+    margin: 32px auto 0;
+    border: 1px solid var(--rule);
+    box-shadow: 0 6px 28px rgba(0,0,0,0.18);
+  }
+  .memorial-video-section .video-frame iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  /* ── Photographs section ──────────────────────────────── */
+  .photographs-section { padding: 56px 0 32px; }
+  .photographs-section .gallery-subsection-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+    margin: 36px 0 14px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .photographs-section .gallery-subsection-title:first-of-type {
+    margin-top: 28px;
+  }
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 10px;
+  }
+  .photo-thumb {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: var(--bg-warm);
+    overflow: hidden;
+    cursor: zoom-in;
+    border: 1px solid var(--rule);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .photo-thumb:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+  }
+  .photo-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ── Lightbox modal ───────────────────────────────────── */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.94);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    animation: lightboxFade 0.2s ease-out;
+  }
+  .lightbox.active { display: flex; }
+  .lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    user-select: none;
+  }
+  .lightbox-close,
+  .lightbox-prev,
+  .lightbox-next {
+    position: absolute;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    opacity: 0.7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.15s;
+  }
+  .lightbox-close:hover,
+  .lightbox-prev:hover,
+  .lightbox-next:hover { opacity: 1; }
+  .lightbox-close {
+    top: 18px;
+    right: 22px;
+    width: 44px;
+    height: 44px;
+  }
+  .lightbox-prev,
+  .lightbox-next {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 56px;
+    height: 56px;
+  }
+  .lightbox-prev { left: 16px; }
+  .lightbox-next { right: 16px; }
+  @keyframes lightboxFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
   /* ── Wall section ─────────────────────────────────────── */
   .wall-section { padding: 72px 0 96px; }
   .wall-heading {
@@ -287,6 +407,11 @@
     .card { padding: 22px 20px 18px; }
     .card .pull { font-size: 17px; }
     .card.featured .pull { font-size: 20px; }
+    .photo-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .lightbox-prev,
+    .lightbox-next { width: 44px; height: 44px; }
+    .memorial-video-section { padding: 48px 0 24px; }
+    .photographs-section { padding: 40px 0 24px; }
   }
 </style>
 </head>
@@ -325,11 +450,60 @@
   </div>
 </section>
 
+<section class="memorial-video-section">
+  <div class="wrap">
+    <h1 class="wall-heading">Memorial <em>Service</em></h1>
+    <p class="wall-intro">April 6, 2026 &middot; Timpany School, Visakhapatnam.</p>
+    <div class="video-frame">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/URWW6LhjLwU"
+        title="Memorial to Jazz — April 6, 2026 at Timpany School, Visakhapatnam"
+        loading="lazy"
+        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        referrerpolicy="strict-origin-when-cross-origin">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<section class="photographs-section">
+  <div class="wrap">
+    <h1 class="wall-heading">Photo<em>graphs</em></h1>
+    <p class="wall-intro">Click any photo to view full size. Use the arrow keys to move between photos.</p>
+
+    <h3 class="gallery-subsection-title">April 6 &middot; Vizag</h3>
+    <div class="photo-grid">
+      <div class="photo-thumb"><img src="images/gallery/jazz-memorial/jazz-94-birthday.jpg" alt="Jazz on her 94th birthday" loading="lazy"></div>
+      <div class="photo-thumb"><img src="images/gallery/jazz-memorial/memorial-01.jpg" alt="Memorial for Dr. Mercy Jeyaraja Rao — photo 1" loading="lazy"></div>
+      <div class="photo-thumb"><img src="images/gallery/jazz-memorial/memorial-02.jpg" alt="Memorial for Dr. Mercy Jeyaraja Rao — photo 2" loading="lazy"></div>
+      <div class="photo-thumb"><img src="images/gallery/jazz-memorial/memorial-03.jpg" alt="Memorial for Dr. Mercy Jeyaraja Rao — photo 3" loading="lazy"></div>
+      <div class="photo-thumb"><img src="images/gallery/jazz-memorial/memorial-04.jpg" alt="Memorial for Dr. Mercy Jeyaraja Rao — photo 4" loading="lazy"></div>
+      <div class="photo-thumb"><img src="images/gallery/jazz-memorial/memorial-05.jpg" alt="Memorial for Dr. Mercy Jeyaraja Rao — photo 5" loading="lazy"></div>
+      <div class="photo-thumb"><img src="images/gallery/jazz-memorial/memorial-06.jpg" alt="Memorial for Dr. Mercy Jeyaraja Rao — photo 6" loading="lazy"></div>
+      <div class="photo-thumb"><img src="images/gallery/jazz-memorial/memorial-07.jpg" alt="Memorial for Dr. Mercy Jeyaraja Rao — photo 7" loading="lazy"></div>
+      <div class="photo-thumb"><img src="images/gallery/jazz-memorial/memorial-08.jpg" alt="Memorial for Dr. Mercy Jeyaraja Rao — photo 8" loading="lazy"></div>
+      <div class="photo-thumb"><img src="images/gallery/jazz-memorial/memorial-09.jpg" alt="Memorial for Dr. Mercy Jeyaraja Rao — photo 9" loading="lazy"></div>
+      <div class="photo-thumb"><img src="images/gallery/jazz-memorial/memorial-10.jpg" alt="Memorial for Dr. Mercy Jeyaraja Rao — photo 10" loading="lazy"></div>
+      <div class="photo-thumb"><img src="images/gallery/jazz-memorial/memorial-11.jpg" alt="Memorial for Dr. Mercy Jeyaraja Rao — photo 11" loading="lazy"></div>
+      <div class="photo-thumb"><img src="images/gallery/jazz-memorial/memorial-12.jpg" alt="Memorial for Dr. Mercy Jeyaraja Rao — photo 12" loading="lazy"></div>
+      <div class="photo-thumb"><img src="images/gallery/jazz-memorial/memorial-13.jpg" alt="Memorial for Dr. Mercy Jeyaraja Rao — photo 13" loading="lazy"></div>
+      <div class="photo-thumb"><img src="images/gallery/jazz-memorial/memorial-14.jpg" alt="Memorial for Dr. Mercy Jeyaraja Rao — photo 14" loading="lazy"></div>
+      <div class="photo-thumb"><img src="images/gallery/jazz-memorial/memorial-15.jpg" alt="Memorial for Dr. Mercy Jeyaraja Rao — photo 15" loading="lazy"></div>
+    </div>
+
+    <h3 class="gallery-subsection-title">Texas Memorial</h3>
+    <div class="photo-grid">
+      <div class="photo-thumb"><img src="images/gallery/jazz-memorial/texas-memorial.jpg" alt="Memorial gathering in Texas for Dr. Mercy Jeyaraja Rao" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
 <section class="wall-section">
   <div class="wrap">
     <h1 class="wall-heading">Tribute <em>Wall</em></h1>
     <p class="wall-intro">
-      Voices from the alumni group chat following her passing — lightly copy-edited for readability, otherwise in the contributors' own words.
+      Jazz's little engines' reflections on her life and legacy.
     </p>
 
     <div class="featured-block">
@@ -902,6 +1076,75 @@
     </div>
   </div>
 </section>
+
+<!-- Lightbox modal -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button class="lightbox-close" aria-label="Close photo viewer">
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="18" y1="6" x2="6" y2="18"/>
+      <line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </button>
+  <button class="lightbox-prev" aria-label="Previous photo">
+    <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="15 18 9 12 15 6"/>
+    </svg>
+  </button>
+  <button class="lightbox-next" aria-label="Next photo">
+    <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="9 18 15 12 9 6"/>
+    </svg>
+  </button>
+  <img id="lightbox-img" alt="">
+</div>
+
+<script>
+  (function () {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    if (!lightbox || !lightboxImg) return;
+    const closeBtn = lightbox.querySelector('.lightbox-close');
+    const prevBtn = lightbox.querySelector('.lightbox-prev');
+    const nextBtn = lightbox.querySelector('.lightbox-next');
+    const thumbs = [...document.querySelectorAll('.photo-thumb img')];
+    let index = -1;
+
+    function show(i) {
+      if (i < 0 || i >= thumbs.length) return;
+      index = i;
+      lightboxImg.src = thumbs[i].src;
+      lightboxImg.alt = thumbs[i].alt || '';
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function close() {
+      lightbox.classList.remove('active');
+      lightboxImg.src = '';
+      document.body.style.overflow = '';
+      index = -1;
+    }
+    function next() { if (thumbs.length) show((index + 1) % thumbs.length); }
+    function prev() { if (thumbs.length) show((index - 1 + thumbs.length) % thumbs.length); }
+
+    thumbs.forEach(function (img, i) {
+      img.parentElement.addEventListener('click', function () { show(i); });
+    });
+
+    lightbox.addEventListener('click', function (e) {
+      if (e.target === lightbox) close();
+    });
+    closeBtn.addEventListener('click', function (e) { e.stopPropagation(); close(); });
+    prevBtn.addEventListener('click', function (e) { e.stopPropagation(); prev(); });
+    nextBtn.addEventListener('click', function (e) { e.stopPropagation(); next(); });
+
+    document.addEventListener('keydown', function (e) {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowRight') next();
+      else if (e.key === 'ArrowLeft') prev();
+    });
+  })();
+</script>
 
 </body>
 </html>
