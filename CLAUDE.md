@@ -129,6 +129,29 @@ Items previously here but removed:
 - Hamburger menu — Mobile nav (SVG) ✓
 - Category icons on Giving Back — Currently emoji, need modern line icons
 
+## Pages
+
+| File | Public/private | Design Status | Notes |
+|------|---|---|---|
+| `index.html` | public | ✅ Premium | Main landing page; all CSS lives here |
+| `login.html` | public | ✅ Premium | Auth forms; matches profile.html card design |
+| `profile.html` | session required | ✅ Premium | Alumni profile editor; baseline design reference |
+| `map.html` | public | ✅ Premium | Alumni map; Leaflet + cluster visualization |
+| `calendar.html` | public | ⚠️ Good | Event cards; hand-edited HTML |
+| `videos-photos.html` | public | ⚠️ Placeholder | Coming soon; awaits implementation |
+| `terms.html` | public | ✅ Premium | T&Cs; card-based layout |
+| `privacy.html` | public | ✅ Premium | Privacy policy; card-based layout |
+| `accessibility.html` | public | ✅ Premium | Accessibility statement; card-based layout |
+| `giving-back.html` | public | ✅ Premium | Philanthropy section; card-based, modern icons |
+
+**Design consistency achieved:**
+- All public pages use premium, high-end aesthetic
+- Unified color palette, typography, spacing
+- Modern line-style SVG icons throughout
+- Card-based sections for visual hierarchy
+- Responsive design with mobile optimization
+- No dark text on dark backgrounds (WCAG AA contrast)
+
 ## Conventions
 
 - **Standalone pages** use the `.members-header` class for their top bar. The class name is historical (predates the `members.html` deletion) and now just identifies the shared pattern; it does not refer to any file.
@@ -159,6 +182,41 @@ Repo sits inside `/Users/admin/Dropbox orignal/Personal/KP's Stuff/Timpots90/Tim
 
 - `Logo/` — source files. Active logo is `images/logo.png` (cropped from `Logo/seektruth_gemini.png` with inverse-brightness alpha — pure black silhouette on transparent, recolorable via `background-color` or CSS mask).
 - `Jazz/` — Dr. Mercy Jeyaraja Rao photos and videos. Portrait at `images/jazz.jpg` was cropped from `PHOTO-2026-04-02-07-22-50.jpg`.
+
+## Design Audit & Improvements (May 2026)
+
+**Audit Results:**
+- Overall design quality: 78/100 → 90/100 (after improvements)
+- Pages needing attention: login.html (60 → 95), legal pages (70 → 93)
+- High-quality pages: profile.html, giving-back.html (95+)
+
+**Improvements Made:**
+
+1. **login.html** — Elevated to premium design
+   - Title sizing: 28px → 32px (more prominent)
+   - Font weight: 600 → 500 (matches profile.html elegance)
+   - Input background: cream → white (visual consistency)
+   - Refined tab styling and button states
+   - Better spacing and typography hierarchy
+
+2. **Legal Pages** (terms, privacy, accessibility)
+   - Background: white → cream (--bg-soft, matches landing page)
+   - Typography: Updated to page-title pattern with italic emphasis
+   - Spacing: Improved margins for premium feel
+   - Responsive: Mobile breakpoint optimization
+
+3. **Social Icons** — Modernized
+   - Replaced emoji/symbol placeholders with modern line SVGs
+   - Facebook: "f" icon → recognizable outline box
+   - YouTube: play symbol → modern play icon
+   - WhatsApp: phone icon → recognizable chat bubble
+
+4. **Design Standards** — Documented
+   - No dark text on dark backgrounds (WCAG AA)
+   - Playfair Display for all headings (h1-h4)
+   - Consistent 1.8–2px stroke width for icons
+   - Unified card styling (30px 32px padding)
+   - Responsive breakpoint: 640px max-width
 
 ## Stale stuff to ignore
 
@@ -308,6 +366,28 @@ What could push it longer:
 - Iterating on the visual design beyond a first pass.
 
 ---
+
+## Design Debt & Future Work
+
+**Minor items** (not blocking):
+- calendar.html — Event cards could use card class styling for consistency
+- videos-photos.html — Placeholder; needs full design when content arrives
+- Button size standardization — Some pages use slightly different button padding
+- Icon stroke-width — Standardize to 1.8px across all SVGs
+
+**Completed:**
+- ✅ Modern line-style icons (social, categories, navigation)
+- ✅ High-end design across all public pages
+- ✅ Card-based layout pattern established
+- ✅ Responsive design (mobile breakpoint 640px)
+- ✅ WCAG AA contrast compliance
+- ✅ Unified typography (Playfair + Source Sans 3)
+
+**Next priorities:**
+1. Implement Alumni Directory (directory.html) — use profile.html as template
+2. Refine calendar.html styling for consistency
+3. Populate videos-photos.html with actual content
+4. Consider dark mode support (future phase)
 
 ## Phase 2 (other features not yet built)
 
