@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>School History — Timpots Forever</title>
+<meta name="description" content="The history of Timpany School in Visakhapatnam — founded 1931 under the Canadian Baptist Mission — and a directory of the teachers remembered by alumni.">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,500;1,700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -12,10 +13,12 @@
     --ink: #1a1a1a;
     --ink-soft: #555;
     --ink-muted: #888;
+    --bg: #fff;
     --bg-soft: #f7f4ee;
     --bg-warm: #f0e9d8;
     --rule: #e5e0d4;
     --gold: #b5894a;
+    --gold-bright: #f0c579;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -26,7 +29,7 @@
   }
   .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
-  /* ── Header bar (shared standalone-page pattern) ─────────── */
+  /* ── Header bar ───────────────────────────────────────── */
   .members-header {
     background: var(--brand);
     padding: 18px 0;
@@ -47,11 +50,7 @@
     font-style: italic;
     color: var(--gold);
   }
-  .members-header .actions {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
+  .members-header .actions { display: flex; align-items: center; gap: 14px; }
   .public-site-link {
     display: inline-flex;
     align-items: center;
@@ -65,70 +64,283 @@
   .public-site-link:hover { opacity: 1; }
   .public-site-link svg { display: block; }
 
-  .page-body {
-    max-width: 700px;
-    margin: 80px auto;
-    padding: 0 24px;
-    text-align: center;
+  /* ── Hero band ────────────────────────────────────────── */
+  .hero {
+    background: var(--brand);
+    color: #fff;
+    padding: 72px 0 80px;
+    position: relative;
+    overflow: hidden;
   }
-  .page-title {
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 40%, rgba(240,197,121,0.10), transparent 60%);
+    pointer-events: none;
+  }
+  .hero .wrap { position: relative; max-width: 820px; text-align: center; }
+  .hero h1 {
     font-family: 'Playfair Display', serif;
-    font-size: 38px;
+    font-size: 48px;
+    font-weight: 500;
+    line-height: 1.1;
+    margin-bottom: 18px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold-bright);
+  }
+  .hero p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.88);
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  /* ── Timeline ─────────────────────────────────────────── */
+  .timeline-section { padding: 64px 0 32px; }
+  .timeline-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
     font-weight: 500;
     color: var(--ink);
-    margin-bottom: 14px;
-  }
-  .page-title em {
-    color: var(--brand);
-    font-style: italic;
-  }
-  .page-intro {
-    color: var(--ink-soft);
-    font-size: 16px;
-    line-height: 1.6;
+    text-align: center;
     margin-bottom: 36px;
   }
-  .placeholder-card {
+  .timeline-section h2 em {
+    font-style: italic;
+    color: var(--brand);
+  }
+  .timeline {
+    list-style: none;
+    max-width: 760px;
+    margin: 0 auto;
+    padding-left: 32px;
+    border-left: 2px solid var(--gold);
+  }
+  .timeline li {
+    position: relative;
+    padding: 0 0 24px 28px;
+  }
+  .timeline li:last-child { padding-bottom: 0; }
+  .timeline li::before {
+    content: '';
+    position: absolute;
+    left: -39px;
+    top: 6px;
+    width: 14px;
+    height: 14px;
+    background: var(--gold);
+    border-radius: 50%;
+    border: 3px solid var(--bg-soft);
+    box-shadow: 0 0 0 1px var(--gold);
+  }
+  .ts-year {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    color: var(--brand);
+    font-size: 18px;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .ts-event {
+    color: var(--ink-soft);
+    font-size: 15.5px;
+    line-height: 1.65;
+  }
+
+  /* ── Story section (narrative) ────────────────────────── */
+  .story-band { padding: 56px 0 32px; }
+  .story-band .wrap { max-width: 800px; }
+  .story-band h1.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--ink);
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .story-band h1.section-title em {
+    font-style: italic;
+    color: var(--brand);
+  }
+  .story-band .section-intro {
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 15px;
+    margin: 0 auto 40px;
+    max-width: 640px;
+    line-height: 1.65;
+  }
+  .story-section {
+    margin-bottom: 36px;
+  }
+  .story-h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--brand);
+    margin-bottom: 14px;
+  }
+  .story-section p {
+    color: var(--ink-soft);
+    font-size: 16px;
+    line-height: 1.75;
+    margin-bottom: 14px;
+  }
+  .story-section p:last-child { margin-bottom: 0; }
+  .song {
+    background: #fff;
+    border-left: 3px solid var(--gold);
+    padding: 22px 26px;
+    margin: 14px 0;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 16.5px;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+
+  /* ── Teachers directory ──────────────────────────────── */
+  .teachers-band { padding: 56px 0 32px; background: #fff; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .teachers-band h1.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--ink);
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .teachers-band h1.section-title em {
+    font-style: italic;
+    color: var(--brand);
+  }
+  .teachers-band .section-intro {
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 15px;
+    margin: 0 auto 28px;
+    max-width: 680px;
+    line-height: 1.65;
+  }
+  .atoz-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    margin-bottom: 40px;
+    padding: 14px 16px;
+    background: var(--bg-soft);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    max-width: 740px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .atoz-link {
+    display: inline-block;
+    min-width: 32px;
+    padding: 6px 8px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--brand);
+    text-align: center;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: all 0.15s;
+  }
+  .atoz-link:hover {
+    background: var(--brand);
+    color: #fff;
+  }
+  .letter-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--brand);
+    margin: 32px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+    scroll-margin-top: 20px;
+  }
+  .letter-heading:first-of-type { margin-top: 8px; }
+  .teachers-list { display: block; }
+  .teacher {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 28px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .teacher:last-child { border-bottom: none; }
+  .teacher-name {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--brand);
+    line-height: 1.4;
+  }
+  .teacher-bio {
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ── Share CTA ───────────────────────────────────────── */
+  .share-cta {
+    margin: 64px auto 96px;
+    max-width: 720px;
+    text-align: center;
+    padding: 36px 28px;
     background: #fff;
     border: 1px solid var(--rule);
-    padding: 56px 36px;
-    color: var(--ink-soft);
+    border-radius: 2px;
   }
-  .placeholder-icon {
-    width: 64px;
-    height: 64px;
-    margin: 0 auto 20px;
-    color: var(--gold);
-  }
-  .placeholder-card h3 {
+  .share-cta h3 {
     font-family: 'Playfair Display', serif;
     font-size: 22px;
     font-weight: 500;
     color: var(--ink);
-    margin-bottom: 14px;
+    margin-bottom: 10px;
   }
-  .placeholder-card h3 em {
-    font-style: italic;
-    color: var(--brand);
-  }
-  .placeholder-card p {
+  .share-cta h3 em { color: var(--brand); font-style: italic; }
+  .share-cta p {
+    color: var(--ink-soft);
     font-size: 15px;
     line-height: 1.65;
-    margin-bottom: 14px;
-    color: var(--ink-soft);
+    max-width: 560px;
+    margin: 0 auto;
   }
-  .placeholder-card p:last-child { margin-bottom: 0; }
-  .placeholder-card a {
+  .share-cta a {
     color: var(--brand);
     text-decoration: none;
     border-bottom: 1px solid var(--brand);
-    transition: opacity 0.15s;
   }
-  .placeholder-card a:hover { opacity: 0.7; }
+  .share-cta a:hover { opacity: 0.7; }
+
+  /* ── Responsive ──────────────────────────────────────── */
+  @media (max-width: 800px) {
+    .hero { padding: 56px 0 60px; }
+    .hero h1 { font-size: 36px; }
+    .hero p { font-size: 15.5px; }
+    .timeline { padding-left: 28px; }
+    .timeline li::before { left: -36px; }
+    .story-h2 { font-size: 20px; }
+    .story-section p { font-size: 15.5px; }
+  }
   @media (max-width: 640px) {
-    .page-title { font-size: 28px; }
-    .page-body  { margin: 50px auto; }
     .members-header h2 { font-size: 18px; }
+    .hero h1 { font-size: 28px; }
+    .timeline-section h2 { font-size: 24px; }
+    .story-band h1.section-title,
+    .teachers-band h1.section-title { font-size: 26px; }
+    .teacher { grid-template-columns: 1fr; gap: 4px; padding: 14px 0; }
+    .teacher-name { font-size: 16px; }
+    .atoz-link { min-width: 28px; font-size: 14px; padding: 4px 6px; }
   }
 </style>
 </head>
@@ -149,26 +361,428 @@
   </div>
 </div>
 
-<div class="page-body">
-  <h1 class="page-title">School <em>History</em></h1>
-  <p class="page-intro">
-    Founded in 1931 by Reverend A.E. Timpany of the Canadian Baptist Mission — a single small room in Kakinada that became a landmark institution in Vizag.
-  </p>
+<section class="hero">
+  <div class="wrap">
+    <h1>School <em>History</em></h1>
+    <p>Founded in 1931 by Rev. A.E. Timpany of the Canadian Baptist Mission — what began as a small mission school grew, under Miss. Mercy Jeyaraja Rao's stewardship, into a Visakhapatnam landmark whose alumni call themselves Timpots wherever in the world they land.</p>
+  </div>
+</section>
 
-  <div class="placeholder-card">
-    <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-      <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-    </svg>
-    <h3>Coming <em>soon</em></h3>
-    <p>
-      The archive is being assembled — founding documents, photographs of the original campus in Asilmetta, the 1964 move to Waltair, class photos across the decades, headmaster portraits, and the voices of alumni who carry Timpany with them across the world.
-    </p>
-    <p>
-      If you have historical photographs, documents, or recollections to contribute, please email
-      <a href="mailto:admin@timpotsforever.org?subject=School%20History%20Contribution">admin@timpotsforever.org</a>
-      — every piece helps complete the picture.
-    </p>
+<section class="timeline-section">
+  <div class="wrap">
+    <h2>Key <em>Milestones</em></h2>
+    <ol class="timeline">
+        <li><span class="ts-year">1931</span><span class="ts-event">School founded by Rev. A.E. Timpany under the Canadian Baptist Mission, in its earliest days known by other names.</span></li>
+        <li><span class="ts-year">1954</span><span class="ts-event">Miss. Mercy Jeyaraja Rao joins as Headmistress, with Ms. Clark as the CBM Director and Principal.</span></li>
+        <li><span class="ts-year">1962–63</span><span class="ts-event">Around this time, Miss. Jeyaraja Rao takes charge as Principal from Ms. Clark; the school comes to be known as Timpany.</span></li>
+        <li><span class="ts-year">1964–65</span><span class="ts-event">The institution moves to its new campus at Asilmetta / Uplands.</span></li>
+        <li><span class="ts-year">1965</span><span class="ts-event">The first ISC batch graduates — including Pramila David and Suguna Kannan, the first ISC topper.</span></li>
+        <li><span class="ts-year">21 Jan 1970</span><span class="ts-event">Mrs. Harshalatha Chiranjeevi joins as a Biology teacher; she will serve the school for fifty years across all three campuses.</span></li>
+        <li><span class="ts-year">1975</span><span class="ts-event">The CBM Compound's “Ladies Bungalow” is inaugurated as the primary / junior school.</span></li>
+        <li><span class="ts-year">1976</span><span class="ts-event">The last Senior Cambridge batch (11-year curriculum) passes out.</span></li>
+        <li><span class="ts-year">1993</span><span class="ts-event">Steel City School — Timpany's branch in Ukkunagaram — opens.</span></li>
+        <li><span class="ts-year">2006</span><span class="ts-event">After Pluto loses planetary status, the Pluto House is renamed Venus.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="story-band">
+  <div class="wrap">
+    <h1 class="section-title">The <em>Story</em></h1>
+    <p class="section-intro">Drawn from recollections shared by alumni in the Timpots Forever group chat.</p>
+      <section class="story-section">
+        <h2 class="story-h2">Origins</h2>
+        <p>Timpany School in Visakhapatnam (Vizag) traces its origins to the Canadian Baptist Mission (CBM) and the work of the Reverend Timpany. Mrudula tells the group that “Rev Timpany started the school in 1931.” In its earliest years, the school went by other names. Damu (who joined in 1959) recalls that what is now Timpany was then “the Anglo Indian Primary Middle School,” with classes from Nursery to 1st standard located close to Soldierpet (an area still known by that name to long-time residents). “St. John's was in Thomson Street,” he says — meaning Std 3 and above were taught inside the St. John's Church premises on Thompson Street, near the head post office and one-town police station. Banashree Bose Bhadra remembers that “when I joined the school in 1962 in grade 2 … it was St. John's school.” Damu thinks the school was renamed Timpany around 1963; Chris recalls the name “Timpots” being in circulation as early as the early 1960s.</p>
+      </section>
+      <section class="story-section">
+        <h2 class="story-h2">The Campuses</h2>
+        <p>The institution then moved to its new campus at Asilmetta / Uplands. Annapurna Banerjee, who joined in 3rd standard with “five students in the 9th standard,” remembers that her batch shifted to the new campus the following year — sometimes Miss. Jeyaraja Rao would ride to school with her family. Mahesh Allam joined KG in 1966 at the new building. Mrudula notes that the old Dutch-looking bungalow within CBM Compound (the “Ladies Bungalow,” as William Edwin clarifies — built by the Canadian Baptist missionaries, not the Dutch) was later inaugurated as the primary / junior school; Shankar Mathur places that inauguration around 1975, when his batch was in XI.</p>
+      </section>
+      <section class="story-section">
+        <h2 class="story-h2">Leadership</h2>
+        <p>Damu mentions that Miss. Jeyaraja Rao joined the school as Headmistress in 1954 (with Ms. Clark, the CBM Director, as Principal); the following year, around 1962/63, she took charge as Principal from Ms. Clark. Lucy Rachel recalls Jazz becoming Principal a year after she joined Class 3. Piyush (“Mickey”) Nair says his mother Mrs. Pushpalata Nair joined Timpany at the old town location, likely 1963/64. Mrs. Harshalatha Chiranjeevi — who served the school for fifty years across all three campuses (Teacher 14 years, Vice Principal 8, Principal 8, Director 4) — joined as a teacher on 21 January 1970, when the new Asilmetta site was, as she puts it, “almost a jungle. Now of course it's a concrete jungle.” Steel City School, the Timpany branch in Ukkunagaram, opened in 1993; Banashree taught there briefly.</p>
+      </section>
+      <section class="story-section">
+        <h2 class="story-h2">Co-Education &amp; the Vizag Circuit</h2>
+        <p>By the late 1960s the school had become co-educational on the Vizag Christian-school circuit alongside St. Aloysius (boys), St. Joseph's (girls) and the Fort Convent — Timpany, as Neelu Murthy notes, “was the only co-ed convent in town.” Boys who travelled from Waltair junction to Vizagapatam station on the Raipur Passenger train called themselves Timpots even then (Chris).</p>
+      </section>
+      <section class="story-section">
+        <h2 class="story-h2">Sports Firsts</h2>
+        <p>Several alumni remember Timpany under Jeyaraja Rao as the first school in the region — possibly the first in India — to introduce softball / baseball. “Under her leadership, Softball or Baseball — Not Bazball — was introduced, likely among the first schools in India to do so,” writes Jaisurya Mamidanna (Class of 1973, Mercury). Sri Devi Susarla was awe-struck watching senior Hazari practise the pole vault: “Never saw any school have pole vaulting in this part of the world.” Sandhya Gautam remembers the dangerous incident when classmate Peter D'Brass, practising the pole vault unsupervised after school, had the tip of the pole rip through his cheek; equipment was locked up after-hours from then on.</p>
+      </section>
+      <section class="story-section">
+        <h2 class="story-h2">The Four Houses</h2>
+        <p>The four houses were Jupiter (blue), Mercury (yellow), Neptune (green) and Pluto (red). After 2006, when Pluto lost planetary status, the house was renamed Venus, as Samith Vellanki (Class of 2024) confirms. The school colours and crest carry “Persevere to conquer” themes.</p>
+      </section>
+      <section class="story-section">
+        <h2 class="story-h2">Batches &amp; Boards</h2>
+        <p>Lakshmi Sarma recalls that the 1968 ISC batch had just four students — Azeez Mehdi, Srikumar, Kiran Sharma and herself. Ganga Ramanathan says, “ISC classes used to be in single digit in the early days.” Patta Saroj writes that “a batch of 24 students started their journey from January 1966 till December 1974,” with 22 passing out in December 1974. Sandhya Gautam adds: “Ours (1976) was the last batch of Senior Cambridge (11 years)” and “I think the first batch that had Telugu as an option in the boards (ISC).” Pramila David belonged to the very first ISC batch in 1965, which also included Suguna Kannan (the first ISC topper) — both passed out from the CBM Compound site. Suguna Kannan went on to head the Home Science department at St. Joseph's College. Joseph Polimetla recalls that Timpany did not yet have its own ISC exam centre then; students had to write their ISC papers at St. Joseph's Girls' High School.</p>
+      </section>
+      <section class="story-section">
+        <h2 class="story-h2">The School Song</h2>
+        <p>Mrudula and others remember the school song. Multiple versions of the lyrics circulated over the years, but the original — contributed by Esther Jean Rajaratnam and Anila Narla — opens:</p>
+        <blockquote class="song">We are of Timpany School,<br>Seek Truth our Golden Rule,<br>With open hearts and minds so free<br>Our lofty goals we seek …<br><br>Chorus:<br>We will work, we will pray,<br>We will help build everyday<br>A school where deeds of truth are sown<br>And the Saviour's love is known.</blockquote>
+        <p>Patta Saroj recalls that the very first line in her time was “With truth our golden rule / Life here is full of smiles and glee / Because we are so free.” Evangeline Sushma remembers a Golden Jubilee anthem: “Fifty years of Timpany's progress we celebrate now this year / God has been our guide and refuge ever faithful, ever true …” Rahul Ganapati shared “Love in Any Language,” a song composed by the school choir with choir master Jeffrey Kirk for Timpany's 70th anniversary, with the line: “Timpany School's love for children, fluently spoken here.”</p>
+      </section>
+      <section class="story-section">
+        <h2 class="story-h2">Chapel, the Computer Lab, the Uniform &amp; Local Haunts</h2>
+        <p>The Chapel was constructed during Mrs. Chiranjeevi's tenure, with Mr. P. Vishnu Kumar Raju (MLA) instrumental in funding it. Mrs. Laxmi Kumar was the first ICT teacher at Timpany — Miss. Jeyaraja Rao sent her to Bangalore to train with Eiko Computer Centre, who then set up the first computer lab adjoining her office, making Timpany one of the first schools in India to offer ICT in the high school curriculum.</p>
+        <p>The Naval Band played every year for the final Sports Day march past (Saroj). The school uniform evolved: boys had to be at least 5 feet tall or in Grade 11 to wear trousers instead of shorts; girls wore maroon skirts (Ravi Mamidanna). By 11th/12th some girls in later years also wore maroon trousers. Long-time providers to Timpany included Valex Soman and Gupta Brothers (notebooks and textbooks every June), Sun n Moon for last-minute project supplies, and Vani Emporium for stationery. The “Uplands Corner” eatery, run by Mrs. Oomana Paul (Renu Paul's mother), later became Kit Kat — famous for burgers and samosas worth risking a gate-pass for.</p>
+      </section>
+  </div>
+</section>
+
+<section class="teachers-band">
+  <div class="wrap">
+    <h1 class="section-title">Our <em>Teachers</em></h1>
+    <p class="section-intro">A directory of the staff our alumni remember — subjects taught, years of service, and biographical notes. 66 entries in all.</p>
+
+    <nav class="atoz-nav" aria-label="Jump to letter">
+      <a href="#letter-a" class="atoz-link">A</a>
+      <a href="#letter-b" class="atoz-link">B</a>
+      <a href="#letter-c" class="atoz-link">C</a>
+      <a href="#letter-d" class="atoz-link">D</a>
+      <a href="#letter-e" class="atoz-link">E</a>
+      <a href="#letter-g" class="atoz-link">G</a>
+      <a href="#letter-h" class="atoz-link">H</a>
+      <a href="#letter-i" class="atoz-link">I</a>
+      <a href="#letter-j" class="atoz-link">J</a>
+      <a href="#letter-k" class="atoz-link">K</a>
+      <a href="#letter-l" class="atoz-link">L</a>
+      <a href="#letter-m" class="atoz-link">M</a>
+      <a href="#letter-n" class="atoz-link">N</a>
+      <a href="#letter-p" class="atoz-link">P</a>
+      <a href="#letter-r" class="atoz-link">R</a>
+      <a href="#letter-s" class="atoz-link">S</a>
+      <a href="#letter-t" class="atoz-link">T</a>
+      <a href="#letter-v" class="atoz-link">V</a>
+    </nav>
+
+      <h3 id="letter-a" class="letter-heading">A</h3>
+      <div class="teachers-list">
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Aidiyantz</div>
+          <div class="teacher-bio">Principal of Timpany School in the late 1980s, while Miss. Jeyaraja Rao served as Executive Director.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Cmdr. Almeida</div>
+          <div class="teacher-bio">Naval commander who taught at Timpany for a year or two before founding Vishakha Valley School as its first Principal. Previously headmaster of Cathedral and John Connon School in Mumbai.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Anantalakshmi</div>
+          <div class="teacher-bio">Sanskrit teacher who also taught Telugu. At Timpany from at least the 1970s. Passed away around 2023.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Annie Cherian</div>
+          <div class="teacher-bio">English teacher who joined in January 1984 as class teacher of 6A and later of 8A. Known for strict grading — she introduced a ¼-mark deduction for any red mark on a two-mark answer.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Asha Noori</div>
+          <div class="teacher-bio">English teacher whose focus on enunciation and diction went well beyond simple pronunciation. Lives in Vizag and runs a vocabulary class for fellow teachers.</div>
+        </div>
+      </div>
+      <h3 id="letter-b" class="letter-heading">B</h3>
+      <div class="teachers-list">
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Bharati Daniel</div>
+          <div class="teacher-bio">Class teacher of 7C; remembered as caring and patient. From BHPV.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Bharati Ramana</div>
+          <div class="teacher-bio">English and Moral Science teacher; class teacher of 5th. Remembered for writing John 3:16 on the blackboard.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. K. Bhramaramba</div>
+          <div class="teacher-bio">Maths teacher at Timpany from 1990 to 2018.</div>
+        </div>
+      </div>
+      <h3 id="letter-c" class="letter-heading">C</h3>
+      <div class="teachers-list">
+        <div class="teacher">
+          <div class="teacher-name">Mr. Chiranjeevi</div>
+          <div class="teacher-bio">Sports master and PT instructor. A former NCC under-officer, he drilled students in formal commands (“Bhaise tez chal,” “Daine mod,” “Baaye mod”) and was the only PT teacher who always appeared on the field formally dressed.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. D. Chitra</div>
+          <div class="teacher-bio">Needlework teacher in the junior school. Helped set up the school's Home Economics department and baked the cakes for school occasions.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Christobel Stevenson</div>
+          <div class="teacher-bio">Class teacher of 2nd grade in 1993; later became Principal of Steel City School (Timpany's branch in Ukkunagaram).</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Cormaty</div>
+          <div class="teacher-bio">History teacher who joined a few months after Miss. Jeyaraja Rao in 1962. Lived in CBM Compound.</div>
+        </div>
+      </div>
+      <h3 id="letter-d" class="letter-heading">D</h3>
+      <div class="teachers-list">
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Daphne</div>
+          <div class="teacher-bio">Pre-KG A class teacher.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mr. R. A. David</div>
+          <div class="teacher-bio">Physics teacher and co-author of the school's Physics textbook, which was used alongside Sears &amp; Zemansky and Resnick &amp; Halliday. Joined Timpany from La Martinière, Kolkata, bringing with him a teaching style that included a tie and a teaching rod.</div>
+        </div>
+      </div>
+      <h3 id="letter-e" class="letter-heading">E</h3>
+      <div class="teachers-list">
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Elisha</div>
+          <div class="teacher-bio">English Literature teacher. Taught Romeo and Juliet, Julius Caesar, Merchant of Venice, Great Expectations and selected poems from Panorama. Famous for the rebuke, “George, will you kindly shut up!”</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Esther Jean Rajaratnam</div>
+          <div class="teacher-bio">English teacher. Known for the “stand outside with the dustbin” punishment for classroom mischief.</div>
+        </div>
+      </div>
+      <h3 id="letter-g" class="letter-heading">G</h3>
+      <div class="teachers-list">
+        <div class="teacher">
+          <div class="teacher-name">Miss. Gloriana Paul</div>
+          <div class="teacher-bio">Head of the front office and known for a formidable memory and pleasant nature. Had a fig tree at her house that students were welcome to pluck from.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Miss. Glory David</div>
+          <div class="teacher-bio">Class teacher of KG A from at least 1982 until her retirement.</div>
+        </div>
+      </div>
+      <h3 id="letter-h" class="letter-heading">H</h3>
+      <div class="teachers-list">
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Harshalatha Chiranjeevi</div>
+          <div class="teacher-bio">Joined Timpany on 21 January 1970 as a Biology teacher and served the school for fifty years across all three campuses — fourteen as a teacher, eight as Vice Principal, eight as Principal and four as Director. Lived in CBM Compound; was one of the “four musketeers” (with Mrs. Cormaty, Mrs. Reuben and Mrs. Nair) who met weekly.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Miss. Hazel Paul</div>
+          <div class="teacher-bio">Class teacher of KG B and sister of Miss. Gloriana Paul. Previously taught at Sri Sarada Bala Vihar, the feeder school for Timpany.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Hilda Samuel (“Samy”)</div>
+          <div class="teacher-bio">Maths teacher and class teacher of 10th. Lived in Dwarakanagar. Daughters Asha and Usha.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mr. Honeyford</div>
+          <div class="teacher-bio">Senior class teacher (10th–12th) around 1976–1980.</div>
+        </div>
+      </div>
+      <h3 id="letter-i" class="letter-heading">I</h3>
+      <div class="teachers-list">
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Iyenna</div>
+          <div class="teacher-bio">Class teacher of 5th. Passed away from cancer a year or two after her students finished 5th grade.</div>
+        </div>
+      </div>
+      <h3 id="letter-j" class="letter-heading">J</h3>
+      <div class="teachers-list">
+        <div class="teacher">
+          <div class="teacher-name">Mr. Jeevan Prakash</div>
+          <div class="teacher-bio">Physics teacher; married Mrs. Esther Jean Rajaratnam.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mr. Jeffrey Kirk</div>
+          <div class="teacher-bio">Choir master of the senior school choir who also taught singing in the junior school and ran after-school piano classes. Co-composed “Love in Any Language” with Jazz and Sandy Wisener for Timpany's 70th anniversary.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Ms. Jogamma</div>
+          <div class="teacher-bio">Telugu teacher and the colleague Miss. Jeyaraja Rao would consult to clarify Telugu doubts.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Ms. Joy Helen</div>
+          <div class="teacher-bio">Originally the school's lab assistant, later a Telugu teacher. Attended the 2006 class reunion.</div>
+        </div>
+      </div>
+      <h3 id="letter-k" class="letter-heading">K</h3>
+      <div class="teachers-list">
+        <div class="teacher">
+          <div class="teacher-name">Miss. Kamala Dharmaraju</div>
+          <div class="teacher-bio">Std 6 class teacher.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Kameswari</div>
+          <div class="teacher-bio">Telugu teacher at Timpany; later taught Telugu at Steel Plant School.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Kanta Morada</div>
+          <div class="teacher-bio">Hindi teacher for the lower classes (grades 3–5). Recognisable on her walk to school by her dark sunglasses and umbrella.</div>
+        </div>
+      </div>
+      <h3 id="letter-l" class="letter-heading">L</h3>
+      <div class="teachers-list">
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Lakshmi</div>
+          <div class="teacher-bio">Home Science teacher who also taught Sanskrit and Telugu. Later taught at DPS.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Lakshmi Ratnam Babu</div>
+          <div class="teacher-bio">Home Science teacher. Recognisable for her perfectly matched saree accessories. In the early 1970s she studied German and earned an A-level proficiency certificate.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mr. Lionel D'Lima</div>
+          <div class="teacher-bio">Music teacher and pianist, known to students as “singing sir” or “piano sir.” Passed away in June 2024.</div>
+        </div>
+      </div>
+      <h3 id="letter-m" class="letter-heading">M</h3>
+      <div class="teachers-list">
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Mahalakshmi</div>
+          <div class="teacher-bio">History teacher (and possibly Commerce); class teacher in the upper school.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Mahalakshmi Veluri</div>
+          <div class="teacher-bio">Maths teacher; remembered for in-depth concept teaching.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Malathi Varaprasad</div>
+          <div class="teacher-bio">Telugu teacher in the junior school. Class teacher of 6C, 1983–84.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Mamata Syed</div>
+          <div class="teacher-bio">Physics teacher. Prescribed a substantial Physics textbook for 10th standard.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Melbourne</div>
+          <div class="teacher-bio">Junior school teacher and class teacher of 6A; coordinated the entrance exam for 3rd standard. Known for a voice that could silence any class instantly.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Milan</div>
+          <div class="teacher-bio">English and pronunciation teacher famous for her V-sound drill: “What Wawa… Wawa… speak as though you have a hot potato in your mouth!” Later taught in Mumbai after her husband was transferred.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Milkamma</div>
+          <div class="teacher-bio">Class 2 teacher — first at the old Soldierpet campus, then at Asilmetta after the 1965 move.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Miss. Moses</div>
+          <div class="teacher-bio">Chemistry teacher and class teacher of 4th and 7th standards. Earlier she taught Biology. Later served as Vice Principal for the 8th–12th standard section of the Senior School.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Ms. Muriel Gordon</div>
+          <div class="teacher-bio">Third-grade class teacher. Now in the Caribbean.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Muthappa</div>
+          <div class="teacher-bio">Class teacher of II B. Wore her saree in the Coorgi style.</div>
+        </div>
+      </div>
+      <h3 id="letter-n" class="letter-heading">N</h3>
+      <div class="teachers-list">
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Nalini Christopher</div>
+          <div class="teacher-bio">Telugu teacher. Now lives in Texas, US.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Miss. Nirmala</div>
+          <div class="teacher-bio">Strict and well-loved teacher who, with her sister Miss. Pushpalatha, later ran the Mariadass EM School in the Scindia area of Vizag — founded by their father. Taught Physics and was class teacher of 12th standard. Briefly served as Principal. Drove her white Ambassador to school every day with her sister.</div>
+        </div>
+      </div>
+      <h3 id="letter-p" class="letter-heading">P</h3>
+      <div class="teachers-list">
+        <div class="teacher">
+          <div class="teacher-name">Ms. Phyllis D'Souza</div>
+          <div class="teacher-bio">English teacher for 8th standard. Now in Goa.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Prabha Plaha</div>
+          <div class="teacher-bio">Sanskrit teacher and class teacher of 7E. Both her sons studied at Timpany.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Prema Francis</div>
+          <div class="teacher-bio">Class teacher of 2B in the junior school; brief tenure.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Pushpalata Nair</div>
+          <div class="teacher-bio">Hindi teacher; joined Timpany at the old town campus around 1963/64 and taught until 1995. Lived at Aashirwaad in CBM Compound, where her question-paper setting and corrections were famously done on the roof garden. Passed away in 1995.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Miss. Pushpalatha</div>
+          <div class="teacher-bio">Geography teacher and sister of Miss. Nirmala. Class teacher of 9B.</div>
+        </div>
+      </div>
+      <h3 id="letter-r" class="letter-heading">R</h3>
+      <div class="teachers-list">
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Rajaratnam</div>
+          <div class="teacher-bio">Soft-spoken class teacher of 3rd standard. Sister of Miss. Jeyaraja Rao and mother of David. Spent her later years in Oakville with her son.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Cdr. Reardon</div>
+          <div class="teacher-bio">Office staff; tough, no-nonsense, and impeccably turned out in a tie. Worked alongside Miss. Gloriana Paul at the front office.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Reuben (30 May 1938 — 10 Oct 2018)</div>
+          <div class="teacher-bio">Vice Principal of the 4th–7th standard sections of the Senior School and a Maths teacher (Geometry and Algebra) for 7th standard. Calm and soft-spoken; known for sitting beside hesitant students during exams. Also taught First Aid, ran the burgers stall at the 1987 fete, and once played Juliet in the Teachers' Day skit. Her daughter Shalini went on to study MBBS at CMC Vellore.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Ms. Rhoda Philips (“Rhody”)</div>
+          <div class="teacher-bio">Physics and Science teacher in the early 1970s. Left Timpany to get married; Mrs. Harshalatha Chiranjeevi succeeded her in Biology.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Rupa Samuel</div>
+          <div class="teacher-bio">Junior school teacher from 1982 to 1986. Passed away in 2025.</div>
+        </div>
+      </div>
+      <h3 id="letter-s" class="letter-heading">S</h3>
+      <div class="teachers-list">
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Sarala Williams</div>
+          <div class="teacher-bio">Class teacher of 3rd grade. Remembered above all for one instruction, repeated all day long: “Keep quiet.”</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Ms. Sarojini</div>
+          <div class="teacher-bio">Strict class teacher of 5th standard. The official school-uniform tailor (Silk Saree Centre near one-town police station) was formalised during her tenure.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Sashi Nair</div>
+          <div class="teacher-bio">Pre-KG class teacher.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Major Srimannarayana</div>
+          <div class="teacher-bio">Chemistry teacher for 9th and 10th standards. A former armed-forces officer with a dry, brilliant sense of humour — once telling a student, “We are in a chemistry class, not a class for fraternising.”</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Subhadra</div>
+          <div class="teacher-bio">Class teacher of 4A. Elder sister of Mrs. Vijayalakshmi.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Sudha Rao</div>
+          <div class="teacher-bio">Hindi teacher at the Middle School (and occasionally the Junior School), 1981–1988. Mrs. Malathi Varaprasad was her Telugu counterpart.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Sunila Nathan</div>
+          <div class="teacher-bio">Biology teacher who joined Timpany in 1985. Known for teaching with a sense of humour.</div>
+        </div>
+      </div>
+      <h3 id="letter-t" class="letter-heading">T</h3>
+      <div class="teachers-list">
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Tara Vishwanatham</div>
+          <div class="teacher-bio">Gentle teacher across multiple batches — 5th std in 1965, 4th std in 1966, and 4th std again in 1980.</div>
+        </div>
+      </div>
+      <h3 id="letter-v" class="letter-heading">V</h3>
+      <div class="teachers-list">
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Vasantha Krishnan</div>
+          <div class="teacher-bio">Maths teacher who filled in for Mrs. Hilda Samuel during her maternity leave. Daughters Pramila and Priya; lived diagonally opposite Maharashtra Mandal in CBM Compound. Passed away in December 2023.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Vaz</div>
+          <div class="teacher-bio">Music teacher and class teacher of 3A. Played the piano with skill and drove her own Fiat car.</div>
+        </div>
+        <div class="teacher">
+          <div class="teacher-name">Mrs. Vijayalakshmi</div>
+          <div class="teacher-bio">First a student at Timpany (in the old school), later a teacher (in the new school). Taught Maths and was a class teacher (7D in 1998, 3C in later years). Her three daughters were also Timpots.</div>
+        </div>
+      </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="share-cta">
+    <h3>Help fill in the <em>gaps</em></h3>
+    <p>If you have historical photographs, documents, names we've missed, or recollections to add, please email <a href="mailto:admin@timpotsforever.org?subject=School%20History%20Contribution">admin@timpotsforever.org</a> — every piece helps complete the picture.</p>
   </div>
 </div>
 
