@@ -22,7 +22,7 @@
   body {
     font-family: 'Source Sans 3', sans-serif;
     color: var(--ink);
-    background: var(--bg);
+    background: var(--bg-soft);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -59,39 +59,59 @@
   .home-icon { display: flex; align-items: center; justify-content: center; }
   .home-icon svg { width: 20px; height: 20px; }
 
-  .content-wrapper {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 40px 24px 80px;
+  /* ── Page layout ─────────────────────────────────────────── */
+  .terms-page {
+    max-width: 760px;
+    margin: 50px auto;
+    padding: 0 24px;
     flex: 1;
   }
-
-  h1 {
+  .page-title {
     font-family: 'Playfair Display', serif;
-    font-size: 32px;
+    font-size: 34px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .page-title em {
+    color: var(--brand);
+    font-style: italic;
+  }
+  .page-intro {
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1.55;
+    margin-bottom: 28px;
+  }
+
+  /* ── Card ────────────────────────────────────────────────── */
+  .card {
+    background: #fff;
+    border: 1px solid var(--rule);
+    padding: 30px 32px;
+    margin-bottom: 24px;
+  }
+  .card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
     font-weight: 600;
     color: var(--ink);
-    margin-bottom: 8px;
+    margin-bottom: 4px;
   }
-  .effective-date {
+  .card .card-help {
     font-size: 13px;
     color: var(--ink-muted);
-    margin-bottom: 32px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    margin-bottom: 20px;
+    line-height: 1.5;
   }
 
   h2 {
     font-family: 'Playfair Display', serif;
     font-size: 20px;
     font-weight: 600;
-    color: var(--brand);
-    margin-top: 32px;
-    margin-bottom: 16px;
-    border-top: 1px solid var(--rule);
-    padding-top: 24px;
+    color: var(--ink);
+    margin-bottom: 4px;
   }
-  h2:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
 
   p {
     line-height: 1.65;
@@ -124,7 +144,14 @@
   a { color: var(--brand); text-decoration: none; }
   a:hover { text-decoration: underline; }
 
-  footer { margin-top: 80px; border-top: 1px solid var(--rule); padding-top: 40px; }
+  footer { margin-top: 60px; border-top: 1px solid var(--rule); padding-top: 40px; }
+
+  /* ── Responsive ──────────────────────────────────────────── */
+  @media (max-width: 640px) {
+    .terms-page { padding: 0 20px; }
+    .page-title { font-size: 28px; }
+    .card { padding: 24px 20px; }
+  }
 </style>
 </head>
 <body>
@@ -141,11 +168,12 @@
   </div>
 </div>
 
-<div class="content-wrapper">
-  <h1>Timpots Forever Terms and Conditions</h1>
-  <div class="effective-date">Effective May 13, 2026</div>
+<div class="terms-page">
+  <h1 class="page-title">Terms &amp; <em>Conditions</em></h1>
+  <p class="page-intro" style="margin-bottom: 6px;">Effective May 13, 2026</p>
 
-  <h2>1. Acceptance of Terms</h2>
+  <div class="card">
+    <h2>1. Acceptance of Terms</h2>
   <p>By accessing and using Timpots Forever (timpotsforever.org), you accept and agree to be bound by these Terms and Conditions. If you do not agree to these terms, please do not use this website.</p>
 
   <h2>2. Disclaimer of Affiliation</h2>
