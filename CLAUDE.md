@@ -81,12 +81,31 @@ Items previously here but removed:
 
 ## Design system
 
-- **Fonts**: Playfair Display (display serif) + Source Sans 3 (sans). Loaded via Google Fonts at the top of each page that needs them. The Playfair link must include italic variants (`ital,wght@0,400;0,600;0,700;1,400;1,500;1,700`) — masthead's `<em>` styling depends on real italic glyphs, not faux-italic.
-- **Brand colors** (CSS vars in `:root`):
-  - `--brand: #7a1420` (deep garnet)
-  - `--gold: #b5894a` (muted bronze; use on light backgrounds)
-  - `--gold-bright: #f0c579` (bright gold; use on dark/garnet backgrounds)
-- **Tagline**: "Seek Truth"
+**Fonts (REQUIRED across all pages):**
+- **Headings (h1, h2, h3, h4)**: Playfair Display (serif) — bold, elegant, consistent with masthead
+- **Body text**: Source Sans 3 (sans-serif) — clean, readable
+- Load via Google Fonts: `ital,wght@0,400;0,600;0,700;1,400;1,500;1,700` (Playfair must include italic variants)
+
+**Color Palette (use everywhere):**
+- `--brand: #7a1420` (deep garnet) — primary/headings/accents
+- `--gold: #b5894a` (muted bronze) — secondary/light backgrounds
+- `--gold-bright: #f0c579` (bright gold) — accents on dark/garnet backgrounds
+- `--ink: #1a1a1a` (black) — body text
+- `--ink-soft: #555` (dark gray) — secondary text
+- `--ink-muted: #888` (medium gray) — tertiary text
+- `--bg: #fff` (white) — backgrounds
+- `--bg-soft: #f7f4ee` (cream) — soft backgrounds
+- `--rule: #e5e0d4` (light tan) — borders/dividers
+
+**Design Standards (REQUIRED for all pages):**
+1. **Every page must feel "high-end"** — match the aesthetic and polish of the landing page (`index.html`)
+2. **Consistent styling** — use the same patterns, spacing, and visual hierarchy as the main site
+3. **Typography hierarchy** — headings use Playfair, body uses Source Sans 3; maintain consistent sizing
+4. **Spacing and padding** — use consistent whitespace; aim for breathing room like the homepage
+5. **Component reuse** — buttons, cards, forms, headers should match landing page patterns
+6. **Visual refinement** — subtle borders, shadows, hover states; no harsh edges or oversized elements
+
+**Tagline**: "Seek Truth"
 
 ## Icons
 
