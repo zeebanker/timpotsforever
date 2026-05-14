@@ -262,11 +262,82 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     cursor: pointer;
-    transition: background 0.15s;
+    transition: background 0.15s, opacity 0.15s;
   }
   .submit-btn:hover {
     background: var(--brand-dark);
   }
+  .submit-btn:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+
+  /* ── Form states (AJAX submission) ──────────────────────── */
+  .form-error {
+    display: none;
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    color: #991b1b;
+    padding: 12px 14px;
+    font-size: 13px;
+    margin-bottom: 16px;
+    border-radius: 2px;
+    line-height: 1.5;
+  }
+
+  .thank-you-state {
+    display: none;
+    text-align: center;
+    padding: 24px 12px 12px;
+    animation: fadeIn 0.4s ease-out;
+  }
+  .thank-you-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 20px;
+    color: var(--gold);
+  }
+  .thank-you-state h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .thank-you-state h3 em {
+    font-style: italic;
+    color: var(--brand);
+  }
+  .thank-you-state p {
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    max-width: 460px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .thank-you-state .reset-link {
+    display: inline-block;
+    color: var(--brand);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--brand);
+    padding-bottom: 2px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .thank-you-state .reset-link:hover { opacity: 0.7; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .form-hidden { display: none !important; }
 
   .categories {
     display: grid;
@@ -410,40 +481,57 @@
     <a href="#">Learn More</a>
   </div>
 
-  <div class="form-section">
-    <h2>Suggest a Cause You Believe In</h2>
-    <p class="card-help">Share what you're working on or what matters to you, and inspire fellow alumni to get involved.</p>
-    <form action="https://formspree.io/f/xgodbgkw" method="POST" style="margin-top: 20px;">
-      <div class="form-group">
-        <label for="name">Your Name</label>
-        <input type="text" id="name" name="name" required>
-      </div>
-      <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" id="email" name="email" required>
-      </div>
-      <div class="form-group">
-        <label for="cause">Cause or Initiative Name</label>
-        <input type="text" id="cause" name="cause" placeholder="e.g., Clean Water for Rural Schools" required>
-      </div>
-      <div class="form-group">
-        <label for="category">Primary Category</label>
-        <select name="category" id="category">
-          <option value="">Select a category</option>
-          <option value="Education">Education Access</option>
-          <option value="Environment">Environment &amp; Sustainability</option>
-          <option value="Health">Health &amp; Wellness</option>
-          <option value="Community">Community Development</option>
-          <option value="Arts">Arts &amp; Culture</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="description">Tell Us About It</label>
-        <textarea id="description" name="description" placeholder="What is this cause? Why does it matter to you? How are you involved?" required></textarea>
-      </div>
-      <button type="submit" class="submit-btn">Submit Suggestion</button>
-    </form>
+  <div class="form-section" id="suggest-section">
+    <div id="form-view">
+      <h2>Suggest a Cause You Believe In</h2>
+      <p class="card-help">Share what you're working on or what matters to you, and inspire fellow alumni to get involved.</p>
+
+      <div class="form-error" id="form-error"></div>
+
+      <form action="https://formspree.io/f/xgodbgkw" method="POST" style="margin-top: 20px;" id="suggest-form">
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="cause">Cause or Initiative Name</label>
+          <input type="text" id="cause" name="cause" placeholder="e.g., Clean Water for Rural Schools" required>
+        </div>
+        <div class="form-group">
+          <label for="category">Primary Category</label>
+          <select name="category" id="category">
+            <option value="">Select a category</option>
+            <option value="Education">Education Access</option>
+            <option value="Environment">Environment &amp; Sustainability</option>
+            <option value="Health">Health &amp; Wellness</option>
+            <option value="Community">Community Development</option>
+            <option value="Arts">Arts &amp; Culture</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="description">Tell Us About It</label>
+          <textarea id="description" name="description" placeholder="What is this cause? Why does it matter to you? How are you involved?" required></textarea>
+        </div>
+        <button type="submit" class="submit-btn" id="submit-btn">Submit Suggestion</button>
+      </form>
+    </div>
+
+    <div class="thank-you-state" id="thank-you-view">
+      <svg class="thank-you-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+        <polyline points="22 4 12 14.01 9 11.01"/>
+      </svg>
+      <h3>Thank <em>you</em></h3>
+      <p>
+        Your suggestion has been received. We read every submission carefully — if your cause resonates with the community, we'll be in touch about featuring it here.
+      </p>
+      <a class="reset-link" onclick="resetSuggestForm()">Submit another suggestion</a>
+    </div>
   </div>
 
   <h2>Cause Categories</h2>
@@ -525,6 +613,83 @@
     </p>
   </footer>
 </div>
+
+<script>
+  /* ── Suggest-a-cause form: AJAX submission to Formspree ──
+     Intercepts the form submit, posts via fetch() with JSON Accept header,
+     and swaps the form for an in-page thank-you state. No redirect. */
+  (function () {
+    const form = document.getElementById('suggest-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const errorBox = document.getElementById('form-error');
+    const formView = document.getElementById('form-view');
+    const thankYouView = document.getElementById('thank-you-view');
+    if (!form) return;
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      // Reset error state
+      errorBox.style.display = 'none';
+      errorBox.textContent = '';
+
+      // Loading state
+      submitBtn.disabled = true;
+      const originalLabel = submitBtn.textContent;
+      submitBtn.textContent = 'Sending…';
+
+      try {
+        const data = new FormData(form);
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          // Success: swap views, scroll the thank-you into view
+          formView.classList.add('form-hidden');
+          thankYouView.style.display = 'block';
+          document.getElementById('suggest-section').scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        } else {
+          const result = await response.json().catch(function () { return {}; });
+          const msg = (result && result.errors && result.errors.map(function (er) { return er.message; }).join('. '))
+            || 'Something went wrong. Please try again, or email admin@timpotsforever.org.';
+          errorBox.textContent = msg;
+          errorBox.style.display = 'block';
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalLabel;
+        }
+      } catch (err) {
+        errorBox.textContent = 'Could not reach the server. Please check your connection and try again.';
+        errorBox.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalLabel;
+      }
+    });
+  })();
+
+  // Allow the user to submit another suggestion without a page reload
+  function resetSuggestForm () {
+    const form = document.getElementById('suggest-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const formView = document.getElementById('form-view');
+    const thankYouView = document.getElementById('thank-you-view');
+    if (!form) return;
+    form.reset();
+    thankYouView.style.display = 'none';
+    formView.classList.remove('form-hidden');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Submit Suggestion';
+    document.getElementById('suggest-section').scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
+</script>
 
 </body>
 </html>

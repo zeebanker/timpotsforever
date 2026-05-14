@@ -33,6 +33,7 @@ Then `http://localhost:8000`. Hard-refresh (Cmd+Shift+R) after edits.
 | **Database** | Supabase Postgres | See "Database schema" below. |
 | **Outbound email** | Resend (custom SMTP plugged into Supabase Auth) | All 4 auth templates (Confirm Signup, Reset Password, Magic Link, Change Email) branded with garnet header + gold accents. Sent as `Timpots Forever <hello@timpotsforever.org>`. |
 | **Inbound email** | Cloudflare Email Routing | `hello@`, `admin@`, `support@`, `newsletter@` forward to the owner's Yahoo inbox via a catch-all + explicit routes. |
+| **Form submissions** | Formspree (form ID `xgodbgkw`) | "Suggest a Cause" form on `giving-back.html` posts via AJAX `fetch()` with `Accept: application/json` header — Formspree returns 200 JSON on success, never redirecting users to Formspree's bland thank-you page. The page swaps the form for a branded in-page thank-you state with a checkmark icon, italic "Thank *you*" heading, and a "Submit another" reset link. Graceful degradation: if JS is disabled, the regular form-POST action takes over and Formspree handles the redirect. |
 | **Map data** | `public_alumni_map` view in Supabase | Anonymous SELECT; powers `map.html`. No login required. |
 
 ## Database schema
