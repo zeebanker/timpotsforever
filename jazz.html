@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jazz — Timpots Forever</title>
+<meta name="description" content="Remembering Dr. Mercy Jeyaraja Rao — Jazz — Principal of Timpany School, Visakhapatnam, 1954–2002. Bio and tribute wall from her alumni.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,500;1,700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand: #7a1420;
+    --brand-dark: #4a0810;
+    --ink: #1a1a1a;
+    --ink-soft: #555;
+    --ink-muted: #888;
+    --bg: #fff;
+    --bg-soft: #f7f4ee;
+    --bg-warm: #f0e9d8;
+    --rule: #e5e0d4;
+    --gold: #b5894a;
+    --gold-bright: #f0c579;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    color: var(--ink);
+    background: var(--bg-soft);
+    min-height: 100vh;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Header bar ───────────────────────────────────────── */
+  .members-header {
+    background: var(--brand);
+    padding: 18px 0;
+    color: #fff;
+  }
+  .members-header .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .members-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 500;
+  }
+  .members-header h2 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .members-header .actions { display: flex; align-items: center; gap: 14px; }
+  .public-site-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-decoration: none;
+    opacity: 0.8;
+    padding: 6px;
+    transition: opacity 0.15s;
+  }
+  .public-site-link:hover { opacity: 1; }
+  .public-site-link svg { display: block; }
+
+  /* ── Bio band ─────────────────────────────────────────── */
+  .bio {
+    background: var(--brand);
+    color: #fff;
+    padding: 64px 0 72px;
+    position: relative;
+    overflow: hidden;
+  }
+  .bio::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 20% 30%, rgba(240,197,121,0.10), transparent 60%);
+    pointer-events: none;
+  }
+  .bio .wrap { position: relative; }
+  .bio-grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+  .portrait {
+    text-align: center;
+  }
+  .portrait-frame {
+    width: 240px;
+    height: 240px;
+    margin: 0 auto 22px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid var(--gold-bright);
+    box-shadow: 0 6px 30px rgba(0,0,0,0.35);
+    background: #2a0608 center/cover no-repeat;
+  }
+  .portrait .name {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: #fff;
+  }
+  .portrait .nickname {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 26px;
+    color: var(--gold-bright);
+    margin: 4px 0 10px;
+  }
+  .portrait .dates {
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: rgba(255,255,255,0.78);
+  }
+  .bio-text h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 44px;
+    font-weight: 500;
+    line-height: 1.1;
+    margin-bottom: 22px;
+    color: #fff;
+  }
+  .bio-text h1 em {
+    font-style: italic;
+    color: var(--gold-bright);
+  }
+  .bio-text p {
+    font-size: 16px;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.88);
+    margin-bottom: 14px;
+  }
+  .bio-text p strong { color: #fff; font-weight: 600; }
+  .bio-text p em { color: var(--gold-bright); font-style: italic; }
+  .bio-text p:last-child { margin-bottom: 0; }
+
+  /* ── Wall section ─────────────────────────────────────── */
+  .wall-section { padding: 72px 0 96px; }
+  .wall-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 500;
+    color: var(--ink);
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .wall-heading em {
+    font-style: italic;
+    color: var(--brand);
+  }
+  .wall-intro {
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 15px;
+    max-width: 620px;
+    margin: 0 auto 44px;
+    line-height: 1.65;
+  }
+
+  /* ── Featured tributes (full-width band) ──────────────── */
+  .featured-block {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 36px;
+  }
+  @media (min-width: 900px) {
+    .featured-block { grid-template-columns: 1fr 1fr; }
+    .featured-block .card.featured:first-child { grid-column: 1 / -1; }
+  }
+
+  /* ── Card ─────────────────────────────────────────────── */
+  .card {
+    background: #fff;
+    border: 1px solid var(--rule);
+    padding: 28px 28px 22px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    border-radius: 2px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .card .pull {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 19px;
+    line-height: 1.4;
+    color: var(--brand);
+    padding-left: 16px;
+    border-left: 3px solid var(--gold);
+    margin-bottom: 18px;
+  }
+  .card.featured .pull {
+    font-size: 23px;
+    line-height: 1.35;
+  }
+  .card .body p {
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+  }
+  .card .body p:last-child { margin-bottom: 0; }
+  .card.featured .body p { font-size: 15.5px; line-height: 1.75; }
+  .card .byline {
+    margin-top: 20px;
+    padding-top: 14px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+  }
+  .card .byline .name {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    color: var(--ink);
+  }
+  .card .byline .meta {
+    color: var(--ink-muted);
+    font-size: 12.5px;
+    letter-spacing: 0.02em;
+    margin-top: 2px;
+  }
+
+  /* ── Masonry wall (CSS columns) ───────────────────────── */
+  .wall {
+    column-count: 3;
+    column-gap: 24px;
+  }
+  .wall .card {
+    margin: 0 0 24px;
+  }
+  @media (max-width: 1000px) {
+    .wall { column-count: 2; }
+  }
+  @media (max-width: 640px) {
+    .wall { column-count: 1; }
+  }
+
+  /* ── CTA ──────────────────────────────────────────────── */
+  .share-cta {
+    margin-top: 56px;
+    text-align: center;
+    padding: 36px 28px;
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+  }
+  .share-cta h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .share-cta h3 em { color: var(--brand); font-style: italic; }
+  .share-cta p {
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1.65;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  .share-cta a {
+    color: var(--brand);
+    text-decoration: none;
+    border-bottom: 1px solid var(--brand);
+  }
+  .share-cta a:hover { opacity: 0.7; }
+
+  /* ── Responsive ───────────────────────────────────────── */
+  @media (max-width: 800px) {
+    .bio { padding: 44px 0 52px; }
+    .bio-grid { grid-template-columns: 1fr; gap: 32px; }
+    .portrait-frame { width: 200px; height: 200px; }
+    .bio-text h1 { font-size: 34px; text-align: center; }
+    .bio-text p { font-size: 15.5px; }
+    .wall-section { padding: 48px 0 64px; }
+    .wall-heading { font-size: 30px; }
+  }
+  @media (max-width: 640px) {
+    .members-header h2 { font-size: 18px; }
+    .card { padding: 22px 20px 18px; }
+    .card .pull { font-size: 17px; }
+    .card.featured .pull { font-size: 20px; }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="members-header">
+  <div class="wrap">
+    <h2>Timpots <em>Forever</em> — Jazz</h2>
+    <div class="actions">
+      <a href="index.html" class="public-site-link" aria-label="Home" title="Home">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 10.5 12 3l9 7.5V21H3z"/>
+          <path d="M9 21v-7h6v7"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<section class="bio">
+  <div class="wrap">
+    <div class="bio-grid">
+      <div class="portrait">
+        <div class="portrait-frame" style="background-image: url('images/jazz.jpg');"></div>
+        <div class="name">Dr. Mercy Jeyaraja Rao</div>
+        <div class="nickname">"Jazz"</div>
+        <div class="dates">July 4, 1930 &mdash; March 22, 2026</div>
+      </div>
+      <div class="bio-text">
+        <h1>Remembering <em>Jazz</em></h1>
+        <p><strong>Dr. Mercy Jeyaraja Rao</strong> — known to generations of Timpots simply as <em>Jazz</em> — served Timpany School for <strong>forty-eight years</strong>, from 1954 to 2002. Born in Visakhapatnam on July 4, 1930, she joined the school in its earliest days, rose through its ranks as teacher, Headmistress, Principal, Executive Director and General Director, and led its transformation from a single small room with ten students into a comprehensive institution of three buildings and over seven thousand students.</p>
+        <p>Under her stewardship in the 1960s, the school moved to its present Waltair campus and grew into a high school whose alumni — fondly known as Timpots — fanned out across India and the world, recognisable everywhere by their bearing, their handwriting, and what one of her students called her insistence on &ldquo;discipline with compassion.&rdquo;</p>
+        <p>Beyond Timpany, she served globally as President of the Women's Department of the Baptist World Alliance, and was a devoted member of the First Baptist Church in Knoxville, Tennessee. She is survived by nephews Daniel, David and John Rajaratnam, niece Esther Jeevan, and the many thousands she taught and shaped.</p>
+        <p>This page gathers stories, prayers and farewells from her former students — the ones she addressed by name over the intercom, the ones whose handwriting she perfected, the ones she sat in her lap on a difficult first day at school. Her words still echo. Her presence still guides.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wall-section">
+  <div class="wrap">
+    <h1 class="wall-heading">Tribute <em>Wall</em></h1>
+    <p class="wall-intro">
+      Voices from the alumni group chat following her passing — lightly copy-edited for readability, otherwise in the contributors' own words.
+    </p>
+
+    <div class="featured-block">
+      <article class="card featured">
+        <blockquote class="pull">Jazz walks down the airy school corridors with poise and elegance, checking on her children.</blockquote>
+        <div class="body">
+          <p>A Poem For Jazz</p>
+          <p>Like smooth jazz notes floating around on an autumn afternoon<br>Jazz walks down the airy school corridors<br>With poise and elegance<br>Checking on her children</p>
+          <p>There is a sudden silence across the halls, as we hear her voice<br>She peeps into our class<br>We all stand as she enters the room<br>"Good morning Miss"<br>Even the chairs join in as they screech going outward<br>Sometimes she catches my eye<br>As if to check on me<br>But I only felt undertones of her love and affection<br>Smiling at the teachers she moves on to the next class</p>
+          <p>There are so many things I am grateful to Jazz for…<br>My love for music, as we sang in tune, as one, at the assembly<br>My faith in the Universe, as she prayed over all of us<br>For friendships that last a lifetime<br>And many, many more memories that remind me of a magical childhood</p>
+          <p>Some were embarrassing…<br>From the ceremonial haircuts, centre stage with the barber<br>To dismissal from school, with notes to my parents<br>Being caught, standing outside the classroom with the teacher's writing board on my head…</p>
+          <p>My dear Jazz, we will always miss you<br>I know you are watching over all of us<br>With your beautiful smile<br>I love you<br>We love you<br>You will remain in our hearts for ever. ❤️</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Ramana Gogula</span>
+          
+        </footer>
+      </article>
+      <article class="card featured">
+        <blockquote class="pull">We will miss you always and forever — you will still be our guiding star.</blockquote>
+        <div class="body">
+          <p>From a Timpot.<br>1959 – 1970. Pluto House.</p>
+          <p>I was just a little kid<br>When I first saw Miss Mercy.<br>My parents came to join me<br>In the Baby Class by the sea.<br>Here is where I met Karuna,<br>Damu, Vijji and the gang —<br>We still stick together though we crossed two-plus and a seventy.</p>
+          <p>Big Miss as I first saw her —<br>Elegant, gorgeous,<br>With a divine smile,<br>A look that was so gentle<br>And a touch that felt so warm and kind.</p>
+          <p>In all the wonderful long years between<br>I see the same divine smile again,<br>A look so gentle and so sweet,<br>A touch that still seemed warm and kind,<br>Until she last bid us farewell. 😢</p>
+          <p>Her stories on discipline and righteousness<br>Rang a bell in my ears<br>Through all my nurturing growing years.<br>Checked me on my faults and falls<br>To make me what I am today. 🙏</p>
+          <p>We love you, our Big Miss.<br>We will miss you always and forever.<br>You will still be our guiding star. 🌟<br>I am sure — and that's forever. ❤️<br>Rest in peace in your final abode<br>As the loved child of the Lord. 🙏</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Aruna</span>
+          <span class="meta">Pluto House · 1959–1970</span>
+        </footer>
+      </article>
+      <article class="card featured">
+        <blockquote class="pull">She was not merely an administrator; she was an institution in herself.</blockquote>
+        <div class="body">
+          <p>The passing of Mercy Jeyaraja Rao, former Principal of Timpany School, Visakhapatnam, marks the end of an era defined by dedication, compassion, and unwavering commitment to education.</p>
+          <p>Mercy Jeyaraja Rao was not merely an administrator; she was an institution in herself. As the guiding force behind Timpany School, she shaped generations of students with a rare blend of discipline and empathy. Her leadership stood as a model of integrity — firm in standards, yet deeply humane in approach. She believed that education was not confined to textbooks but extended to character, values, and responsibility toward society.</p>
+          <p>Under her stewardship, Timpany School grew not only in academic excellence but also in moral stature. She encouraged students to think critically, act ethically, and strive for excellence in every sphere of life. Many who passed through the corridors during her tenure went on to become responsible citizens, carrying forward the imprint of her teachings.</p>
+          <p>Her colleagues remember her as a visionary leader who upheld the highest standards of professionalism while fostering a spirit of unity and purpose. She inspired teachers to go beyond conventional methods, nurturing young minds with patience and dedication.</p>
+          <p>Beyond her professional achievements, she was known for her humility, kindness, and quiet strength. She touched countless lives — not through grand gestures, but through consistent care, guidance, and encouragement.</p>
+          <p>Her legacy lives on in every student she mentored, every teacher she inspired, and every life she shaped. Though she is no longer with us, her values and contributions will continue to illuminate the path for future generations.</p>
+          <p>May her soul rest in eternal peace.</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— T George John</span>
+          
+        </footer>
+      </article>
+    </div>
+
+    <div class="wall">
+      <article class="card">
+        <blockquote class="pull">It was she who established the school and made it so famous.</blockquote>
+        <div class="body">
+          <p>Whatever the feelings between ETASI and Jazz, it can't be forgotten that it was she who established the school and made it so famous — the fruits of which they're still enjoying. The fact that they didn't mention her demise on their website sadly reeks of pettiness. 😕</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Aarti</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">Seek Truth our Golden Rule…</blockquote>
+        <div class="body">
+          <p>The Timpany School Song<br>(I think it was written by Big Miss)</p>
+          <p>We are of Timpany School<br>Seek Truth our Golden Rule<br>With open hearts and minds so free<br>Our lofty goals we seek</p>
+          <p>And we are being trained<br>To keep our lives unstained<br>We'll grow to be our country's best<br>And leave behind the rest</p>
+          <p>Chorus:<br>We will work, we will pray<br>We will help build everyday<br>A school where deeds of truth are sown<br>And the Saviour's love is known</p>
+          <p>Persevere to conquer<br>Progress to perfection<br>Undaunted ever scale new heights<br>For wisdom thirsty be</p>
+          <p>We'll hold the banner high<br>For honour we aspire<br>Come join the songs of triumph loud<br>Of Timpany we're proud</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Anila Narla</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">An Epitome. An Icon. We can never ever meet anyone like you.</blockquote>
+        <div class="body">
+          <p>Aaahh! Old memories. We came all the way to school from Shipyard. Sometimes the main gates were closed (for latecomers) and we could hear the assembly, the Amen, a thought or a little story for the day… then a pause — we knew Big Miss was stepping out to address us. A finger shakes at us. A thunder breaks out. The sky falls.</p>
+          <p>On the other side of the gate, our legs go weak and tremble. We feel faint. No excuses were allowed. Miss knew better. Waiting for minutes to pass — I think I even squinted in fear. Everything was sweet later in the day.</p>
+          <p>An Epitome.<br>An Icon.<br>Miss your style.<br>Your perfection.<br>Your warmth.</p>
+          <p>Love you, Miss.<br>We can never ever meet anyone like you. 🙏❤️🙏</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Aruna</span>
+          <span class="meta">second post</span>
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">The signature single flower in her bun is so uniquely her.</blockquote>
+        <div class="body">
+          <p>Just wanted to add — I have always admired Ms Jeyaraja Rao's personal style. She carried her enviable collection of sarees so beautifully. The signature single flower in her bun is so uniquely her — I haven't seen anyone who could carry that off as well as she did.</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Aruna</span>
+          <span class="meta">third post</span>
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">As her students, we are blessed and carry forward her legacy far and wide.</blockquote>
+        <div class="body">
+          <p>Let us take a moment and reflect on her first name, Mercy. I cannot help but remember the lines from The Merchant of Venice (taught by the late Mrs Elisha), on the quality of mercy:</p>
+          <p>"The quality of mercy is not strain'd.<br>It droppeth as the gentle rain from heaven<br>Upon the place beneath. It is twice blest:<br>It blesseth him that gives, and him that takes."</p>
+          <p>As her students, we are blessed and carry forward her legacy far and wide.</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Arvind Vepa</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">Travelling was an education in itself.</blockquote>
+        <div class="body">
+          <p>Jazz had a brilliant mind and was very progressive in those days. I remember she let my daughter skip her final exams so she could sail with her father — she said travelling was an education in itself. So very grateful to her for that.</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Bharati Sikand</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">“Well done my good and faithful Ms Jeyaraja Rao. What a rich harvest your dedication has produced.”</blockquote>
+        <div class="body">
+          <p>You see what Ms Jeyaraja Rao is doing! This is a farewell gift to all her students who she cared for individually. She has brought so many together. I can almost hear her say:</p>
+          <p>"Great is Your faithfulness, O God. These are my students that You entrusted to my care. They have climbed the mountain and like the chu chu train, they know they can achieve greatness. God, I have got a whole train load of my Timpany students across the world."</p>
+          <p>And God replies:</p>
+          <p>"Well done my good and faithful Ms Jeyaraja Rao. What a rich harvest your dedication has produced. Rest in peace."</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Deborah Bhanojirow</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">She would be the first to send me a message on March 22nd — to console us on the loss of our son Rohit.</blockquote>
+        <div class="body">
+          <p>Every year, Jazz would be the first to send me a message on March 22nd, to console Anantram and me on the loss of our son Rohit that day. Now we celebrate Jazz and Rohit together. A date etched in my heart. 🥰</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Dr Meenakshi Anantram</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">She came over to hug me and say sorry.</blockquote>
+        <div class="body">
+          <p>Met the stick the first time. I remember she was crying while it came down on my open palm. Later she came over to hug me and say sorry. 😢</p>
+          <p>Strangely, she never stopped saying sorry till the end. That strap was worth it.</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Dr Meenakshi Anantram</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">Jupiter House (finally) won Throwball — and we got caught jumping the wall near the toilets by ‘the Jazz.’</blockquote>
+        <div class="body">
+          <p>Took me back to that historic day in 1978 when Jupiter House (finally 😂) won Throwball after many years, and as Captain and Vice Captain, Nikhil Oza (better known as Ozone 😍) and I escaped to pick treats for our victorious girls — and got caught jumping the wall near the toilets by "the Jazz."</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Dr Meenakshi Anantram</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">She made us so strong. Today we are India's first Palliative Medical Clowns.</blockquote>
+        <div class="body">
+          <p>I remember the day I won the election to become President of the Union of Stella Maris College Madras in 1983. Jazz sent me flowers and such a beautiful letter on leadership. I've been searching the house these last few days trying to find that and her pictures. They are etched on my heart, though. 🥰</p>
+          <p>Miss talking to Miss J. 😢 She used to send Anantram and me messages regularly after we lost Rohit. She made us so strong. Today we are India's first Palliative Medical Clowns. 🙏</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Dr Meenakshi Anantram</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">Our Jazz has unbeatably created an awesome impact in all our lives.</blockquote>
+        <div class="body">
+          <p>As a Timpot I just realise how much we have contributed to the entire world, living in different parts and creating a big difference — just because of the simple reason: our mentorship from childhood, no matter our age and journey throughout. Our Jazz has unbeatably created an awesome impact in all our lives. This is our best blessing forever. Love you forever, our irreplaceable Jazz. We all miss you big time and will make you so, so proud. ❤️</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Dr Mike Proddoku</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">She came to my hospital opening and blessed us.</blockquote>
+        <div class="body">
+          <p>My attachment to the old school next to St John's Church during 1956/57 to 1959/60 (i.e. 1st to 3rd standard) is only around three years, but Miss's charming personality has imprinted itself in our minds. She was so nice and obliging when I went in 1988 to get a seat in LKG for my elder daughter in the middle of the academic year — she recognised me and got her admitted. Both my daughters are Timpots. She came to my hospital opening and blessed us. We miss her and pray for her soul to rest in peace. 🙏</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Dr M B Patrudu</span>
+          <span class="meta">1st–3rd standard · 1956/57–1959/60</span>
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">“Keep quiet” — the whole day.</blockquote>
+        <div class="body">
+          <p>Thank you Mrudula for sharing Sarla Miss's picture — she was my 3rd grade class teacher. The best memory I have is going home and telling my parents that Miss spoke to me a lot every day.</p>
+          <p>"What did she speak?" my parents would ask.</p>
+          <p>And I would say she would tell me… "Keep quiet." The whole day. 😀</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Hima</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">She noticed the small things, encouraged without fuss, and set a tone that stayed with the school.</blockquote>
+        <div class="body">
+          <p>The late Ms Jeyaraja Rao led with quiet strength and clarity. She was firm but fair, and deeply invested in the growth of her students — not just academically, but in how they carried themselves. She noticed the small things, encouraged without fuss, and set a tone that stayed with the school.</p>
+          <p>Her belief that confidence comes with practice showed in the morning assemblies. We were given topics in advance, but standing up to speak in front of the entire school was never easy. There were nerves, pauses, and uncertainty. Yet, over time, those moments helped us find our voice and speak with greater ease.</p>
+          <p>She also ensured that sports had a meaningful place in school life. Under her leadership, softball was introduced — likely among the first schools in India to do so. 👏 It added something new to the rhythm of school, and quickly became a distinctive part of it.</p>
+          <p>What she created was not loud or showy, but it was lasting — a school where students grew in confidence, step by step, under her steady guidance and encouragement.</p>
+          <p>I was privileged to meet her once again in Bangalore and will always cherish my memories of this angel who walked this earth. 🙏</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Jaisurya Mamidenna</span>
+          <span class="meta">Mercury · 1969–1973</span>
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">Her one-hour Christmas message in Telugu — not a single word of English. Such was her perfection.</blockquote>
+        <div class="body">
+          <p>I'm an old student of Timpany of the mid-60s and early 70s, and I knew her as a perfect English-speaking Principal.</p>
+          <p>After I joined the Visakhapatnam Port for my career, sometime in the late 80s (88 or 89), she was invited to deliver the Christmas message in Telugu. The English message was to be delivered by Bishop K. R. Singh. Her one-hour message in Telugu was outstanding, perfect and impeccable — not a single word of English was used. Such was her perfection.</p>
+          <p>My granddaughter, the third-generation Timpot, is now in 5th standard.</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Joseph Polimetla</span>
+          <span class="meta">mid-1960s – early 1970s</span>
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">It wasn't only the girls who were taught needlework — the boys too.</blockquote>
+        <div class="body">
+          <p>And… it wasn't only the girls who were taught needlework — the boys too. Thanks to that, I am proud to display my sewing skills at home… which are sometimes better than my better half's. 😂</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Kalim</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">She said I would be on the map of India for being the first ICT teacher in the country.</blockquote>
+        <div class="body">
+          <p>A proud Timpot, currently in Bengaluru. I was also the first Computer Teacher for Timpany — dear Jazz said I would be on the map of India for being the first ICT teacher in India, as other schools were not yet offering ICT as part of the high school curriculum.</p>
+          <p>She sent me to Bangalore for training with Eiko Computer Centre, and they set up the first computer lab for Timpany adjacent to her office. I owe my teaching career to dear Miss. First a student, later joined as staff when I returned to Vizag. I still treasure her sweet gift of embroidered table mats — a parting gift when I left for the Gulf.</p>
+          <p>I kept in touch with her through the years, until her 93rd birthday — when she prayed for my dear departed Mom. What an incredible memory she had. 👌</p>
+          <p>She will always remain "Special" — an icon, an unforgettable personality, larger than life. May her sweet soul find solace in Heaven. 🙏💐❤️</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Laxmi Kumar</span>
+          <span class="meta">First Computer Teacher · later staff</span>
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">The story of the Little Blue Engine that climbed the BIG mountain telling itself — I think I can.</blockquote>
+        <div class="body">
+          <p>Mercy "Miss" Jeyaraja Rao — or Jazz, as we lovingly called her — was not just our Principal at one time, but an iconic figure who shaped generations of young minds growing up and moving out of Vizag to make a difference in the world, with the values inculcated under her guidance by the force called Timpany.</p>
+          <p>The thing I remember most about her — which has truly turned around my life for good — from her enormous legacy is the fable she narrated on the first day of the new academic year during the assembly. The story of the Little Blue Engine that climbed the BIG mountain telling itself "I think I can," till it did climb over.</p>
+          <p>What an amazing and inspiring story that was. Weirdly it meant very little back then, and I barely knew it stuck in my mind the way it did. But today, almost 30 years after leaving school, this very story has become the elixir for my life — and that of my children, to whom I continue to narrate this every year they start their new year.</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Monisha Hatkar (Chakravarthy)</span>
+          <span class="meta">ICSE 1992 · ISC 1994</span>
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">She always walked gracefully towering over everyone. Had an aura that no one could overshadow.</blockquote>
+        <div class="body">
+          <p>The best memories I have of Big Miss are of her in well-draped, bold-coloured sarees, always with a flower tucked in her neatly tied bun.</p>
+          <p>She always walked gracefully, towering over everyone. Had an aura that no one could overshadow. She was always poised in her speech and body language.</p>
+          <p>The way she spoke always drilled right through our mind, heart and soul, leaving an imprint forever. 🫶</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Monisha Hatkar (Chakravarthy)</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">All work and no play makes Jack a dull boy.</blockquote>
+        <div class="body">
+          <p>"All work and no play makes Jack a dull boy" — Jazz said often, if we were found in the classrooms during PT class. 😇</p>
+          <p>When we started taking her advice seriously (especially just before the 10th and 12th board exams, obviously to de-stress 😎), Big Miss would call us by name to her chamber (over the iconic intercom system) and each of us would immediately know the gravity of what we had done. 🤦🏻‍♀️</p>
+          <p>Thanks to all the grounding we received, our batch went on to produce both the highest number of IITians and sports persons in 1994. 🫡</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Monisha Hatkar (Chakravarthy)</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">She didn't just lead Timpany School — she transformed generations.</blockquote>
+        <div class="body">
+          <p>Most people forget their school.</p>
+          <p>But never forget the person who shaped their life there.</p>
+          <p>For thousands of us in Timpany Senior Secondary School, Vizag, that person was the late Dr. Mercy Jeyaraja Rao — a woman who defined grace under pressure, discipline with compassion, and leadership with purpose. She didn't just lead Timpany School. She transformed generations.</p>
+          <p>To us, she was not just a Principal. She was a mentor. A conscience keeper. A quiet architect of character. She was… our beloved Jazz. ♥️</p>
+          <p>Her classrooms extended far beyond walls. Her lessons went far beyond academics. She taught us to show up with integrity. To lead with courage. To rise, no matter the odds.</p>
+          <p>Today, across the world, countless Timpots carry her imprint — in boardrooms, communities, institutions, and lives they continue to impact. That is her legacy. She groomed us to believe in ourselves first. Not awards. Not titles. But people who became more because she believed they could.</p>
+          <p>Jazz, you didn't just teach us.<br>You lived through us.<br>And you always will.</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Monisha Hatkar (Chakravarthy)</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">I don't think anyone that's been a part of Timpany can ever see Timpany and Big Miss apart.</blockquote>
+        <div class="body">
+          <p>As we fondly remember and bid adieu to our darling Big Miss — who has managed to bring so many of us together — I hope and pray the generations ahead carry her legacy forward.</p>
+          <p>The change in management and all the drama happened when I was in grade 11 and it shook most of us. I don't think anyone that's been a part of Timpany can ever see Timpany and Big Miss apart. Always a Timpot at heart, whichever corner of the earth we live in.</p>
+          <p>We'll hold our banner high<br>For honour we aspire<br>Come join the songs of triumph loud<br>Of Timpany we are proud. 🙏</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Neiharika</span>
+          <span class="meta">ISC 2004 · Mercury House Captain</span>
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">A platform where we were allowed to be who we were.</blockquote>
+        <div class="body">
+          <p>Big Miss had a profound impact on our early life. She was there until we were in class 11. We fondly looked forward to her first-day-of-school assembly days. I was rather bold — I would always knock and walk into her cabin, and she would always respond to my earnest queries: "Yes child. Now off to your class." I remember it so well.</p>
+          <p>A part of me still belongs to my school. My husband is always joking about how I'm a poster girl for school days. But this is the right platform to share and express — I still feel I never had enough of school, years after it ended. After travelling with my in-service parents from city to city, Vizag brought in the much-needed stability — 5th standard to 12th. Every memory of Timpany so beautifully etched in my heart.</p>
+          <p>17th July 1996 was the first day I stepped into Timpany, and 28th March 2004 the last. The lessons, the memories, many firsts, the accomplishments, the friendships — they all stay strongly inside. A platform where we were allowed to be who we were.</p>
+          <p>When we went to college we realised — for a "small" city, Vizag and Timpany had given us way too much exposure.</p>
+          <p>Thank you, thank you, thank you, Big Miss. I know you will always continue to bless us from wherever you are. 🥺</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Neiharika</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">Discipline, diction, presence. A life well lived.</blockquote>
+        <div class="body">
+          <p>Mercy touched and shaped all of us in ways big and small — discipline, diction, presence. A life well lived. May she rest in eternal peace. 🙏</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Nitish Pinisetti</span>
+          <span class="meta">Pluto · 1991</span>
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">Walked into Timpany school at the age of 6. Now we are 68. But our minds are still fresh.</blockquote>
+        <div class="body">
+          <p>Timpany School at Visakhapatnam, on the East Coast of Andhra Pradesh, earned the fame of being the best school in the city. A well-planned school with a playground and tracks, baseball, netball, basketball, throwball courts.</p>
+          <p>A batch of 24 students started their journey in January 1966 and finished in December 1974.</p>
+          <p>The Principal, Ms Jeyaraja Rao, was a terror to the students — the teachers feared her too. Disciplined in all aspects: punctuality, dress code, neat physical appearance, manners, spirituality, and above all, academics. The spoken English, the language and pronunciation were at their best. This made the students — fondly referred to as "Timpots" — stand out amongst the rest. Timpany School made a non-erasable impression globally.</p>
+          <p>The teachers were very good and caring. Cannot forget the names of all the teachers whose teachings laid the strongest foundation to our lives: Ms Rachel, Mrs Rajaratnam, Mrs Melbourne, Ms Sarojini, Ms Kamala, Mrs Reuben, Mrs Cormatty, Mrs Samuel, Mrs Elisha, Mrs Mamata Syed, Mrs Uma Ranganadhan, Mrs Chiranjeevi, Mr Chiranjeevi (sports master), Mrs Pushpalata Nair, Mrs Lakshmi, Mrs Malathi. And Ms Paul, the office clerk.</p>
+          <p>Ms Jeyaraja Rao's classes on English Literature were the ultimate.</p>
+          <p>We passed out in December 1974, totally 22 of us, to pursue our lives. Walked into Timpany school at the age of 6. Now we are 68. But our minds are still fresh with the memories of our good old school, and we still proudly call ourselves "Timpots."</p>
+          <p>A very big thank you to our dearest Jazz for shaping our lives. 🙏</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Patta Saroj</span>
+          <span class="meta">January 1966 – December 1974</span>
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">Miss J and Sandy met me at the airport and stayed with me for 3 days post-surgery. Even my family was not around.</blockquote>
+        <div class="body">
+          <p>Miss J had a profound effect on my life, though I left Timpany years ago.</p>
+          <p>In 2010, when I was in a precarious, absolutely hopeless medical situation, I reached out to her for advice. After a reply from Miss J, who got a set of the best medical doctors and a surgeon in the US, I was winging my way to the US for surgery soon. Miss J and Sandy met me at the airport in Tennessee and stayed with me for 3 days post-surgery. Even my family was not around during those tenuous times.</p>
+          <p>I am thankful to God for having brought Miss J into my life.</p>
+          <p>On hindsight, Timpany made us what we are today — thanks to Miss J and the wonderful band of endearing teachers.</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Piyush Nair (Mickey)</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">You were the first to believe in me — the one who saw my potential before I even knew I had it.</blockquote>
+        <div class="body">
+          <p>If today I have reached a place of dignity and honour, it is your gentle guidance at that tender age that made me take those baby "steps of learning" — that are fresh and memorable in my heart and will continue for my lifetime.</p>
+          <p>You were the first to believe in me — the one who saw my potential before I even knew I had it. Your kindness and guidance shaped me. To military school you came over too, showcasing me as a Timpany child many years ago. And now, even though you're gone, your lessons still echo in my soul.</p>
+          <p>RIP, dear Madam.</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Gp Capt Allam Prabhakar (Veteran)</span>
+          <span class="meta">Class of 1962</span>
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">I got warned of a haircut in the class. Now I don't need to worry about a haircut. 😛</blockquote>
+        <div class="body">
+          <p>I moved from St Aloysius and did ISC (1989) at Timpany. I haven't come across a teacher or faculty like Miss Jazz. She was a martinet — strict discipline. I was one of the guys that got warned of a haircut in the class. Now I don't need to worry about a haircut. 😛</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Rama Gogineni</span>
+          <span class="meta">ISC 1989</span>
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">7:55 a.m. was never just a time — it was a line you dared not cross.</blockquote>
+        <div class="body">
+          <p>Jazz was not just an educationist, but a guiding force who shaped our lives with her unwavering commitment to discipline and values. At the time, her strictness often felt overwhelming, but today we realise that those very lessons have become the foundation of who we are.</p>
+          <p>We still remember how 7:55 a.m. was never just a time — it was a line you dared not cross. Walking in late felt like entering a lion's den, where her sharp words would shake you up, but also set you right for life.</p>
+          <p>There were moments that stayed with us forever — students made to stand in the corridor for untidy uniforms, reminders about polished shoes, trimmed nails, proper haircuts, and carrying a handkerchief every day. There were even rare but unforgettable punishments that taught us the value of self-respect and discipline in a way we could never ignore.</p>
+          <p>What we once feared, we now deeply appreciate. Her discipline has stayed with us, guiding us even today in our personal and professional lives. Jazz's legacy lives on in every one of us.</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Rayudu</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">She constantly reminded us to count our blessings.</blockquote>
+        <div class="body">
+          <p>Our Principal's long prayers — seeking God's blessings and protection for her children — along with her daily speeches filled with morals and values, left a deep and lasting impact on us. She constantly reminded us to count our blessings and remain grateful for what the Lord has given us.</p>
+          <p>"Timpots" carry these teachings with them, and are distinctly visible in society for their discipline, character, resilience, and the values they uphold. And yes, perhaps a touch of confidence — sometimes mistaken for arrogance. 😀</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Rayudu</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">Our Jazz is so big, so loving and caring. There's nothing for us she can't do.</blockquote>
+        <div class="body">
+          <p>Our Jazz is so big,<br>So loving and caring,<br>There's nothing for us<br>She can't do.<br>The prayers are hers, discipline was hers,<br>The love is her handiwork too.<br>Our Jazz is so beautiful —<br>There's nothing for us<br>She won't do.</p>
+          <p>We love you, Amma. 💕❤️</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Sandhya Gautam</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">She was up till midnight almost and showed no signs of being tired.</blockquote>
+        <div class="body">
+          <p>Gautam and I spent her 95th birthday with her at Binu and David's home. It was such a beautiful evening. She was up till midnight almost and showed no signs of being tired. We all prayed together and I spoke to her from Niagara the next day. She said she would record a message for our class 50th reunion later this year. Sigh — guess it wasn't meant to be. We love you so much, Amma. ❤️🙏</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Sandhya Gautam</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">She deserves one of our nation's civilian awards — Padma Shri — posthumously.</blockquote>
+        <div class="body">
+          <p>While many paid glowing tributes to our Big Miss, Jeyaraja Rao, I think she deserves one of our nation's civilian awards — Padma Shri — posthumously. It was quite a difficult task to become an educator in 1954, with terrible conditions and scant resources, just after we attained independence. Despite all odds, she chose to become one of the most successful educators in the region and made Timpany a prestigious school due to her efficient administration. Madam Hilda Mary Lazarus — a doctor, a simple human being, recognised worldwide, and a close friend of Big Miss — received the Padma Shri in the 1970s. If we can collectively lobby about our Big Miss's contributions to the field of education, we can ensure that she too gets the Padma Shri posthumously before her 100th birthday.</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Sekhar T</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">Jazz on the prowl — with strap.</blockquote>
+        <div class="body">
+          <p>Jazz on the prowl — with strap.</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Shankar Mathur</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">Echoes of resolute love — silent miss is missed.</blockquote>
+        <div class="body">
+          <p>My haiku for our Big Miss:</p>
+          <p>Elegant image —<br>Echoes of resolute love,<br>Silent miss is missed.</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Siva Yarlagadda</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">She sat me in her lap, reassuring that my life will be ok and I can dream big.</blockquote>
+        <div class="body">
+          <p>My first day at Timpany in 6th grade began with an intercom announcement from Ms Jeyaraja Rao: "Children, you should all have a clean haircut. If not, I will ensure to bring scissors and personally cut your hair."</p>
+          <p>Me, being continuously balded as a child each summer by my mother's incessant prayers — finally had two strands of hair growing on my head and was getting to dream of pleating up my hair and putting garlands of jasmine. Hearing the announcement of the haircut policy at the new school traumatised my first day. (I didn't realise it was meant for boys only. 🤣) I kept profusely crying. Harini, Savitha, Jyothi, Preethi Jain, Sumitha, Ramesh, Captain Diwaker — then class captains — none could dissuade me from crying. New student crying for half a day was taken to Ms Jazz's office finally.</p>
+          <p>I remember my first conversation with her so vividly — how kind she was. She sat me in her lap, reassuring that my life will be ok and I can dream big… long hair 🤣 or perhaps any big and impossible dreams. Life-changing moments — fear being replaced with confidence.</p>
+          <p>Ms Jazz, you are the best of best. You are so deeply loved and remembered. Your voice still rings in my ears. Thank you for shaping us. 🙏</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Sridevi Kurella</span>
+          <span class="meta">ICSE 1989</span>
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">She was the sole reason for making me ‘worthy’ in my father's sight.</blockquote>
+        <div class="body">
+          <p>Just felt the urge to express my feelings for Ms Jeyaraja Rao — the remarkable lady who gave me a purpose in my life when I had no identity. She gave me one. She offered me a job in her school — and that was the best thing that had ever happened to me. Mind you, I had neither the skill nor the qualifications, and yet… 🤷‍♀️</p>
+          <p>A beautiful and wonderful lady who I was always in complete awe of — a fascinating lady who was so awesomely gifted. Miss was the most amazingly dedicated, devoted, charismatic and mesmerising woman I had ever seen in my whole life.</p>
+          <p>She was not only a great mentor, but a huge inspiration and an excellent role model to me. I will forever be deeply grateful and wholly indebted to her for all that she has given me — her invaluable support, guidance, warmth, affection and wisdom — which I will always carry with me. She has profoundly impacted my life, and I am so thankful to her.</p>
+          <p>There is no denying that I found her intimidating, but I always had this tremendous desire to have her like me — which she did — and I would feel thrilled to bits every time she had a kind and encouraging word for me. It truly mattered to me to be in her good books, and I always looked up to her with immense respect and admiration for the commendable manner in which she worked as our Principal.</p>
+          <p>But for me, my beloved Miss holds an extremely special place in my heart, because she was the sole reason for making me "worthy" in my father's sight — and that meant the whole world to me. ❤️</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Sudha Nair</span>
+          <span class="meta">Former staff</span>
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">What Timpany and Miss Jeyaraja Rao taught us was to be independent and to sail against the odds.</blockquote>
+        <div class="body">
+          <p>Miss Jeyaraja Rao has touched and nurtured thousands of students and is truly the greatest leader we have come across. What Timpany and Miss Jeyaraja Rao taught us was to be independent — situational leadership, and to sail against the odds. What we are today is because of the school.</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Surya Nemani (Harsha)</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">It was my experiences as a young boy at Timpany that laid the foundation for my success.</blockquote>
+        <div class="body">
+          <p>Listening to the speakers, I was struck by the common theme that emerged — the importance of living with integrity, a value that Ms Jeyaraja Rao taught us during our time at Timpany. This principle has had a profound impact on my life, both personally and professionally, and has helped me stay true to myself. It was my experiences as a young boy at Timpany that laid the foundation for my success. Today, as I look back on my 16-year journey at work, I'm grateful for the passion and integrity that have driven me to reach the top position in my organisation. I'm thankful to the almighty, Miss Jeyaraja Rao, and all the exceptional teachers who taught us life lessons that have shaped us into the individuals we are today.</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Surya Nemani (Harsha)</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">She asked for Natasha's contact info and even sent her a beautiful hand-written letter of support.</blockquote>
+        <div class="body">
+          <p>I had a few conversations with Jazz over the years about corporal discipline. I worked for decades in education, and she apologised for the fear she caused us and the strappings she gave us. Reducing some of our teachers to tears was also something she said she regretted doing — she said she saw herself as the head of a large family and followed the prevalent school of thought of that time, where strict discipline was the norm. Spare the rod and all that. I believe her heart was in the right place and she meant well.</p>
+          <p>She was supportive of my mum when my father was away in Bangladesh. More recently, about 10 years ago, my sister Natasha was diagnosed with cancer. Jazz and I spoke and she asked for Natasha's contact info and even sent her a beautiful hand-written letter of support.</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Ujwala S</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">One of my managers at HSBC wanted to know if all Timpots had such good handwriting.</blockquote>
+        <div class="body">
+          <p>One of my managers at HSBC wanted to know if all Timpots had such good handwriting. Credit to Jazz for her inspection — checking our notes, and if the handwriting was bad, God save you. 😁</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Umadevi</span>
+          
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">A wonderful human being — a great orator, teacher, Principal and mentor. God incarnate. Par excellence.</blockquote>
+        <div class="body">
+          <p>The legacy we Timpots have inherited from Jazz — Dr. Mercy Jeyaraja Rao — is profound. A way of life shaped by discipline, regimentation, and strong values and bonds that remain etched in us forever.</p>
+          <p>Dr. Mercy Jeyaraja Rao was a wonderful human being — a great orator, an inspiring teacher, a visionary Principal, and above all, a mentor who shaped our lives. To many of us, she was nothing short of God incarnate — guiding us with discipline, regimentation, and values that have stood the test of time. Her excellence was not just in what she did, but in the lives she transformed. Par excellence… always.</p>
+          <p>We don't just remember her — we live her legacy, in who we are and in all that we will continue to become.</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— Vinod Nambiar</span>
+          <span class="meta">ICSE 1976</span>
+        </footer>
+      </article>
+      <article class="card">
+        <blockquote class="pull">I owe it to these women — I was moulded in the cultural womb they collectively spawned.</blockquote>
+        <div class="body">
+          <p>In school, my teachers thought of me as intelligent but naughty — maybe unruly too. In my adulthood, people I have worked with have called me a very cultured person. I owe it to these women — I was moulded in the cultural womb they collectively spawned.</p>
+          <p>Over the last few days, as I have been reading the messages pouring into this group, I wanted to acknowledge my debt to these magical women — and certainly to Big Miss, for putting them together in one place.</p>
+        </div>
+        <footer class="byline">
+          <span class="name">— A Timpot</span>
+          <span class="meta">Anonymous</span>
+        </footer>
+      </article>
+    </div>
+
+    <div class="share-cta">
+      <h3>Share your own <em>memory</em></h3>
+      <p>If you have a story, a letter, a photograph or a few lines you'd like added to this wall, write to <a href="mailto:hello@timpotsforever.org?subject=Tribute%20for%20Jazz">hello@timpotsforever.org</a> — short or long, prose or poem, we'd love to include it.</p>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
