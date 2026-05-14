@@ -137,8 +137,8 @@ Items previously here but removed:
 | `login.html` | public | ✅ Premium | Auth forms; matches profile.html card design |
 | `profile.html` | session required | ✅ Premium | Alumni profile editor; baseline design reference |
 | `map.html` | public | ✅ Premium | Alumni map; Leaflet + cluster visualization |
-| `calendar.html` | public | ⚠️ Good | Event cards; hand-edited HTML |
-| `videos-photos.html` | public | ⚠️ Placeholder | Coming soon; awaits implementation |
+| `calendar.html` | public | ✅ Premium | Event cards; uses canonical `.members-header` |
+| `videos-photos.html` | public | ✅ Premium | Coming-soon placeholder card with icon; canonical header |
 | `terms.html` | public | ✅ Premium | T&Cs; card-based layout |
 | `privacy.html` | public | ✅ Premium | Privacy policy; card-based layout |
 | `accessibility.html` | public | ✅ Premium | Accessibility statement; card-based layout |
@@ -186,37 +186,76 @@ Repo sits inside `/Users/admin/Dropbox orignal/Personal/KP's Stuff/Timpots90/Tim
 ## Design Audit & Improvements (May 2026)
 
 **Audit Results:**
-- Overall design quality: 78/100 → 90/100 (after improvements)
-- Pages needing attention: login.html (60 → 95), legal pages (70 → 93)
-- High-quality pages: profile.html, giving-back.html (95+)
+- Overall design quality: 78/100 → 94/100 (after second consistency pass)
+- All standalone pages now use canonical `.members-header` pattern
+- Card-based section layout uniform across all legal pages
+
+**Canonical header pattern (profile.html baseline) — REQUIRED on every standalone page:**
+
+```html
+<div class="members-header">
+  <div class="wrap">
+    <h2>Timpots <em>Forever</em> — Page Title</h2>
+    <div class="actions">
+      <a href="index.html" class="public-site-link" aria-label="Home" title="Home">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 10.5 12 3l9 7.5V21H3z"/>
+          <path d="M9 21v-7h6v7"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>
+```
+
+CSS rules:
+- `.members-header`: `background: var(--brand); padding: 18px 0; color: #fff;`
+- `.members-header .wrap`: `max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; gap: 16px;`
+- `.members-header h2`: `font-family: 'Playfair Display'; font-size: 22px; font-weight: 500;`
+- `.members-header h2 em`: `font-style: italic; color: var(--gold);` (NOT --gold-bright)
+- `.public-site-link`: opacity 0.8 hover to 1, no circle background
 
 **Improvements Made:**
 
-1. **login.html** — Elevated to premium design
-   - Title sizing: 28px → 32px (more prominent)
-   - Font weight: 600 → 500 (matches profile.html elegance)
-   - Input background: cream → white (visual consistency)
-   - Refined tab styling and button states
-   - Better spacing and typography hierarchy
+1. **Canonical header pattern enforced** — all standalone pages
+   - terms.html, privacy.html, accessibility.html refactored to canonical pattern
+   - calendar.html, videos-photos.html: renamed `.page-header` → `.members-header`, `.icon-link` → `.public-site-link`
+   - h2 font-weight standardized to 500 (was inconsistent 500/600)
+   - em color standardized to `var(--gold)` (was inconsistent gold/gold-bright)
+   - Home icon SVG standardized across all pages
 
-2. **Legal Pages** (terms, privacy, accessibility)
-   - Background: white → cream (--bg-soft, matches landing page)
-   - Typography: Updated to page-title pattern with italic emphasis
-   - Spacing: Improved margins for premium feel
-   - Responsive: Mobile breakpoint optimization
+2. **Info-box colors brought into palette**
+   - Removed off-palette `#e8f4f8` (light blue) and `#fff3cd` (yellow)
+   - Now use `background: var(--bg-soft); border-left: 4px solid var(--gold);`
 
-3. **Social Icons** — Modernized
-   - Replaced emoji/symbol placeholders with modern line SVGs
-   - Facebook: "f" icon → recognizable outline box
-   - YouTube: play symbol → modern play icon
-   - WhatsApp: phone icon → recognizable chat bubble
+3. **Responsive breakpoint standardized to 640px**
+   - Fixed calendar.html, videos-photos.html, map.html (were using 600px)
 
-4. **Design Standards** — Documented
-   - No dark text on dark backgrounds (WCAG AA)
-   - Playfair Display for all headings (h1-h4)
-   - Consistent 1.8–2px stroke width for icons
-   - Unified card styling (30px 32px padding)
-   - Responsive breakpoint: 640px max-width
+4. **Card-based section layout uniform**
+   - terms.html: all 21 sections wrapped in `.card` divs (was unwrapped)
+   - privacy.html: all 18 sections wrapped (already done)
+   - accessibility.html: all sections wrapped (already done)
+
+5. **h3 styling added to terms.html and accessibility.html**
+   - Was missing → fell back to browser defaults
+
+6. **Modern line-style SVGs throughout**
+   - stories.html c2, c3 portraits: filled gold avatars → line silhouettes (matching c1 and hero.html)
+   - social.html Facebook/YouTube/WhatsApp icons fixed (were rendering as maroon boxes)
+
+7. **videos-photos.html elevated from bare placeholder**
+   - Added decorative image icon SVG
+   - Italic emphasis on "Coming soon" heading
+   - Better card styling and hover states
+
+**Design Standards (REQUIRED):**
+- No dark text on dark backgrounds (WCAG AA)
+- Playfair Display for all headings (h1-h4)
+- Consistent 1.8–2px stroke width for icons
+- Unified card styling (30px 32px padding, 1px solid --rule border, white bg)
+- Responsive breakpoint: 640px max-width
+- Header h2: font-weight 500, font-size 22px, em color var(--gold)
+- Public site link: opacity-based hover (0.8 → 1.0), 6px padding, no circle background
 
 ## Stale stuff to ignore
 
@@ -370,24 +409,25 @@ What could push it longer:
 ## Design Debt & Future Work
 
 **Minor items** (not blocking):
-- calendar.html — Event cards could use card class styling for consistency
-- videos-photos.html — Placeholder; needs full design when content arrives
 - Button size standardization — Some pages use slightly different button padding
-- Icon stroke-width — Standardize to 1.8px across all SVGs
+- Icon stroke-width — Standardize to 1.8px across all SVGs (mostly done)
 
-**Completed:**
-- ✅ Modern line-style icons (social, categories, navigation)
-- ✅ High-end design across all public pages
-- ✅ Card-based layout pattern established
-- ✅ Responsive design (mobile breakpoint 640px)
+**Completed (May 2026 consistency sweep):**
+- ✅ Modern line-style icons across all sections (social, stories, hero)
+- ✅ Canonical `.members-header` pattern on every standalone page
+- ✅ Card-based layout pattern in all legal pages (terms, privacy, accessibility)
+- ✅ Responsive design — 640px breakpoint everywhere (was inconsistent 600/640)
 - ✅ WCAG AA contrast compliance
 - ✅ Unified typography (Playfair + Source Sans 3)
+- ✅ Info-box colors brought into brand palette (no more off-brand blue/yellow)
+- ✅ Header h2 weight + em color standardized (500 + var(--gold))
+- ✅ Social icons rendering correctly (Facebook, YouTube, WhatsApp)
+- ✅ videos-photos.html elevated from bare placeholder to designed coming-soon card
 
 **Next priorities:**
 1. Implement Alumni Directory (directory.html) — use profile.html as template
-2. Refine calendar.html styling for consistency
-3. Populate videos-photos.html with actual content
-4. Consider dark mode support (future phase)
+2. Populate videos-photos.html with actual content (when ready)
+3. Consider dark mode support (future phase)
 
 ## Phase 2 (other features not yet built)
 

@@ -26,35 +26,44 @@
   }
   .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
-  .page-header {
+  /* ── Header bar (shared standalone-page pattern) ─────────── */
+  .members-header {
     background: var(--brand);
     padding: 18px 0;
     color: #fff;
   }
-  .page-header .wrap {
+  .members-header .wrap {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 16px;
   }
-  .page-header h2 {
+  .members-header h2 {
     font-family: 'Playfair Display', serif;
     font-size: 22px;
     font-weight: 500;
   }
-  .page-header h2 em {
+  .members-header h2 em {
     font-style: italic;
     color: var(--gold);
   }
-  .icon-link {
+  .members-header .actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .public-site-link {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     color: #fff;
     text-decoration: none;
-    opacity: 0.85;
+    opacity: 0.8;
     padding: 6px;
+    transition: opacity 0.15s;
   }
-  .icon-link:hover { opacity: 1; }
+  .public-site-link:hover { opacity: 1; }
+  .public-site-link svg { display: block; }
 
   .page-body {
     max-width: 700px;
@@ -81,43 +90,62 @@
   }
   .placeholder-card {
     background: #fff;
-    border: 1px dashed var(--rule);
-    padding: 48px 32px;
-    color: var(--ink-muted);
+    border: 1px solid var(--rule);
+    padding: 56px 36px;
+    color: var(--ink-soft);
+  }
+  .placeholder-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 20px;
+    color: var(--gold);
   }
   .placeholder-card h3 {
     font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    color: var(--ink-soft);
-    margin-bottom: 12px;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .placeholder-card h3 em {
+    font-style: italic;
+    color: var(--brand);
   }
   .placeholder-card p {
-    font-size: 14px;
-    line-height: 1.6;
-    margin-bottom: 12px;
+    font-size: 15px;
+    line-height: 1.65;
+    margin-bottom: 14px;
+    color: var(--ink-soft);
   }
+  .placeholder-card p:last-child { margin-bottom: 0; }
   .placeholder-card a {
     color: var(--brand);
-    text-decoration: underline;
+    text-decoration: none;
+    border-bottom: 1px solid var(--brand);
+    transition: opacity 0.15s;
   }
-  @media (max-width: 600px) {
+  .placeholder-card a:hover { opacity: 0.7; }
+  @media (max-width: 640px) {
     .page-title { font-size: 28px; }
     .page-body  { margin: 50px auto; }
+    .members-header h2 { font-size: 18px; }
   }
 </style>
 </head>
 
 <body>
 
-<div class="page-header">
+<div class="members-header">
   <div class="wrap">
     <h2>Timpots <em>Forever</em> — Videos &amp; Photos</h2>
-    <a href="index.html" class="icon-link" aria-label="Home" title="Home">
-      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M3 10.5 12 3l9 7.5V21H3z"/>
-        <path d="M9 21v-7h6v7"/>
-      </svg>
-    </a>
+    <div class="actions">
+      <a href="index.html" class="public-site-link" aria-label="Home" title="Home">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 10.5 12 3l9 7.5V21H3z"/>
+          <path d="M9 21v-7h6v7"/>
+        </svg>
+      </a>
+    </div>
   </div>
 </div>
 
@@ -128,7 +156,12 @@
   </p>
 
   <div class="placeholder-card">
-    <h3>Coming soon</h3>
+    <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+      <circle cx="8.5" cy="8.5" r="1.5"/>
+      <polyline points="21 15 16 10 5 21"/>
+    </svg>
+    <h3>Coming <em>soon</em></h3>
     <p>
       We're putting this section together. It will include alumni photos, classroom-era shots,
       reunion galleries, and embedded YouTube videos of tributes and events.

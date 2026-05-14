@@ -27,37 +27,49 @@
     display: flex;
     flex-direction: column;
   }
+  /* ── Header bar (shared standalone-page pattern) ─────────── */
   .members-header {
     background: var(--brand);
+    padding: 18px 0;
     color: #fff;
-    padding: 16px 24px;
+  }
+  .members-header .wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    font-weight: 600;
+    gap: 16px;
   }
-  .members-header .title { flex: 1; }
+  .members-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: #fff;
+    margin: 0;
+  }
+  .members-header h2 em {
+    font-style: italic;
+    color: var(--gold);
+  }
   .members-header .actions {
     display: flex;
-    gap: 16px;
     align-items: center;
+    gap: 14px;
   }
-  .members-header a {
-    color: #fff;
-    text-decoration: none;
-    display: flex;
+  .public-site-link {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    transition: background 0.2s;
+    color: #fff;
+    text-decoration: none;
+    opacity: 0.8;
+    padding: 6px;
+    transition: opacity 0.15s;
   }
-  .members-header a:hover { background: rgba(255,255,255,0.1); }
-  .home-icon { display: flex; align-items: center; justify-content: center; }
-  .home-icon svg { width: 20px; height: 20px; }
+  .public-site-link:hover { opacity: 1; }
+  .public-site-link svg { display: block; }
 
   /* ── Page layout ─────────────────────────────────────────── */
   .terms-page {
@@ -130,13 +142,22 @@
   }
 
   .disclaimer-box {
-    background: #fff3cd;
-    border-left: 4px solid #ffc107;
+    background: var(--bg-soft);
+    border-left: 4px solid var(--gold);
     padding: 16px;
     margin: 24px 0;
     border-radius: 2px;
   }
   .disclaimer-box p { margin-bottom: 0; }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-top: 20px;
+    margin-bottom: 12px;
+  }
 
   strong { color: var(--ink); font-weight: 600; }
   em { font-style: italic; }
@@ -151,20 +172,24 @@
     .terms-page { padding: 0 20px; }
     .page-title { font-size: 28px; }
     .card { padding: 24px 20px; }
+    .members-header .wrap { padding: 0 20px; }
+    .members-header h2 { font-size: 18px; }
   }
 </style>
 </head>
 <body>
 
 <div class="members-header">
-  <div class="title">Terms &amp; Conditions</div>
-  <div class="actions">
-    <a href="index.html" class="home-icon" title="Home" aria-label="Home">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M3 9L12 3l9 6v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-        <polyline points="9 22 9 12 15 12 15 22"/>
-      </svg>
-    </a>
+  <div class="wrap">
+    <h2>Timpots <em>Forever</em> — Terms &amp; Conditions</h2>
+    <div class="actions">
+      <a href="index.html" class="public-site-link" aria-label="Home" title="Home">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 10.5 12 3l9 7.5V21H3z"/>
+          <path d="M9 21v-7h6v7"/>
+        </svg>
+      </a>
+    </div>
   </div>
 </div>
 
@@ -174,161 +199,202 @@
 
   <div class="card">
     <h2>1. Acceptance of Terms</h2>
-  <p>By accessing and using Timpots Forever (timpotsforever.org), you accept and agree to be bound by these Terms and Conditions. If you do not agree to these terms, please do not use this website.</p>
-
-  <h2>2. Disclaimer of Affiliation</h2>
-  <div class="disclaimer-box">
-    <p><strong>Important:</strong> Timpots Forever is <strong>not affiliated with Timpany School, Timpany Schools in Visakhapatnam India, or any of their owners, management, or affiliates.</strong> This website is solely the property of and operated by a former student of Timpany School. Any use of the name "Timpots" or references to Timpany School are used for historical and nostalgic purposes only.</p>
+    <p>By accessing and using Timpots Forever (timpotsforever.org), you accept and agree to be bound by these Terms and Conditions. If you do not agree to these terms, please do not use this website.</p>
   </div>
 
-  <h2>3. Intellectual Property and Content Restrictions</h2>
-  <p>All content on Timpots Forever, including but not limited to text, images, logos, design, and layout, is the property of Timpots Forever or its licensors and is protected by copyright laws.</p>
-  <p><strong>You may not:</strong></p>
-  <ul>
-    <li>Copy, screenshot, capture, or otherwise save any part of the website or its content</li>
-    <li>Download, copy, use, or distribute any information, data, or profiles of alumni registered on this website</li>
-    <li>Reproduce, modify, or create derivative works from any content on the site</li>
-    <li>Use scrapers, bots, or automated tools to extract data</li>
-    <li>Share, republish, or redistribute any content without express written permission</li>
-  </ul>
-  <p>Violations of these restrictions may result in immediate account termination and legal action.</p>
+  <div class="card">
+    <h2>2. Disclaimer of Affiliation</h2>
+    <div class="disclaimer-box">
+      <p><strong>Important:</strong> Timpots Forever is <strong>not affiliated with Timpany School, Timpany Schools in Visakhapatnam India, or any of their owners, management, or affiliates.</strong> This website is solely the property of and operated by a former student of Timpany School. Any use of the name "Timpots" or references to Timpany School are used for historical and nostalgic purposes only.</p>
+    </div>
+  </div>
 
-  <h2>4. Alumni Membership and Verification</h2>
-  <p>Access to certain features of Timpots Forever (such as the Alumni Directory) requires membership. To maintain the integrity of the alumni community:</p>
-  <ul>
-    <li>Members may be required to provide proof of identity and attendance at Timpany School</li>
-    <li>Acceptable documentation may include school records, yearbooks, or other verifiable evidence</li>
-    <li>False or fraudulent membership applications will result in immediate account termination</li>
-    <li>The website owner reserves the right to verify membership status at any time</li>
-  </ul>
+  <div class="card">
+    <h2>3. Intellectual Property and Content Restrictions</h2>
+    <p>All content on Timpots Forever, including but not limited to text, images, logos, design, and layout, is the property of Timpots Forever or its licensors and is protected by copyright laws.</p>
+    <p><strong>You may not:</strong></p>
+    <ul>
+      <li>Copy, screenshot, capture, or otherwise save any part of the website or its content</li>
+      <li>Download, copy, use, or distribute any information, data, or profiles of alumni registered on this website</li>
+      <li>Reproduce, modify, or create derivative works from any content on the site</li>
+      <li>Use scrapers, bots, or automated tools to extract data</li>
+      <li>Share, republish, or redistribute any content without express written permission</li>
+    </ul>
+    <p>Violations of these restrictions may result in immediate account termination and legal action.</p>
+  </div>
 
-  <h2>5. User Accounts and Profile Management</h2>
-  <p>When you create an account, you agree to:</p>
-  <ul>
-    <li>Provide accurate and truthful information</li>
-    <li>Maintain the confidentiality of your password and account credentials</li>
-    <li>Notify us immediately of any unauthorized use of your account</li>
-    <li>Be responsible for all activities that occur under your account</li>
-  </ul>
-  <p>Your profile information is stored securely using Supabase authentication. You may update or delete your profile at any time through your account settings.</p>
+  <div class="card">
+    <h2>4. Alumni Membership and Verification</h2>
+    <p>Access to certain features of Timpots Forever (such as the Alumni Directory) requires membership. To maintain the integrity of the alumni community:</p>
+    <ul>
+      <li>Members may be required to provide proof of identity and attendance at Timpany School</li>
+      <li>Acceptable documentation may include school records, yearbooks, or other verifiable evidence</li>
+      <li>False or fraudulent membership applications will result in immediate account termination</li>
+      <li>The website owner reserves the right to verify membership status at any time</li>
+    </ul>
+  </div>
 
-  <h2>6. Privacy and Visibility Controls</h2>
-  <p>Timpots Forever provides granular privacy controls for your profile:</p>
-  <ul>
-    <li><strong>Public Map Data:</strong> Your first name, last initial, house, city, country, and location coordinates appear on the Alumni Map regardless of visibility settings, visible to anyone including non-members</li>
-    <li><strong>Member-Only Information:</strong> Your full name, contact information, professional details, and bio are only visible to logged-in alumni members, based on your chosen visibility level</li>
-    <li><strong>Private:</strong> You may set your profile to private, visible only to you</li>
-    <li><strong>Members:</strong> Default setting; visible to all logged-in alumni</li>
-  </ul>
-  <p>You control these settings in your profile. Changing visibility settings may take up to one hour to take effect.</p>
+  <div class="card">
+    <h2>5. User Accounts and Profile Management</h2>
+    <p>When you create an account, you agree to:</p>
+    <ul>
+      <li>Provide accurate and truthful information</li>
+      <li>Maintain the confidentiality of your password and account credentials</li>
+      <li>Notify us immediately of any unauthorized use of your account</li>
+      <li>Be responsible for all activities that occur under your account</li>
+    </ul>
+    <p>Your profile information is stored securely using Supabase authentication. You may update or delete your profile at any time through your account settings.</p>
+  </div>
 
-  <h2>7. Alumni Directory and Information Sharing</h2>
-  <p>The Alumni Directory is accessible only to verified members. By joining, you consent to:</p>
-  <ul>
-    <li>Your profile being discoverable by other members based on your visibility settings</li>
-    <li>Members viewing your profile information according to your chosen privacy level</li>
-    <li>Members being able to contact you through the website's messaging system (if implemented)</li>
-  </ul>
-  <p>However, members may <strong>not</strong> download, copy, export, or use alumni data for any commercial or unauthorized purpose. All member data is for directory and networking use only within the Timpots Forever community.</p>
+  <div class="card">
+    <h2>6. Privacy and Visibility Controls</h2>
+    <p>Timpots Forever provides granular privacy controls for your profile:</p>
+    <ul>
+      <li><strong>Public Map Data:</strong> Your first name, last initial, house, city, country, and location coordinates appear on the Alumni Map regardless of visibility settings, visible to anyone including non-members</li>
+      <li><strong>Member-Only Information:</strong> Your full name, contact information, professional details, and bio are only visible to logged-in alumni members, based on your chosen visibility level</li>
+      <li><strong>Private:</strong> You may set your profile to private, visible only to you</li>
+      <li><strong>Members:</strong> Default setting; visible to all logged-in alumni</li>
+    </ul>
+    <p>You control these settings in your profile. Changing visibility settings may take up to one hour to take effect.</p>
+  </div>
 
-  <h2>8. Third-Party Services</h2>
-  <p>Timpots Forever uses the following third-party services:</p>
-  <ul>
-    <li><strong>Supabase:</strong> Database and authentication services. Your data is stored on Supabase servers. See <a href="https://supabase.com/privacy" target="_blank">Supabase Privacy Policy</a></li>
-    <li><strong>Cloudflare:</strong> Website hosting and email routing. See <a href="https://www.cloudflare.com/privacypolicy/" target="_blank">Cloudflare Privacy Policy</a></li>
-    <li><strong>Resend:</strong> Transactional email service (password resets, confirmations). See <a href="https://resend.com/privacy" target="_blank">Resend Privacy Policy</a></li>
-  </ul>
-  <p>We are not responsible for the privacy practices of these third parties. Please review their policies independently.</p>
+  <div class="card">
+    <h2>7. Alumni Directory and Information Sharing</h2>
+    <p>The Alumni Directory is accessible only to verified members. By joining, you consent to:</p>
+    <ul>
+      <li>Your profile being discoverable by other members based on your visibility settings</li>
+      <li>Members viewing your profile information according to your chosen privacy level</li>
+      <li>Members being able to contact you through the website's messaging system (if implemented)</li>
+    </ul>
+    <p>However, members may <strong>not</strong> download, copy, export, or use alumni data for any commercial or unauthorized purpose. All member data is for directory and networking use only within the Timpots Forever community.</p>
+  </div>
 
-  <h2>9. Email Communications</h2>
-  <p>By creating an account, you consent to receive transactional emails from Timpots Forever, including:</p>
-  <ul>
-    <li>Account confirmation and verification emails</li>
-    <li>Password reset and security notifications</li>
-    <li>Profile updates and activity notifications</li>
-  </ul>
-  <p>You may opt out of non-essential communications, but transactional emails are necessary for account management and cannot be disabled.</p>
+  <div class="card">
+    <h2>8. Third-Party Services</h2>
+    <p>Timpots Forever uses the following third-party services:</p>
+    <ul>
+      <li><strong>Supabase:</strong> Database and authentication services. Your data is stored on Supabase servers. See <a href="https://supabase.com/privacy" target="_blank">Supabase Privacy Policy</a></li>
+      <li><strong>Cloudflare:</strong> Website hosting and email routing. See <a href="https://www.cloudflare.com/privacypolicy/" target="_blank">Cloudflare Privacy Policy</a></li>
+      <li><strong>Resend:</strong> Transactional email service (password resets, confirmations). See <a href="https://resend.com/privacy" target="_blank">Resend Privacy Policy</a></li>
+    </ul>
+    <p>We are not responsible for the privacy practices of these third parties. Please review their policies independently.</p>
+  </div>
 
-  <h2>10. Acceptable Use Policy</h2>
-  <p>You agree not to use Timpots Forever to:</p>
-  <ul>
-    <li>Harass, threaten, defame, or discriminate against other members</li>
-    <li>Post illegal, obscene, or offensive content</li>
-    <li>Spam or send unsolicited messages</li>
-    <li>Attempt to gain unauthorized access to the website or other accounts</li>
-    <li>Disrupt or interfere with the website's normal operation</li>
-    <li>Violate any applicable local, state, or federal laws</li>
-  </ul>
+  <div class="card">
+    <h2>9. Email Communications</h2>
+    <p>By creating an account, you consent to receive transactional emails from Timpots Forever, including:</p>
+    <ul>
+      <li>Account confirmation and verification emails</li>
+      <li>Password reset and security notifications</li>
+      <li>Profile updates and activity notifications</li>
+    </ul>
+    <p>You may opt out of non-essential communications, but transactional emails are necessary for account management and cannot be disabled.</p>
+  </div>
 
-  <h2>11. User-Generated Content</h2>
-  <p>Any content you submit to your profile (bio, photos, information) grants Timpots Forever a non-exclusive, royalty-free right to:</p>
-  <ul>
-    <li>Store and maintain your data</li>
-    <li>Display your information according to your visibility settings</li>
-    <li>Use aggregated, anonymized data for analytics and site improvement</li>
-  </ul>
-  <p>You retain ownership of your content and may request deletion at any time.</p>
+  <div class="card">
+    <h2>10. Acceptable Use Policy</h2>
+    <p>You agree not to use Timpots Forever to:</p>
+    <ul>
+      <li>Harass, threaten, defame, or discriminate against other members</li>
+      <li>Post illegal, obscene, or offensive content</li>
+      <li>Spam or send unsolicited messages</li>
+      <li>Attempt to gain unauthorized access to the website or other accounts</li>
+      <li>Disrupt or interfere with the website's normal operation</li>
+      <li>Violate any applicable local, state, or federal laws</li>
+    </ul>
+  </div>
 
-  <h2>12. Future Features</h2>
-  <p>Timpots Forever is continuously evolving. Planned features include:</p>
-  <ul>
-    <li>Alumni photo gallery and media archive</li>
-    <li>Community forum and discussion boards</li>
-    <li>Newsletter archives</li>
-    <li>Administrative moderation tools</li>
-  </ul>
-  <p>Future features may be subject to additional terms. Updates will be posted on this page.</p>
+  <div class="card">
+    <h2>11. User-Generated Content</h2>
+    <p>Any content you submit to your profile (bio, photos, information) grants Timpots Forever a non-exclusive, royalty-free right to:</p>
+    <ul>
+      <li>Store and maintain your data</li>
+      <li>Display your information according to your visibility settings</li>
+      <li>Use aggregated, anonymized data for analytics and site improvement</li>
+    </ul>
+    <p>You retain ownership of your content and may request deletion at any time.</p>
+  </div>
 
-  <h2>13. Data Retention and Deletion</h2>
-  <p>You may request deletion of your account and data at any time. Upon deletion:</p>
-  <ul>
-    <li>Your profile will be removed from the directory and map</li>
-    <li>Your account will be deactivated</li>
-    <li>Some data may be retained for legal or security purposes</li>
-  </ul>
-  <p>To request account deletion, contact <a href="mailto:admin@timpotsforever.org">admin@timpotsforever.org</a>.</p>
+  <div class="card">
+    <h2>12. Future Features</h2>
+    <p>Timpots Forever is continuously evolving. Planned features include:</p>
+    <ul>
+      <li>Alumni photo gallery and media archive</li>
+      <li>Community forum and discussion boards</li>
+      <li>Newsletter archives</li>
+      <li>Administrative moderation tools</li>
+    </ul>
+    <p>Future features may be subject to additional terms. Updates will be posted on this page.</p>
+  </div>
 
-  <h2>14. Limitation of Liability</h2>
-  <p>Timpots Forever is provided "as is" without warranties of any kind. To the fullest extent permitted by law, Timpots Forever and its operators are not liable for:</p>
-  <ul>
-    <li>Loss of data or unauthorized access to your account</li>
-    <li>Service interruptions or technical issues</li>
-    <li>Any damages arising from your use of the website</li>
-    <li>Third-party content or services</li>
-  </ul>
+  <div class="card">
+    <h2>13. Data Retention and Deletion</h2>
+    <p>You may request deletion of your account and data at any time. Upon deletion:</p>
+    <ul>
+      <li>Your profile will be removed from the directory and map</li>
+      <li>Your account will be deactivated</li>
+      <li>Some data may be retained for legal or security purposes</li>
+    </ul>
+    <p>To request account deletion, contact <a href="mailto:admin@timpotsforever.org">admin@timpotsforever.org</a>.</p>
+  </div>
 
-  <h2>15. Indemnification</h2>
-  <p>You agree to defend, indemnify, and hold harmless Timpots Forever and its operators from any claims, damages, or costs arising from your use of the website or violation of these terms.</p>
+  <div class="card">
+    <h2>14. Limitation of Liability</h2>
+    <p>Timpots Forever is provided "as is" without warranties of any kind. To the fullest extent permitted by law, Timpots Forever and its operators are not liable for:</p>
+    <ul>
+      <li>Loss of data or unauthorized access to your account</li>
+      <li>Service interruptions or technical issues</li>
+      <li>Any damages arising from your use of the website</li>
+      <li>Third-party content or services</li>
+    </ul>
+  </div>
 
-  <h2>16. Governing Law and Jurisdiction</h2>
-  <p>These Terms and Conditions are governed by and construed in accordance with the laws of the State of Minnesota, without regard to conflict of law principles. You irrevocably submit to the exclusive jurisdiction of the state and federal courts located in Hennepin County, Minnesota for any disputes arising from these terms or your use of Timpots Forever.</p>
+  <div class="card">
+    <h2>15. Indemnification</h2>
+    <p>You agree to defend, indemnify, and hold harmless Timpots Forever and its operators from any claims, damages, or costs arising from your use of the website or violation of these terms.</p>
+  </div>
 
-  <h2>17. Modifications to Terms</h2>
-  <p>Timpots Forever may revise these Terms and Conditions at any time without notice. Continued use of the website following any changes constitutes your acceptance of the revised terms. It is your responsibility to review these terms periodically.</p>
+  <div class="card">
+    <h2>16. Governing Law and Jurisdiction</h2>
+    <p>These Terms and Conditions are governed by and construed in accordance with the laws of the State of Minnesota, without regard to conflict of law principles. You irrevocably submit to the exclusive jurisdiction of the state and federal courts located in Hennepin County, Minnesota for any disputes arising from these terms or your use of Timpots Forever.</p>
+  </div>
 
-  <h2>18. Termination</h2>
-  <p>Timpots Forever reserves the right to terminate or suspend your account at any time, without notice, for:</p>
-  <ul>
-    <li>Violation of these Terms and Conditions</li>
-    <li>Unauthorized access or fraudulent activity</li>
-    <li>Violation of the Acceptable Use Policy</li>
-    <li>Any reason at the sole discretion of the website owner</li>
-  </ul>
-  <p>Upon termination, your right to use the website immediately ceases, and your account data may be deleted.</p>
+  <div class="card">
+    <h2>17. Modifications to Terms</h2>
+    <p>Timpots Forever may revise these Terms and Conditions at any time without notice. Continued use of the website following any changes constitutes your acceptance of the revised terms. It is your responsibility to review these terms periodically.</p>
+  </div>
 
-  <h2>19. Severability</h2>
-  <p>If any provision of these Terms and Conditions is found to be invalid or unenforceable, that provision shall be severable, and all other provisions shall remain in full force and effect.</p>
+  <div class="card">
+    <h2>18. Termination</h2>
+    <p>Timpots Forever reserves the right to terminate or suspend your account at any time, without notice, for:</p>
+    <ul>
+      <li>Violation of these Terms and Conditions</li>
+      <li>Unauthorized access or fraudulent activity</li>
+      <li>Violation of the Acceptable Use Policy</li>
+      <li>Any reason at the sole discretion of the website owner</li>
+    </ul>
+    <p>Upon termination, your right to use the website immediately ceases, and your account data may be deleted.</p>
+  </div>
 
-  <h2>20. Entire Agreement</h2>
-  <p>These Terms and Conditions, together with our Privacy Policy, constitute the entire agreement between you and Timpots Forever regarding your use of the website.</p>
+  <div class="card">
+    <h2>19. Severability</h2>
+    <p>If any provision of these Terms and Conditions is found to be invalid or unenforceable, that provision shall be severable, and all other provisions shall remain in full force and effect.</p>
+  </div>
 
-  <h2>21. Contact Information</h2>
-  <p>If you have questions about these Terms and Conditions, please contact:</p>
-  <p>
-    <strong>Timpots Forever</strong><br>
-    Email: <a href="mailto:admin@timpotsforever.org">admin@timpotsforever.org</a><br>
-    Website: <a href="https://timpotsforever.org">https://timpotsforever.org</a>
-  </p>
+  <div class="card">
+    <h2>20. Entire Agreement</h2>
+    <p>These Terms and Conditions, together with our Privacy Policy, constitute the entire agreement between you and Timpots Forever regarding your use of the website.</p>
+  </div>
+
+  <div class="card">
+    <h2>21. Contact Information</h2>
+    <p>If you have questions about these Terms and Conditions, please contact:</p>
+    <p>
+      <strong>Timpots Forever</strong><br>
+      Email: <a href="mailto:admin@timpotsforever.org">admin@timpotsforever.org</a><br>
+      Website: <a href="https://timpotsforever.org">https://timpotsforever.org</a>
+    </p>
+  </div>
 
   <footer>
     <p style="font-size: 13px; color: var(--ink-muted); text-align: center;">

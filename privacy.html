@@ -27,55 +27,49 @@
     display: flex;
     flex-direction: column;
   }
+  /* ── Header bar (shared standalone-page pattern) ─────────── */
   .members-header {
     background: var(--brand);
+    padding: 18px 0;
     color: #fff;
-    padding: 0;
+  }
+  .members-header .wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-  .members-header .wrap {
-    flex: 1;
-    padding: 20px 24px;
-    display: flex;
-    align-items: center;
+    gap: 16px;
   }
   .members-header h2 {
     font-family: 'Playfair Display', serif;
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 22px;
+    font-weight: 500;
     color: #fff;
     margin: 0;
-    border: none;
-    padding: 0;
-    margin-top: 0;
   }
   .members-header h2 em {
-    color: var(--gold-bright);
     font-style: italic;
-    font-weight: 600;
+    color: var(--gold);
   }
   .members-header .actions {
     display: flex;
-    gap: 16px;
     align-items: center;
-    padding-right: 24px;
+    gap: 14px;
   }
-  .members-header a {
-    color: #fff;
-    text-decoration: none;
-    display: flex;
+  .public-site-link {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    transition: background 0.2s;
+    color: #fff;
+    text-decoration: none;
+    opacity: 0.8;
+    padding: 6px;
+    transition: opacity 0.15s;
   }
-  .members-header a:hover { background: rgba(255,255,255,0.1); }
-  .public-site-link { display: flex; align-items: center; justify-content: center; }
-  .public-site-link svg { width: 22px; height: 22px; }
+  .public-site-link:hover { opacity: 1; }
+  .public-site-link svg { display: block; }
 
   .privacy-page {
     max-width: 760px;
@@ -152,8 +146,8 @@
   }
 
   .info-box {
-    background: #e8f4f8;
-    border-left: 4px solid #007bba;
+    background: var(--bg-soft);
+    border-left: 4px solid var(--gold);
     padding: 16px;
     margin: 24px 0;
     border-radius: 2px;
@@ -173,8 +167,8 @@
     .privacy-page { padding: 0 20px; }
     .page-title { font-size: 28px; }
     .card { padding: 24px 20px; }
-    .members-header .wrap { padding: 16px 20px; }
-    .members-header .actions { padding-right: 20px; }
+    .members-header .wrap { padding: 0 20px; }
+    .members-header h2 { font-size: 18px; }
   }
 </style>
 </head>
@@ -193,6 +187,7 @@
     </div>
   </div>
 </div>
+<!-- header HTML matches canonical pattern -->
 
 <div class="privacy-page">
   <h1 class="page-title">Privacy <em>Policy</em></h1>

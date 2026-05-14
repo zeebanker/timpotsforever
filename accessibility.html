@@ -27,55 +27,49 @@
     display: flex;
     flex-direction: column;
   }
+  /* ── Header bar (shared standalone-page pattern) ─────────── */
   .members-header {
     background: var(--brand);
+    padding: 18px 0;
     color: #fff;
-    padding: 0;
+  }
+  .members-header .wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-  .members-header .wrap {
-    flex: 1;
-    padding: 20px 24px;
-    display: flex;
-    align-items: center;
+    gap: 16px;
   }
   .members-header h2 {
     font-family: 'Playfair Display', serif;
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 22px;
+    font-weight: 500;
     color: #fff;
     margin: 0;
-    border: none;
-    padding: 0;
-    margin-top: 0;
   }
   .members-header h2 em {
-    color: var(--gold-bright);
     font-style: italic;
-    font-weight: 600;
+    color: var(--gold);
   }
   .members-header .actions {
     display: flex;
-    gap: 16px;
     align-items: center;
-    padding-right: 24px;
+    gap: 14px;
   }
-  .members-header a {
-    color: #fff;
-    text-decoration: none;
-    display: flex;
+  .public-site-link {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    transition: background 0.2s;
+    color: #fff;
+    text-decoration: none;
+    opacity: 0.8;
+    padding: 6px;
+    transition: opacity 0.15s;
   }
-  .members-header a:hover { background: rgba(255,255,255,0.1); }
-  .public-site-link { display: flex; align-items: center; justify-content: center; }
-  .public-site-link svg { width: 22px; height: 22px; }
+  .public-site-link:hover { opacity: 1; }
+  .public-site-link svg { display: block; }
 
   .accessibility-page {
     max-width: 760px;
@@ -143,13 +137,22 @@
   }
 
   .info-box {
-    background: #e8f4f8;
-    border-left: 4px solid #007bba;
+    background: var(--bg-soft);
+    border-left: 4px solid var(--gold);
     padding: 16px;
     margin: 24px 0;
     border-radius: 2px;
   }
   .info-box p { margin-bottom: 0; }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-top: 20px;
+    margin-bottom: 12px;
+  }
 
   strong { color: var(--ink); font-weight: 600; }
   em { font-style: italic; }
@@ -164,8 +167,8 @@
     .accessibility-page { padding: 0 20px; }
     .page-title { font-size: 28px; }
     .card { padding: 24px 20px; }
-    .members-header .wrap { padding: 16px 20px; }
-    .members-header .actions { padding-right: 20px; }
+    .members-header .wrap { padding: 0 20px; }
+    .members-header h2 { font-size: 18px; }
   }
 </style>
 </head>
@@ -174,14 +177,14 @@
 <div class="members-header">
   <div class="wrap">
     <h2>Timpots <em>Forever</em> — Accessibility</h2>
-  </div>
-  <div class="actions">
-    <a href="index.html" class="public-site-link" title="Home" aria-label="Home">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M3 9L12 3l9 6v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-        <polyline points="9 22 9 12 15 12 15 22"/>
-      </svg>
-    </a>
+    <div class="actions">
+      <a href="index.html" class="public-site-link" aria-label="Home" title="Home">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 10.5 12 3l9 7.5V21H3z"/>
+          <path d="M9 21v-7h6v7"/>
+        </svg>
+      </a>
+    </div>
   </div>
 </div>
 

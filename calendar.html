@@ -28,32 +28,32 @@
   .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
   /* ── Header bar ────────────────────────────────────────── */
-  .page-header {
+  .members-header {
     background: var(--brand);
     padding: 18px 0;
     color: #fff;
   }
-  .page-header .wrap {
+  .members-header .wrap {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 16px;
   }
-  .page-header h2 {
+  .members-header h2 {
     font-family: 'Playfair Display', serif;
     font-size: 22px;
     font-weight: 500;
   }
-  .page-header h2 em {
+  .members-header h2 em {
     font-style: italic;
     color: var(--gold);
   }
-  .page-header .actions {
+  .members-header .actions {
     display: flex;
     align-items: center;
     gap: 14px;
   }
-  .icon-link {
+  .public-site-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -63,8 +63,8 @@
     padding: 6px;
     transition: opacity 0.15s;
   }
-  .icon-link:hover { opacity: 1; }
-  .icon-link svg { display: block; }
+  .public-site-link:hover { opacity: 1; }
+  .public-site-link svg { display: block; }
 
   /* ── Page content ──────────────────────────────────────── */
   .page-body {
@@ -200,12 +200,13 @@
   }
   .section-heading:first-child { margin-top: 0; }
 
-  @media (max-width: 600px) {
+  @media (max-width: 640px) {
     .page-title { font-size: 28px; }
     .event-card { grid-template-columns: 70px 1fr; gap: 14px; padding: 18px 18px; }
     .event-date { padding-right: 12px; }
     .event-day { font-size: 28px; }
     .event-body h3 { font-size: 18px; }
+    .members-header h2 { font-size: 18px; }
   }
 </style>
 </head>
@@ -213,11 +214,11 @@
 <body>
 
 <!-- ── Header ───────────────────────────────────────────────── -->
-<div class="page-header">
+<div class="members-header">
   <div class="wrap">
     <h2>Timpots <em>Forever</em> — Calendar</h2>
     <div class="actions">
-      <a href="index.html" class="icon-link" aria-label="Home" title="Home">
+      <a href="index.html" class="public-site-link" aria-label="Home" title="Home">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M3 10.5 12 3l9 7.5V21H3z"/>
           <path d="M9 21v-7h6v7"/>
