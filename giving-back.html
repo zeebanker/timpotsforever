@@ -56,7 +56,8 @@
     transition: background 0.2s;
   }
   .members-header a:hover { background: rgba(255,255,255,0.1); }
-  .home-icon::before { content: "🏠"; font-size: 20px; }
+  .home-icon { display: flex; align-items: center; justify-content: center; }
+  .home-icon svg { width: 20px; height: 20px; }
 
   .content-wrapper {
     max-width: 900px;
@@ -216,6 +217,13 @@
     font-weight: 600;
     color: var(--brand);
     transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .category-tag svg {
+    color: var(--brand);
   }
   .category-tag:hover {
     background: var(--bg-soft);
@@ -281,7 +289,12 @@
 <div class="members-header">
   <div class="title">Giving Back</div>
   <div class="actions">
-    <a href="index.html" class="home-icon" title="Home"></a>
+    <a href="index.html" class="home-icon" title="Home" aria-label="Home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 9L12 3l9 6v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+    </a>
   </div>
 </div>
 
@@ -340,11 +353,45 @@
 
   <h2>Cause Categories</h2>
   <div class="categories">
-    <div class="category-tag">🎓 Education Access</div>
-    <div class="category-tag">🌍 Environment &amp; Sustainability</div>
-    <div class="category-tag">❤️ Health &amp; Wellness</div>
-    <div class="category-tag">🏘️ Community Development</div>
-    <div class="category-tag">🎨 Arts &amp; Culture</div>
+    <div class="category-tag">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; margin-bottom: 8px;">
+        <path d="M4 6.5c0-1 .5-2.5 4-4 3.5-1.5 4-1 8-1 4 0 4.5.5 8 1 3.5 1.5 4 3 4 4M5 10.5h14M6.5 20h11c.83 0 1.5-.67 1.5-1.5V10.5H5v8c0 .83.67 1.5 1.5 1.5z"/>
+      </svg>
+      Education Access
+    </div>
+    <div class="category-tag">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; margin-bottom: 8px;">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 2c5.5 0 10 4.5 10 10M2 12c0 5.5 4.5 10 10 10"/>
+        <path d="M12 7v5l3.5 3.5"/>
+      </svg>
+      Environment &amp; Sustainability
+    </div>
+    <div class="category-tag">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; margin-bottom: 8px;">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+      Health &amp; Wellness
+    </div>
+    <div class="category-tag">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; margin-bottom: 8px;">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+        <circle cx="9" cy="7" r="4"/>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+      Community Development
+    </div>
+    <div class="category-tag">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px; margin-bottom: 8px;">
+        <circle cx="12" cy="12" r="1"/>
+        <circle cx="19" cy="12" r="1"/>
+        <circle cx="5" cy="12" r="1"/>
+        <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/>
+        <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+      </svg>
+      Arts &amp; Culture
+    </div>
   </div>
 
   <h2>Alumni Making a Difference</h2>

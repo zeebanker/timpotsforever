@@ -88,6 +88,27 @@ Items previously here but removed:
   - `--gold-bright: #f0c579` (bright gold; use on dark/garnet backgrounds)
 - **Tagline**: "Seek Truth"
 
+## Icons
+
+**Philosophy**: Use clean line-style icons, not pictures or emojis. Create custom SVGs as needed.
+
+- **Style**: Modern stroke-based icons (thin lines, consistent stroke width ~1.8–2px)
+- **Colors**: Icons inherit `currentColor` for flexibility (brand color on light backgrounds, white on dark)
+- **Sizing**: Explicit width/height on all SVG icons to prevent inconsistent rendering
+- **Sources**: Hand-craft custom SVGs or use open-source sets (Feather Icons, Heroicons) for consistency
+
+**Icons to update/create:**
+- Portrait silhouettes (hero section, stories section) — replace filled gold avatars with line icons
+- Category tags on Giving Back page — replace emoji with modern line icons
+- Map icons — already modern; maintain current style
+
+**Current icons (as of May 2026):**
+- User icon (outline) — Sign-in button, headers (stroke SVG) ✓
+- Home icon — On standalone page headers (emoji on newer pages, update to SVG)
+- Map pins — Pushpin markers (SVG) ✓
+- Hamburger menu — Mobile nav (SVG) ✓
+- Category icons on Giving Back — Currently emoji, need modern line icons
+
 ## Conventions
 
 - **Standalone pages** use the `.members-header` class for their top bar. The class name is historical (predates the `members.html` deletion) and now just identifies the shared pattern; it does not refer to any file.
