@@ -1366,6 +1366,15 @@
   .footer-col a { color: var(--footer-text); font-size: 13px; }
   .footer-col a:hover { color: var(--white); text-decoration: none; }
 
+  .explore-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  @media (max-width: 640px) {
+    .explore-columns { grid-template-columns: 1fr; gap: 12px; }
+  }
+
   .footer-bottom {
     padding-top: 24px;
     border-top: 1px solid var(--footer-rule);

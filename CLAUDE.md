@@ -104,6 +104,7 @@ Items previously here but removed:
 4. **Spacing and padding** — use consistent whitespace; aim for breathing room like the homepage
 5. **Component reuse** — buttons, cards, forms, headers should match landing page patterns
 6. **Visual refinement** — subtle borders, shadows, hover states; no harsh edges or oversized elements
+7. **No dark text on dark backgrounds** — ensure sufficient contrast. Dark backgrounds (brand color, dark headers) require light/white text. Always test readability.
 
 **Tagline**: "Seek Truth"
 
