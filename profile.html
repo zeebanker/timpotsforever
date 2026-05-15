@@ -797,11 +797,6 @@
   // ── Populate grade dropdowns ───────────────────────────────
   // DB enum values stay as 'ICSE' / 'ISC'; only the display labels differ.
   function gradeLabel(g) {
-    if (g === 'ICSE') return '10/ICSE';
-    if (g === 'ISC')  return '12/ISC';
-    return g;
-  }
-  function gradeLabelShort(g) {
     if (g === 'ICSE') return '10';
     if (g === 'ISC')  return '12';
     return g;
@@ -1059,7 +1054,7 @@
         <td>
           <select data-field="grade" aria-label="Standard for ${yr}">
             <option value="">—</option>
-            ${GRADES.map(g => `<option value="${g}"${gradeVal === g ? ' selected' : ''}>${gradeLabelShort(g)}</option>`).join('')}
+            ${GRADES.map(g => `<option value="${g}"${gradeVal === g ? ' selected' : ''}>${gradeLabel(g)}</option>`).join('')}
           </select>
         </td>
         <td>

@@ -417,6 +417,16 @@ What could push it longer:
 **Pages not yet built:**
 - `directory.html` — Alumni Directory (full build plan above, ~1.5 hrs). The homepage Directory panel and the footer link both show a "(coming soon)" treatment until this exists.
 
+**Calendar — Option C (Supabase-backed events, ~3 hrs):**
+- Today's `calendar.html` uses Option B for member-gating: hand-edited HTML cards where each `.event-card` has a `.member-only` block hidden by default, revealed only when a Supabase session exists (script at the bottom of `calendar.html` adds `body.is-signed-in`). The gated HTML is **still in page source**, so it must never contain real PII (phone numbers, personal emails, exact addresses with minors). The `events@timpotsforever.org` forwarder is the safe RSVP channel.
+- Option C replaces this with real server-side gating:
+  - New `events` table in `public` schema: `id uuid PK, title text, public_description text, member_description text, venue text, organizer_name text, organizer_contact text, start_at timestamptz, end_at timestamptz, status text ('upcoming'|'past'), tag text ('Monthly'|'Inaugural'|...), is_recurring boolean, created_at, updated_at`.
+  - Two views (or one view + RLS): `public_events` exposes title/public_description/start_at/tag to `anon`; `events` exposes the full row to `authenticated`. Use `grant select` per role, not just RLS, so anon literally cannot fetch the gated columns.
+  - `calendar.html` fetches `public_events` when no session, `events` when signed in. Render with the same card markup, but populate from data instead of hand-edited HTML.
+  - One-time port: convert the existing 7 monthly meetups + Jul 4 2026 debate + Mar 22 2027 anniversary into rows. Past events go in with `status = 'past'`.
+  - Admin UX: edit events directly in the Supabase Table Editor; no code change needed per event.
+- Why we haven't done it yet: low event volume (~9 cards) makes the static HTML workflow fine for now. Move to Option C when event count grows or when truly sensitive info (specific venues with minors, organizer phone numbers) needs to be listed.
+
 **Content gaps awaiting real material:**
 - `videos-photos.html` — `Jazz Message.mp4` (28MB, in `Photos and Videos/Videos/`) still needs YouTube upload + embed.
 
@@ -425,7 +435,7 @@ What could push it longer:
 
 **Infrastructure to verify:**
 - Supabase Auth redirect-URL whitelist includes `https://timpotsforever.org/profile.html`
-- Cloudflare Email Routing for `hello@`, `admin@`, `support@`, `newsletter@` is configured (mailto links across the site assume these deliver)
+- Cloudflare Email Routing for `hello@`, `admin@`, `support@`, `newsletter@`, `events@` is configured (mailto links across the site assume these deliver)
 - DMARC TXT record in Cloudflare DNS: `_dmarc` → `v=DMARC1; p=none; rua=mailto:admin@timpotsforever.org; pct=100; adkim=r; aspf=r` — fixes Supabase confirmation emails landing in spam
 - `.DS_Store` files tracked in git — add `.DS_Store` to `.gitignore`, then `git rm --cached -r '.DS_Store'`
 
@@ -477,6 +487,7 @@ Companion utilities in the same stylesheet:
 - ✅ **Supabase signup 500 fixed (2026-05-15)** — `create_profile_for_new_user()` trigger was failing with `relation "profiles" does not exist` because the `SECURITY DEFINER` function had no explicit `search_path`. Rewritten with `SET search_path = ''` and fully-qualified `public.profiles`. New users now register successfully. Pattern note: all future Supabase `SECURITY DEFINER` functions must follow this convention.
 - ✅ **Mobile hero "How It Began" no longer clipped (2026-05-15)** — at ≤720px, `.hero` was locked to `height: 460px` with `overflow: hidden`, clipping the multi-line dek's top when bottom-aligned. Changed to `height: auto; min-height: 460px` and added `padding-top: 40px` on `.hero-content`. Desktop layout unchanged.
 - ✅ **Footer Alumni Directory link styling matched siblings (2026-05-15)** — `.coming-soon-li` was inheriting `--ink-muted` (#767676) at default size with 0.75 opacity, looking visibly darker/smaller than the regular `.footer-col a` links. Now uses `--footer-text` at 13px with opacity 1; only the small italic `.cs-tag` "(coming soon)" stays muted.
+- ✅ **Calendar member-gating — Option B (2026-05-15)** — `calendar.html` now hides venue / RSVP / organizer details from logged-out visitors. Each meetup card carries a `.member-only` block (hidden by default via CSS) and a `.member-cta` "Sign in to see details" line (shown by default). A small script at the bottom of the page calls `supabase.auth.getSession()` and, if signed in, adds `body.is-signed-in` (which flips the visibility via CSS) and hides the page-level `#public-gating-note`. The gated HTML is still in page source — see the Option C note in "Incomplete items" for the server-side replacement. Cloudflare Email Routing has a new `events@timpotsforever.org` address that all RSVP / contact links route through (avoids putting personal phones or emails into HTML).
 
 **Next priorities:**
 1. Build `directory.html` (Alumni Directory) using `profile.html` as the design template
