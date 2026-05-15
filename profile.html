@@ -774,6 +774,12 @@
   let currentProfile = null;
   let attendanceRows = []; // [{year, grade, section, class_teacher}]
 
+  // Autosave state — flips to true on any form edit, false after a successful save.
+  let isDirty       = false;
+  let isSaving      = false; // re-entry guard for both manual and auto saves
+  let autosaveTimer = null;
+  const AUTOSAVE_INTERVAL_MS = 30000;
+
   // ── Banner helpers ─────────────────────────────────────────
   function showError(msg) {
     const el = document.getElementById('banner-error');
@@ -861,6 +867,21 @@
     // If we have both years, fetch attendance
     if (data.beginning_year && data.ending_year) {
       await loadAttendance();
+    }
+
+    // Dirty tracking + autosave (every 30s when there are unsaved edits)
+    const form = document.getElementById('profile-form');
+    const markDirty = () => { isDirty = true; };
+    form.addEventListener('input',  markDirty);
+    form.addEventListener('change', markDirty);
+    if (!autosaveTimer) {
+      autosaveTimer = setInterval(() => {
+        if (!isDirty || isSaving) return;
+        const fn = document.getElementById('first_name').value.trim();
+        const ln = document.getElementById('last_name').value.trim();
+        if (!fn || !ln) return; // required fields empty — skip until user fills them
+        handleSaveAll({ silent: true });
+      }, AUTOSAVE_INTERVAL_MS);
     }
   }
 
@@ -1093,19 +1114,31 @@
   });
 
   // ── Save everything (profile + attendance) in one go ───────
-  async function handleSaveAll() {
-    clearBanners();
-    const btn = document.getElementById('save-btn');
-    btn.disabled = true;
-    document.getElementById('save-status').textContent = 'Saving…';
+  // opts.silent = true → no banners, quiet "Auto-saved" indicator. Used by the autosave timer.
+  async function handleSaveAll(opts) {
+    const silent = !!(opts && opts.silent);
+    if (isSaving) return;
+    isSaving = true;
+    if (!silent) clearBanners();
+    const btn        = document.getElementById('save-btn');
+    const statusEl   = document.getElementById('save-status');
+    if (!silent) btn.disabled = true;
+    statusEl.textContent = silent ? 'Auto-saving…' : 'Saving…';
+
+    function bail(msg) {
+      isSaving = false;
+      if (!silent) btn.disabled = false;
+      if (silent) {
+        statusEl.textContent = '⚠ Auto-save failed';
+        setTimeout(() => { if (!isSaving) statusEl.textContent = ''; }, 3000);
+      } else {
+        statusEl.textContent = '';
+        showError(msg);
+      }
+    }
 
     const { data: { session } } = await supabase.auth.getSession();
-    if (!session) {
-      showError('Not signed in.');
-      btn.disabled = false;
-      document.getElementById('save-status').textContent = '';
-      return;
-    }
+    if (!session) { bail('Not signed in.'); return; }
 
     // 1. Capture attendance form state BEFORE updating the profile
     //    (the profile update fires a DB trigger that may reshape the rows)
@@ -1159,12 +1192,7 @@
       .select()
       .single();
 
-    if (profileErr) {
-      btn.disabled = false;
-      document.getElementById('save-status').textContent = '';
-      showError('Save failed: ' + profileErr.message);
-      return;
-    }
+    if (profileErr) { bail('Save failed: ' + profileErr.message); return; }
     currentProfile = profile;
 
     // 4. Save attendance (only if both years are set; otherwise nothing to save)
@@ -1176,12 +1204,7 @@
         .eq('profile_id', session.user.id)
         .order('year');
 
-      if (fetchErr) {
-        btn.disabled = false;
-        document.getElementById('save-status').textContent = '';
-        showError('Could not refresh attendance: ' + fetchErr.message);
-        return;
-      }
+      if (fetchErr) { bail('Could not refresh attendance: ' + fetchErr.message); return; }
 
       // Merge form values into DB rows
       const upsertPayload = (dbRows || []).map(r => {
@@ -1199,12 +1222,7 @@
         const { error: attErr } = await supabase
           .from('attendance_records')
           .upsert(upsertPayload, { onConflict: 'profile_id,year' });
-        if (attErr) {
-          btn.disabled = false;
-          document.getElementById('save-status').textContent = '';
-          showError('Year details save failed: ' + attErr.message);
-          return;
-        }
+        if (attErr) { bail('Year details save failed: ' + attErr.message); return; }
       }
 
       // Reload to reflect the saved state
@@ -1215,9 +1233,16 @@
       renderAttendance();
     }
 
-    btn.disabled = false;
-    document.getElementById('save-status').textContent = '';
-    showSuccess('Profile saved.');
+    isDirty  = false;
+    isSaving = false;
+    if (!silent) {
+      btn.disabled = false;
+      statusEl.textContent = '';
+      showSuccess('Profile saved.');
+    } else {
+      statusEl.textContent = '✓ Auto-saved';
+      setTimeout(() => { if (!isSaving) statusEl.textContent = ''; }, 2500);
+    }
   }
 
   // ── Password show/hide toggle handler lives in js/auth.js (shared across pages)
