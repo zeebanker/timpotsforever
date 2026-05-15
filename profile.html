@@ -769,6 +769,11 @@
     if (g === 'ISC')  return '12/ISC';
     return g;
   }
+  function gradeLabelShort(g) {
+    if (g === 'ICSE') return '10';
+    if (g === 'ISC')  return '12';
+    return g;
+  }
   function fillGradeOptions(selectEl) {
     GRADES.forEach(g => {
       const opt = document.createElement('option');
@@ -997,7 +1002,7 @@
         <td>
           <select data-field="grade" aria-label="Standard for ${yr}">
             <option value="">—</option>
-            ${GRADES.map(g => `<option value="${g}"${gradeVal === g ? ' selected' : ''}>${gradeLabel(g)}</option>`).join('')}
+            ${GRADES.map(g => `<option value="${g}"${gradeVal === g ? ' selected' : ''}>${gradeLabelShort(g)}</option>`).join('')}
           </select>
         </td>
         <td>
