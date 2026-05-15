@@ -425,7 +425,9 @@ What could push it longer:
 
 **Infrastructure to verify:**
 - Supabase Auth redirect-URL whitelist includes `https://timpotsforever.org/profile.html`
-- Cloudflare Email Routing for `hello@`, `admin@`, `newsletter@` is configured (mailto links across the site assume these deliver)
+- Cloudflare Email Routing for `hello@`, `admin@`, `support@`, `newsletter@` is configured (mailto links across the site assume these deliver)
+- DMARC TXT record in Cloudflare DNS: `_dmarc` → `v=DMARC1; p=none; rua=mailto:admin@timpotsforever.org; pct=100; adkim=r; aspf=r` — fixes Supabase confirmation emails landing in spam
+- `.DS_Store` files tracked in git — add `.DS_Store` to `.gitignore`, then `git rm --cached -r '.DS_Store'`
 
 **Minor design debt:**
 - Button padding varies slightly across pages — standardize
@@ -472,6 +474,9 @@ Companion utilities in the same stylesheet:
 - ✅ Newsletter renamed throughout — homepage callout now reads "The *Timpany Times*" (italic gold). Cadence: bi-monthly, first issue July 2026.
 - ✅ Fake social-post tweets replaced — three boxes under "Be social." now each represent one upcoming channel (Facebook, YouTube, WhatsApp) with a brief honest description + "Stay tuned." italic.
 - ✅ Alumni Map initial view changed from Vizag-centered (zoom 3) to fitBounds covering all landmass except Antarctica — first-time visitors see the global spread of Timpots immediately.
+- ✅ **Supabase signup 500 fixed (2026-05-15)** — `create_profile_for_new_user()` trigger was failing with `relation "profiles" does not exist` because the `SECURITY DEFINER` function had no explicit `search_path`. Rewritten with `SET search_path = ''` and fully-qualified `public.profiles`. New users now register successfully. Pattern note: all future Supabase `SECURITY DEFINER` functions must follow this convention.
+- ✅ **Mobile hero "How It Began" no longer clipped (2026-05-15)** — at ≤720px, `.hero` was locked to `height: 460px` with `overflow: hidden`, clipping the multi-line dek's top when bottom-aligned. Changed to `height: auto; min-height: 460px` and added `padding-top: 40px` on `.hero-content`. Desktop layout unchanged.
+- ✅ **Footer Alumni Directory link styling matched siblings (2026-05-15)** — `.coming-soon-li` was inheriting `--ink-muted` (#767676) at default size with 0.75 opacity, looking visibly darker/smaller than the regular `.footer-col a` links. Now uses `--footer-text` at 13px with opacity 1; only the small italic `.cs-tag` "(coming soon)" stays muted.
 
 **Next priorities:**
 1. Build `directory.html` (Alumni Directory) using `profile.html` as the design template
