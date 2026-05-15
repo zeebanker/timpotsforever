@@ -471,6 +471,7 @@ Companion utilities in the same stylesheet:
 - ✅ Hero band rewritten — fictional "From Vizag to the world stage" replaced with the actual origin story of Timpots Forever: "Out of a memorial, a *movement*." Frames Jazz's March 2026 passing as the spark for the three working groups (website, *The Timpany Times* newsletter, local events).
 - ✅ Newsletter renamed throughout — homepage callout now reads "The *Timpany Times*" (italic gold). Cadence: bi-monthly, first issue July 2026.
 - ✅ Fake social-post tweets replaced — three boxes under "Be social." now each represent one upcoming channel (Facebook, YouTube, WhatsApp) with a brief honest description + "Stay tuned." italic.
+- ✅ Alumni Map initial view changed from Vizag-centered (zoom 3) to fitBounds covering all landmass except Antarctica — first-time visitors see the global spread of Timpots immediately.
 
 **Next priorities:**
 1. Build `directory.html` (Alumni Directory) using `profile.html` as the design template

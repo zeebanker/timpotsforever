@@ -319,11 +319,18 @@
   }
 
   // ════════════════════════════════════════════════════════════
-  // Map setup — Visakhapatnam-centered, no tile layer (uses country
-  // GeoJSON for borders only), maxZoom required by markercluster.
+  // Map setup — opens with the whole inhabited world visible (Antarctica
+  // excluded). No tile layer (uses country GeoJSON for borders only).
+  // maxZoom required by markercluster.
   // ════════════════════════════════════════════════════════════
   const VIZAG = [17.6868, 83.2185];
-  const map = L.map('map', { maxZoom: 18, worldCopyJump: true }).setView(VIZAG, 3);
+  // Bounds that cover all landmass except Antarctica:
+  //   south = -58° (covers Tierra del Fuego)
+  //   north = 82°  (covers northern Greenland)
+  //   west/east = ±180° (full longitude range)
+  const WORLD_BOUNDS = [[-58, -180], [82, 180]];
+  const map = L.map('map', { maxZoom: 18, worldCopyJump: true });
+  map.fitBounds(WORLD_BOUNDS, { padding: [8, 8] });
 
   // Custom pane so the Vizag logo renders ABOVE country polygons but BELOW markers
   map.createPane('vizagPane');
@@ -503,7 +510,8 @@
       }
 
       clusterGroup.addLayers(markers);
-      // (No fitBounds — keep the default Visakhapatnam-centered view per design.)
+      // (No fitBounds to markers — keep the initial world-view from setup so
+      //  the visitor sees the global spread of Timpots rather than auto-zooming.)
 
       // Count by COLOR GROUP for the banner breakdown (Pluto + Venus merged into 'red')
       const colorCounts = { red: 0, yellow: 0, blue: 0, green: 0 };
