@@ -203,6 +203,66 @@
     color: var(--ink);
   }
 
+  /* ── Crest transition callout ────────────────────────── */
+  .crest-callout {
+    background: var(--bg-warm);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--gold);
+    padding: 26px 28px 22px;
+    margin: 18px 0 6px;
+    border-radius: 2px;
+  }
+  .crest-grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .crest-figure {
+    text-align: center;
+    margin: 0;
+    flex: 0 0 auto;
+  }
+  .crest-figure img {
+    width: 170px;
+    height: 170px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+  }
+  .crest-figure figcaption {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 12px;
+    color: var(--ink-muted);
+    margin-top: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .crest-arrow {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    color: var(--gold);
+    line-height: 1;
+    flex: 0 0 auto;
+    user-select: none;
+  }
+  .crest-callout p {
+    font-size: 15.5px;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    margin-bottom: 0;
+  }
+  @media (max-width: 640px) {
+    .crest-callout { padding: 22px 20px 18px; }
+    .crest-grid { flex-direction: column; gap: 12px; }
+    .crest-figure img { width: 140px; height: 140px; }
+    .crest-figure figcaption { margin-top: 8px; }
+    .crest-arrow { transform: rotate(90deg); font-size: 26px; }
+  }
+
   /* ── Teachers directory ──────────────────────────────── */
   .teachers-band { padding: 56px 0 32px; background: #fff; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
   .teachers-band h1.section-title {
@@ -413,6 +473,23 @@
       <section class="story-section">
         <h2 class="story-h2">The Four Houses</h2>
         <p>The four houses were Jupiter (blue), Mercury (yellow), Neptune (green) and Pluto (red). After 2006, when Pluto lost planetary status, the house was renamed Venus, as Samith Vellanki (Class of 2024) confirms. The school colours and crest carry “Persevere to conquer” themes.</p>
+      </section>
+      <section class="story-section">
+        <h2 class="story-h2">The Crest</h2>
+        <div class="crest-callout">
+          <div class="crest-grid">
+            <figure class="crest-figure">
+              <img src="images/crest-old.jpg" alt="Timpany School's original shield-style crest — a lighthouse flanked by a TS monogram and an open book, ringed by waves and the motto 'Seek Truth'">
+              <figcaption>Pre-1979</figcaption>
+            </figure>
+            <div class="crest-arrow" aria-hidden="true">&rarr;</div>
+            <figure class="crest-figure">
+              <img src="images/crest-new.png" alt="Timpany School's current emblem — an open book bearing 'Seek Truth' with a flame above and waves below">
+              <figcaption>c. 1979 onward</figcaption>
+            </figure>
+          </div>
+          <p>Around 1979, Timpany's early shield-style crest gave way to the simpler emblem still in use today. The original — a lighthouse flanked by a TS monogram and an open book, ringed by waves and the motto &ldquo;Seek Truth&rdquo; — was replaced by an open book bearing the motto with a flame of learning above and waves below. The waves and motto carried over; the lighthouse, monogram and ornate framing did not.</p>
+        </div>
       </section>
       <section class="story-section">
         <h2 class="story-h2">Batches &amp; Boards</h2>
