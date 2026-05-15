@@ -456,6 +456,38 @@
       </div>
     </div>
 
+    <!-- ── Birthday ───────────────────────────────────── -->
+    <div class="card">
+      <h3>Birthday <span style="font-weight:400; color:var(--ink-muted); font-size:14px; letter-spacing:0; text-transform:none;">(optional)</span></h3>
+      <p class="card-help">Month and day only — we use this just to wish you a happy birthday in <em>The Timpany Times</em> newsletter or on the website. Year is not collected.</p>
+      <div class="field-grid">
+        <div class="field">
+          <label for="birth_month">Month</label>
+          <select id="birth_month" aria-label="Birth month">
+            <option value="">—</option>
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="birth_day">Day</label>
+          <select id="birth_day" aria-label="Birth day">
+            <option value="">—</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
     <!-- ── Time at Timpany ────────────────────────────── -->
     <div class="card">
       <h3>Time at Timpany</h3>
@@ -784,6 +816,29 @@
   fillGradeOptions(document.getElementById('beginning_grade'));
   fillGradeOptions(document.getElementById('ending_grade'));
 
+  // ── Birthday: populate Day options based on selected Month ──
+  function daysInMonth(m) {
+    // 29 for Feb (leap-year-friendly — no year collected), 30/31 otherwise.
+    if (!m) return 31;
+    return [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][m - 1];
+  }
+  function fillBirthDayOptions(preserveValue) {
+    const monthSel = document.getElementById('birth_month');
+    const daySel   = document.getElementById('birth_day');
+    const max      = daysInMonth(parseInt(monthSel.value, 10) || 0);
+    const current  = preserveValue !== undefined ? preserveValue : daySel.value;
+    daySel.innerHTML = '<option value="">—</option>';
+    for (let d = 1; d <= max; d++) {
+      const opt = document.createElement('option');
+      opt.value = String(d);
+      opt.textContent = String(d);
+      if (current && parseInt(current, 10) === d) opt.selected = true;
+      daySel.appendChild(opt);
+    }
+  }
+  fillBirthDayOptions();
+  document.getElementById('birth_month').addEventListener('change', () => fillBirthDayOptions());
+
   // ── Load profile from Supabase ─────────────────────────────
   async function loadProfile() {
     const { data: { session } } = await supabase.auth.getSession();
@@ -818,6 +873,8 @@
     document.getElementById('first_name').value     = p.first_name || '';
     document.getElementById('last_name').value      = p.last_name || '';
     document.getElementById('preferred_name').value = p.preferred_name || '';
+    document.getElementById('birth_month').value    = p.birth_month ? String(p.birth_month) : '';
+    fillBirthDayOptions(p.birth_day ? String(p.birth_day) : '');
     document.getElementById('beginning_grade').value = p.beginning_grade || '';
     document.getElementById('beginning_year').value  = p.beginning_year || '';
     document.getElementById('ending_grade').value    = p.ending_grade || '';
@@ -1072,6 +1129,8 @@
       first_name:      document.getElementById('first_name').value.trim(),
       last_name:       document.getElementById('last_name').value.trim(),
       preferred_name:  document.getElementById('preferred_name').value.trim() || null,
+      birth_month:     parseInt(document.getElementById('birth_month').value, 10) || null,
+      birth_day:       parseInt(document.getElementById('birth_day').value, 10) || null,
       beginning_grade: document.getElementById('beginning_grade').value || null,
       beginning_year:  parseInt(document.getElementById('beginning_year').value, 10) || null,
       ending_grade:    document.getElementById('ending_grade').value || null,
