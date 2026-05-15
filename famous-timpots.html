@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Famous Timpots — Timpots Forever</title>
+<meta name="description" content="Notable Timpany School alumni — the Timpots who have left their mark in the military, medicine and the sciences, business, the arts and sport.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,500;1,700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand: #7a1420;
+    --brand-dark: #4a0810;
+    --ink: #1a1a1a;
+    --ink-soft: #555;
+    --ink-muted: #888;
+    --bg: #fff;
+    --bg-soft: #f7f4ee;
+    --bg-warm: #f0e9d8;
+    --rule: #e5e0d4;
+    --gold: #b5894a;
+    --gold-bright: #f0c579;
+    --pluto: #b94a3c;
+    --mercury: #c9a23c;
+    --jupiter: #3e6ea8;
+    --neptune: #4a8a6e;
+    --venus: #b94a3c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    color: var(--ink);
+    background: var(--bg-soft);
+    min-height: 100vh;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Header bar ───────────────────────────────────────── */
+  .members-header {
+    background: var(--brand);
+    padding: 18px 0;
+    color: #fff;
+  }
+  .members-header .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .members-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 500;
+  }
+  .members-header h2 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .members-header .actions { display: flex; align-items: center; gap: 14px; }
+  .public-site-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-decoration: none;
+    opacity: 0.8;
+    padding: 6px;
+    transition: opacity 0.15s;
+  }
+  .public-site-link:hover { opacity: 1; }
+  .public-site-link svg { display: block; }
+
+  /* ── Hero band ────────────────────────────────────────── */
+  .hero {
+    background: var(--brand);
+    color: #fff;
+    padding: 72px 0 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 40%, rgba(240,197,121,0.10), transparent 60%);
+    pointer-events: none;
+  }
+  .hero .wrap { position: relative; max-width: 820px; text-align: center; }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 500;
+    line-height: 1.1;
+    margin-bottom: 18px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold-bright);
+  }
+  .hero p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.88);
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* ── Category sections ────────────────────────────────── */
+  .famous-band { padding: 56px 0 16px; }
+  .famous-band:nth-of-type(odd-band) { background: #fff; }
+  .famous-band + .famous-band { padding-top: 24px; }
+  .category-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--brand);
+    margin-bottom: 6px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .category-heading em {
+    font-style: italic;
+    color: var(--ink);
+  }
+  .category-intro {
+    color: var(--ink-muted);
+    font-size: 13.5px;
+    margin: 0 0 22px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .famous-list { display: block; }
+  .famous {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 32px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .famous:last-child { border-bottom: none; }
+  .famous-meta { display: flex; flex-direction: column; gap: 4px; }
+  .famous-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 500;
+    color: var(--brand);
+    line-height: 1.3;
+  }
+  .famous-class {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 13px;
+    color: var(--ink-muted);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .house-chip {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px 8px;
+    color: #fff;
+    border-radius: 2px;
+    margin-top: 4px;
+    align-self: flex-start;
+  }
+  .house-chip.pluto, .house-chip.venus { background: var(--pluto); }
+  .house-chip.mercury { background: var(--mercury); color: #2a1d00; }
+  .house-chip.jupiter { background: var(--jupiter); }
+  .house-chip.neptune { background: var(--neptune); }
+  .famous-bio {
+    color: var(--ink-soft);
+    font-size: 15.5px;
+    line-height: 1.7;
+  }
+  .famous-bio strong { color: var(--ink); font-weight: 600; }
+  .famous-bio em { font-style: italic; color: var(--ink-soft); }
+
+  /* ── Share CTA ───────────────────────────────────────── */
+  .share-cta {
+    margin: 56px auto 96px;
+    max-width: 720px;
+    text-align: center;
+    padding: 36px 28px;
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+  }
+  .share-cta h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .share-cta h3 em { color: var(--brand); font-style: italic; }
+  .share-cta p {
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1.65;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .share-cta a {
+    color: var(--brand);
+    text-decoration: none;
+    border-bottom: 1px solid var(--brand);
+  }
+  .share-cta a:hover { opacity: 0.7; }
+
+  /* ── Responsive ──────────────────────────────────────── */
+  @media (max-width: 800px) {
+    .hero { padding: 56px 0 60px; }
+    .hero h1 { font-size: 36px; }
+    .hero p { font-size: 15.5px; }
+    .category-heading { font-size: 22px; }
+    .famous { grid-template-columns: 1fr; gap: 8px; padding: 18px 0; }
+    .famous-bio { font-size: 15px; }
+  }
+  @media (max-width: 640px) {
+    .members-header h2 { font-size: 18px; }
+    .hero h1 { font-size: 28px; }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="members-header">
+  <div class="wrap">
+    <h2>Timpots <em>Forever</em> — Famous Timpots</h2>
+    <div class="actions">
+      <a href="index.html" class="public-site-link" aria-label="Home" title="Home">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 10.5 12 3l9 7.5V21H3z"/>
+          <path d="M9 21v-7h6v7"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>Famous <em>Timpots</em></h1>
+    <p>Timpots who have left their mark — in uniform, in laboratories and operating theatres, in boardrooms, on stages, on the field. A growing list, drawn from what alumni themselves have shared in the Timpots Forever group. Missing someone? Send their story to <a href="mailto:admin@timpotsforever.org?subject=Famous%20Timpots%20Submission" style="color: var(--gold-bright); text-decoration: underline;">admin@timpotsforever.org</a>.</p>
+  </div>
+</section>
+
+<section class="famous-band">
+  <div class="wrap">
+    <h2 class="category-heading">Military &amp; <em>Uniformed Services</em></h2>
+    <div class="famous-list">
+
+      <div class="famous">
+        <div class="famous-meta">
+          <div class="famous-name">Surg. Vice Admiral Arti Sarin</div>
+          <div class="famous-class">ISC 1981 &middot; Pluto Captain</div>
+          <span class="house-chip pluto">Pluto</span>
+        </div>
+        <div class="famous-bio">First woman officer to become <strong>Director General of Armed Forces Medical Services (DGAFMS)</strong>. Earlier <strong>Director General Medical Services (Navy)</strong>. Her service spans all three branches of the Indian Armed Forces — Army, Navy and Air Force.</div>
+      </div>
+
+      <div class="famous">
+        <div class="famous-meta">
+          <div class="famous-name">Air Vice Marshal NM Samuel (Retd.)</div>
+          <div class="famous-class">ISC c. 1980</div>
+        </div>
+        <div class="famous-bio">Retired <strong>Air Vice Marshal, Indian Air Force</strong>. Batchmate of Dr Meenakshi Anantram.</div>
+      </div>
+
+      <div class="famous">
+        <div class="famous-meta">
+          <div class="famous-name">Surg. Rear Admiral Manish Honwad</div>
+          <div class="famous-class">Indian Navy</div>
+        </div>
+        <div class="famous-bio">Recently appointed <strong>Additional Director General Medical Services (Navy)</strong> — under VAdm Arti Sarin.</div>
+      </div>
+
+      <div class="famous">
+        <div class="famous-meta">
+          <div class="famous-name">Gp Capt Prabhakar Allam (Veteran)</div>
+          <div class="famous-class">Old School &middot; 1962</div>
+        </div>
+        <div class="famous-bio"><strong>Group Captain, Indian Air Force</strong>. Credits his school years for the discipline that shaped his journey into a military school and beyond.</div>
+      </div>
+
+      <div class="famous">
+        <div class="famous-meta">
+          <div class="famous-name">Commodore J Sridhar</div>
+          <div class="famous-class">1987</div>
+        </div>
+        <div class="famous-bio"><strong>Commodore, Indian Navy</strong>.</div>
+      </div>
+
+      <div class="famous">
+        <div class="famous-meta">
+          <div class="famous-name">Commodore S Raghav</div>
+          <div class="famous-class">1988</div>
+        </div>
+        <div class="famous-bio"><strong>Commodore, Indian Navy</strong>.</div>
+      </div>
+
+      <div class="famous">
+        <div class="famous-meta">
+          <div class="famous-name">Commodore Saurabh Thakur</div>
+          <div class="famous-class">1993</div>
+        </div>
+        <div class="famous-bio"><strong>Commodore, Indian Navy</strong>.</div>
+      </div>
+
+      <div class="famous">
+        <div class="famous-meta">
+          <div class="famous-name">Capt. A. Nagaraj Subbarao, PhD</div>
+          <div class="famous-class">ICSE 1980 &middot; Timpany 1969–1980</div>
+        </div>
+        <div class="famous-bio"><strong>Master Mariner</strong> with over two decades commanding vessels across global waters. Now <strong>Dean, School of Commerce &amp; Management Studies</strong> and Professor of Leadership &amp; Strategy at Dayananda Sagar University. Holds two PhDs (Organisational Behaviour; Higher Education). Recipient of the <strong>CII Indian Change Maker Award, 2024</strong>.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="famous-band">
+  <div class="wrap">
+    <h2 class="category-heading">Medicine &amp; <em>Sciences</em></h2>
+    <div class="famous-list">
+
+      <div class="famous">
+        <div class="famous-meta">
+          <div class="famous-name">Dr Priya Abraham</div>
+          <div class="famous-class">ISC 1981</div>
+          <span class="house-chip jupiter">Jupiter</span>
+        </div>
+        <div class="famous-bio">One of India's leading <strong>virologists</strong>. Director of the <strong>National Institute of Virology, Pune</strong>. Known for her contributions to COVID-19 testing techniques and SARS-CoV-2 genome studies; a key figure at the PMO during the pandemic. A <em>biopic</em> on her life has been made.</div>
+      </div>
+
+      <div class="famous">
+        <div class="famous-meta">
+          <div class="famous-name">Dr Vijay S. Gorantla, MD PhD FRCS</div>
+          <div class="famous-class">1987</div>
+        </div>
+        <div class="famous-bio">Medical academic and reconstructive surgeon affiliated with the <strong>McGowan Institute for Regenerative Medicine, University of Pittsburgh</strong>.</div>
+      </div>
+
+      <div class="famous">
+        <div class="famous-meta">
+          <div class="famous-name">Dr Smriti Chitra</div>
+          <div class="famous-class">ICSE c. 2010/11</div>
+        </div>
+        <div class="famous-bio">Recipient of the <strong>DY Patil gold medal for MD</strong>.</div>
+      </div>
+
+      <div class="famous">
+        <div class="famous-meta">
+          <div class="famous-name">Prof. Madhu</div>
+          <div class="famous-class">Class of 1974</div>
+        </div>
+        <div class="famous-bio"><strong>Professor of Psychology, Andhra University</strong>. Pioneering work on the psychology of diabetes, beginning in 1990 with collaborators in the field. Passed away in the first wave of COVID-19, 2020.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="famous-band">
+  <div class="wrap">
+    <h2 class="category-heading">Corporate &amp; <em>Finance Leaders</em></h2>
+    <div class="famous-list">
+
+      <div class="famous">
+        <div class="famous-meta">
+          <div class="famous-name">Purnachandra Rao</div>
+          <div class="famous-class">ISC 1974 &middot; Mercury Captain</div>
+          <span class="house-chip mercury">Mercury</span>
+        </div>
+        <div class="famous-bio"><strong>Vice Chairman, Bank of America</strong> and <strong>Chairman of its Investment Banking Division</strong>. Based in New York. Began his Wall Street career at Merrill Lynch (which was acquired by Bank of America).</div>
+      </div>
+
+      <div class="famous">
+        <div class="famous-meta">
+          <div class="famous-name">Keshav R Murugesh</div>
+          <div class="famous-class">ISC 1981</div>
+        </div>
+        <div class="famous-bio"><strong>Group CEO and Member of the Board of Directors, WNS Holdings</strong> — a multinational business process management company. <strong>Chairman of the Confederation of Indian Industry (CII) UK India Business Forum</strong>.</div>
+      </div>
+
+      <div class="famous">
+        <div class="famous-meta">
+          <div class="famous-name">Harmit Singh</div>
+          <div class="famous-class">ISC c. 1981</div>
+        </div>
+        <div class="famous-bio"><strong>Chief Financial Officer, Levi Strauss &amp; Co.</strong></div>
+      </div>
+
+      <div class="famous">
+        <div class="famous-meta">
+          <div class="famous-name">A. Rama Krishna</div>
+          <div class="famous-class">New York</div>
+        </div>
+        <div class="famous-bio">Owner of an <strong>investment hedge fund in New York</strong>.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="famous-band">
+  <div class="wrap">
+    <h2 class="category-heading">Entrepreneurs &amp; <em>Business Owners</em></h2>
+    <div class="famous-list">
+
+      <div class="famous">
+        <div class="famous-meta">
+          <div class="famous-name">Kamal Sagar</div>
+          <div class="famous-class">Bangalore</div>
+        </div>
+        <div class="famous-bio">Indian architect (IIT Kharagpur). <strong>Founder &amp; Chairman, Total Environment Building Systems</strong> and Total Environment Hospitality. Designer, real-estate developer, restaurateur and music enthusiast.</div>
+      </div>
+
+      <div class="famous">
+        <div class="famous-meta">
+          <div class="famous-name">Neelam Chhiber</div>
+          <div class="famous-class">NID graduate</div>
+        </div>
+        <div class="famous-bio"><strong>Co-founder of Industree and Mother Earth</strong>; pioneer in building inclusive, regenerative livelihoods. Over 30 years empowering women from vulnerable communities through enterprise-led models. Recognised by the <strong>World Economic Forum</strong> and <em>The Economic Times</em>; independent director at <strong>CaratLane</strong> and <strong>Prestige Group</strong>. Through <em>Mission Creative Million</em>, she aims to impact three million producers by 2030.</div>
+      </div>
+
+      <div class="famous">
+        <div class="famous-meta">
+          <div class="famous-name">Dr Meenakshi Anantram</div>
+          <div class="famous-class">ISC 1980 &middot; Jupiter Captain</div>
+          <span class="house-chip jupiter">Jupiter</span>
+        </div>
+        <div class="famous-bio"><strong>Founder &amp; CEO of Razzmatazz</strong>, one of India's pioneering event-management companies — having hosted events for Presidents and global icons. <strong>Young Scientist Award</strong> recipient and the <strong>first Indian woman scientist nominated on the Antarctic Mission</strong>. National-level athlete (Indian handball as a Timpany student) and a <strong>Limca Book of Records</strong> awardee. <strong>Amazon #1 Best-Selling Author</strong>. Together with her husband, she is part of <em>India's first palliative medical-clown couple</em>, recognised with the <strong>Mahatma Gandhi Desh Sewa Puraskar on Republic Day 2025</strong>. TEDx speaker.</div>
+      </div>
+
+      <div class="famous">
+        <div class="famous-meta">
+          <div class="famous-name">V J Gupta</div>
+          <div class="famous-class">Std 11–12 &middot; 1978–80</div>
+        </div>
+        <div class="famous-bio">Third-generation proprietor of <strong>Gupta Brothers</strong> — the Vizag bookshop and stationery institution that opened in <strong>1916</strong> and is still trading, having long since crossed its centenary. Generations of Timpany students bought their textbooks here every June.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="famous-band">
+  <div class="wrap">
+    <h2 class="category-heading">Arts &amp; <em>Entertainment</em></h2>
+    <div class="famous-list">
+
+      <div class="famous">
+        <div class="famous-meta">
+          <div class="famous-name">Ramana Gogula</div>
+          <div class="famous-class">ISC 1976 &middot; Pluto Captain</div>
+          <span class="house-chip pluto">Pluto</span>
+        </div>
+        <div class="famous-bio">Indo-American <strong>entrepreneur, venture capitalist, music composer and singer</strong> of Telugu film music and Indian pop. Notable film compositions include <em>Premante Idera</em> (1998), <em>Thammudu</em> (1999), <em>Badri</em> (2000), <em>Johnny</em> (2003), <em>Lakshmi</em> (2006), <em>Annavaram</em> (2006) and <em>Yogi</em> (2007), with four collaborations alongside Pawan Kalyan. Currently <strong>Vice President, Clean Technology Innovation at Stanley Black &amp; Decker, Inc.</strong> and venture partner at Anthill Ventures. Sang Timpany's 70th-anniversary anthem.</div>
+      </div>
+
+      <div class="famous">
+        <div class="famous-meta">
+          <div class="famous-name">Shobita Dhulipala</div>
+          <div class="famous-class">Mumbai</div>
+        </div>
+        <div class="famous-bio"><strong>Bollywood actress and model</strong>.</div>
+      </div>
+
+      <div class="famous">
+        <div class="famous-meta">
+          <div class="famous-name">Badri Chavan</div>
+          <div class="famous-class">Mumbai</div>
+        </div>
+        <div class="famous-bio">Actor and public figure (Hindi film and television).</div>
+      </div>
+
+      <div class="famous">
+        <div class="famous-meta">
+          <div class="famous-name">Keya Hatkar</div>
+          <div class="famous-class">Recent Timpot</div>
+        </div>
+        <div class="famous-bio">A recent young Timpot already making her own mark — among other things, she hand-crafted the memorial video for Jazz that opened the April 2026 remembrance service.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="famous-band">
+  <div class="wrap">
+    <h2 class="category-heading">Sport</h2>
+    <div class="famous-list">
+
+      <div class="famous">
+        <div class="famous-meta">
+          <div class="famous-name">Damu (Damodar)</div>
+          <div class="famous-class">Class of 1970 &middot; Neptune Captain</div>
+          <span class="house-chip neptune">Neptune</span>
+        </div>
+        <div class="famous-bio"><strong>Andhra State Schools Cricket Captain</strong> in the Gulam Ahmad Trophy, 1969. School champion four years running (1967–70); Neptune House Captain 1969 and 1970, leading Neptune to its first championship in 1969 — a streak that continued through 1972.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="share-cta">
+    <h3>Know a Timpot we've <em>missed</em>?</h3>
+    <p>This list is drawn from what alumni themselves have shared in the Timpots Forever WhatsApp group — and Monisha Hatkar's note in that thread that "we have over a 100 plus major achievers amongst us" suggests we are nowhere near done. If you know a Timpot whose work deserves a place here, please email <a href="mailto:admin@timpotsforever.org?subject=Famous%20Timpots%20Submission">admin@timpotsforever.org</a> with a name, batch, house and a few sentences on what they've done.</p>
+  </div>
+</div>
+
+</body>
+</html>
