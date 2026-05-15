@@ -1579,6 +1579,19 @@
       await loadSection(section);
     }
     document.dispatchEvent(new CustomEvent('sectionsLoaded'));
+
+    // If the URL has a hash (e.g. index.html#jazz), the browser scrolled
+    // before the section existed. Re-scroll now that everything's in place.
+    if (window.location.hash) {
+      const id = window.location.hash.slice(1);
+      const el = document.getElementById(id);
+      if (el) {
+        // Defer one frame to let layout settle
+        requestAnimationFrame(() => {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      }
+    }
   }
 
   // Start loading sections when DOM is ready

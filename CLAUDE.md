@@ -141,7 +141,7 @@ Items previously here but removed:
 | `calendar.html` | public | ✅ Premium | Event cards; uses canonical `.members-header` |
 | `videos-photos.html` | public | ✅ Premium | Coming-soon placeholder card with icon; canonical header |
 | `newsletter.html` | public | ✅ Premium | Coming-soon placeholder — future home for issue archives |
-| `memory-lane.html` | public | ✅ Premium | Coming-soon placeholder — future home for alumni stories |
+| `memory-lane.html` | public | ✅ Premium | Thematic curation of 40 alumni memories — 9 themes (First Days, Walking with Jazz, Teachers, Mr. Chiranjeevi, Houses & Sports, Songs & Stages, Mischief, Haunts, Always a Timpot). Source: `Whatsapp chats/Memories of the School.docx` |
 | `school-history.html` | public | ✅ Premium | Coming-soon placeholder — future home for archive (1931→) |
 | `terms.html` | public | ✅ Premium | T&Cs; card-based layout |
 | `privacy.html` | public | ✅ Premium | Privacy policy; card-based layout |
