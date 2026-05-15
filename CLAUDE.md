@@ -414,19 +414,14 @@ What could push it longer:
 
 ## Incomplete items
 
-**Placeholder `href="#"` links still in the codebase:**
-- `sections/dynamic/stories.html` — "Where Are They Now", "Class Notes · Spring 2026", "More Stories" (no content yet)
-- `sections/static/footer.html` — "Alumni Directory" (waits on `directory.html`)
-- `sections/dynamic/directory-events.html` — "Search the Alumni Directory" heading + two dummy event-card titles ("Job Search 2.0", "Test Test Test")
-- `sections/dynamic/social.html` — Facebook, YouTube, WhatsApp need real URLs
-
 **Pages not yet built:**
-- `directory.html` — Alumni Directory (full build plan above, ~1.5 hrs)
+- `directory.html` — Alumni Directory (full build plan above, ~1.5 hrs). The homepage Directory panel and the footer link both show a "(coming soon)" treatment until this exists.
 
-**Content gaps on existing pages:**
-- `videos-photos.html` — `Jazz Message.mp4` (28MB, in `Photos and Videos/Videos/`) still needs YouTube upload + embed
-- `sections/dynamic/stories.html` — three homepage story cards have placeholder titles/text
-- `sections/dynamic/directory-events.html` — dummy events should be replaced with real ones from `calendar.html`
+**Content gaps awaiting real material:**
+- `videos-photos.html` — `Jazz Message.mp4` (28MB, in `Photos and Videos/Videos/`) still needs YouTube upload + embed.
+
+**Pending real URLs / accounts:**
+- Social channels — Facebook, YouTube, WhatsApp icons in `social.html` are present but dimmed + `pointer-events:none` until handles exist. Update both the `href` and remove the `is-coming-soon` class when ready.
 
 **Infrastructure to verify:**
 - Supabase Auth redirect-URL whitelist includes `https://timpotsforever.org/profile.html`
@@ -435,6 +430,23 @@ What could push it longer:
 **Minor design debt:**
 - Button padding varies slightly across pages — standardize
 - A few SVG stroke-widths still at 1.5px — should all be 1.8px
+
+## Coming-soon treatment (shared utility)
+
+When placeholder content needs to be visible but clearly marked as not-yet-live, use the shared `.coming-soon-chip` pattern defined in `index.html`'s stylesheet:
+
+```html
+<div class="coming-soon-chip">Coming Soon</div>
+```
+
+Renders as a small gold uppercase label with a 6px gold dot bullet, letter-spacing 0.22em. Currently used on: story cards 1+2, directory panel, anywhere new placeholder content lands.
+
+Companion utilities in the same stylesheet:
+- `.more-soon` — italic muted text for "more X coming soon" links
+- `.social-links.is-coming-soon` — dims social icons + disables clicks
+- `.social-coming-note` — italic muted line beside dimmed social icons
+- `.footer-col li.coming-soon-li` + `.cs-tag` — muted footer item with "(coming soon)" suffix
+- `.event-item.is-placeholder` — placeholder variant of the homepage events panel
 
 ---
 
@@ -455,12 +467,15 @@ What could push it longer:
 - ✅ Dedicated `jazz.html` tribute page — bio band with portrait, memorial video, photographs sections. Nav, footer, and the homepage Jazz feature band all link to it.
 - ✅ Hash-deeplink handler added to `index.html` — any homepage anchor (e.g. future `#stories`, `#history`) scrolls correctly even after async section load. Currently no consumer uses it, but the pattern is in place.
 - ✅ Formspree "Suggest a Cause" form uses AJAX + custom in-page thank-you state (no Formspree-branded redirect)
+- ✅ Homepage placeholder content given honest "Coming Soon" treatment — stories cards 1+2, "More stories" link, newsletter callout ("Coming July 2026"), directory panel, events panel (real Memorial Debate Competition + placeholder card), social icons (dimmed + "Channels coming soon"), footer Alumni Directory ("(coming soon)" muted text). Shared `.coming-soon-chip` utility class added to `index.html` for consistency.
+- ✅ Hero band rewritten — fictional "From Vizag to the world stage" replaced with the actual origin story of Timpots Forever: "Out of a memorial, a *movement*." Frames Jazz's March 2026 passing as the spark for the three working groups (website, *The Timpany Times* newsletter, local events).
+- ✅ Newsletter renamed throughout — homepage callout now reads "The *Timpany Times*" (italic gold). Cadence: bi-monthly, first issue July 2026.
+- ✅ Fake social-post tweets replaced — three boxes under "Be social." now each represent one upcoming channel (Facebook, YouTube, WhatsApp) with a brief honest description + "Stay tuned." italic.
 
 **Next priorities:**
 1. Build `directory.html` (Alumni Directory) using `profile.html` as the design template
-2. Replace homepage `stories.html` placeholder content with real story cards
-3. Replace homepage `directory-events.html` dummy events with real ones from `calendar.html`
-4. Add real social media URLs to `sections/dynamic/social.html`
+2. Add real social media URLs / handles to `sections/dynamic/social.html` and remove `is-coming-soon` class once channels go live
+3. Upload `Jazz Message.mp4` to YouTube and embed on `videos-photos.html`
 
 ## Phase 2 (other features not yet built)
 
