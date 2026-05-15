@@ -180,6 +180,8 @@ Items previously here but removed:
 
 6. **Supabase Auth URL Configuration**: redirect-URL whitelist must include the post-confirmation page. Currently should include `https://timpotsforever.org/profile.html` (was `/members.html` historically — update if not already done).
 
+7. **Hash-deeplinks into homepage sections** (`index.html#jazz`, `#stories`, etc.) require the post-`sectionsLoaded` scroll re-trigger in `loadAllSections()` — because the browser's native anchor-scroll fires before the async section loader has injected the element. Without it, deep-links land the user at the top of the page. The handler in `index.html` reads `window.location.hash` after sections load and calls `scrollIntoView()` on the matching element. Any new homepage anchor-link (`<section id="...">`) gets this behavior for free.
+
 ## Asset sources (outside the repo)
 
 Repo sits inside `/Users/admin/Dropbox orignal/Personal/KP's Stuff/Timpots90/Timpots Forever/`. Sibling folders:
@@ -410,13 +412,34 @@ What could push it longer:
 
 ---
 
-## Design Debt & Future Work
+## Incomplete items
 
-**Minor items** (not blocking):
-- Button size standardization — Some pages use slightly different button padding
-- Icon stroke-width — Standardize to 1.8px across all SVGs (mostly done)
+**Placeholder `href="#"` links still in the codebase:**
+- `sections/dynamic/stories.html` — "Where Are They Now", "Class Notes · Spring 2026", "More Stories" (no content yet)
+- `sections/static/footer.html` — "Alumni Directory" (waits on `directory.html`)
+- `sections/dynamic/directory-events.html` — "Search the Alumni Directory" heading + two dummy event-card titles ("Job Search 2.0", "Test Test Test")
+- `sections/dynamic/social.html` — Facebook, YouTube, WhatsApp need real URLs
 
-**Completed (May 2026 consistency sweep):**
+**Pages not yet built:**
+- `directory.html` — Alumni Directory (full build plan above, ~1.5 hrs)
+
+**Content gaps on existing pages:**
+- `videos-photos.html` — `Jazz Message.mp4` (28MB, in `Photos and Videos/Videos/`) still needs YouTube upload + embed
+- `sections/dynamic/stories.html` — three homepage story cards have placeholder titles/text
+- `sections/dynamic/directory-events.html` — dummy events should be replaced with real ones from `calendar.html`
+
+**Infrastructure to verify:**
+- Supabase Auth redirect-URL whitelist includes `https://timpotsforever.org/profile.html`
+- Cloudflare Email Routing for `hello@`, `admin@`, `newsletter@` is configured (mailto links across the site assume these deliver)
+
+**Minor design debt:**
+- Button padding varies slightly across pages — standardize
+- A few SVG stroke-widths still at 1.5px — should all be 1.8px
+
+---
+
+## Completed (May 2026 consistency sweep)
+
 - ✅ Modern line-style icons across all sections (social, stories, hero)
 - ✅ Canonical `.members-header` pattern on every standalone page
 - ✅ Card-based layout pattern in all legal pages (terms, privacy, accessibility)
@@ -426,12 +449,18 @@ What could push it longer:
 - ✅ Info-box colors brought into brand palette (no more off-brand blue/yellow)
 - ✅ Header h2 weight + em color standardized (500 + var(--gold))
 - ✅ Social icons rendering correctly (Facebook, YouTube, WhatsApp)
-- ✅ videos-photos.html elevated from bare placeholder to designed coming-soon card
+- ✅ `videos-photos.html` populated with gallery — 35 photos in 5 sections + featured Jazz memorial video, custom lightbox
+- ✅ `school-history.html` built — hero, timeline, narrative, 66-entry A-Z teachers directory
+- ✅ `memory-lane.html` built — thematic curation of 40 alumni memories across 9 themes
+- ✅ Dedicated `jazz.html` tribute page — bio band with portrait, memorial video, photographs sections. Nav, footer, and the homepage Jazz feature band all link to it.
+- ✅ Hash-deeplink handler added to `index.html` — any homepage anchor (e.g. future `#stories`, `#history`) scrolls correctly even after async section load. Currently no consumer uses it, but the pattern is in place.
+- ✅ Formspree "Suggest a Cause" form uses AJAX + custom in-page thank-you state (no Formspree-branded redirect)
 
 **Next priorities:**
-1. Implement Alumni Directory (directory.html) — use profile.html as template
-2. Populate videos-photos.html with actual content (when ready)
-3. Consider dark mode support (future phase)
+1. Build `directory.html` (Alumni Directory) using `profile.html` as the design template
+2. Replace homepage `stories.html` placeholder content with real story cards
+3. Replace homepage `directory-events.html` dummy events with real ones from `calendar.html`
+4. Add real social media URLs to `sections/dynamic/social.html`
 
 ## Phase 2 (other features not yet built)
 
