@@ -1498,6 +1498,77 @@
     font-family: 'Source Sans 3', sans-serif;
     font-size: 13px;
   }
+
+  /* ============ COMING-SOON utilities ============
+     Shared chip + states used across placeholder cards / sections.
+     ============================================ */
+  .coming-soon-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .coming-soon-chip::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  /* Disabled "more" link — looks present, signals not yet active */
+  .more-soon {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--ink-muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* Social channels: muted + disabled state */
+  .social-links.is-coming-soon a {
+    opacity: 0.45;
+    pointer-events: none;
+    cursor: default;
+  }
+  .social-coming-note {
+    font-family: 'Source Sans 3', sans-serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-right: 14px;
+    letter-spacing: 0.02em;
+  }
+
+  /* Footer link rendered as muted "(coming soon)" text instead of <a> */
+  .footer-col li .cs-tag {
+    font-style: italic;
+    color: var(--ink-muted);
+    font-size: 12px;
+    font-weight: 400;
+    margin-left: 4px;
+  }
+  .footer-col li.coming-soon-li {
+    color: var(--ink-muted);
+    opacity: 0.75;
+  }
+
+  /* Event item — placeholder variant for the homepage events panel */
+  .event-item.is-placeholder { opacity: 0.7; }
+  .event-item.is-placeholder .event-date {
+    border-color: var(--rule) !important;
+  }
+  .event-item.is-placeholder .event-date .month,
+  .event-item.is-placeholder .event-date .day {
+    color: var(--ink-muted) !important;
+  }
 </style>
 </head>
 
