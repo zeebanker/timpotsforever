@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alumni Directory — Timpots Forever</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,500;1,700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand: #7a1420;
+    --brand-dark: #4a0810;
+    --ink: #1a1a1a;
+    --ink-soft: #555;
+    --ink-muted: #888;
+    --bg: #fff;
+    --bg-soft: #f7f4ee;
+    --bg-warm: #f0e9d8;
+    --rule: #e5e0d4;
+    --gold: #b5894a;
+    --gold-bright: #f0c579;
+
+    /* House dot colors — mirror map.html colorGroups */
+    --house-jupiter: #2f5a9e;
+    --house-mercury: #d4a017;
+    --house-neptune: #2d7a3f;
+    --house-pluto:   #a83040;
+    --house-venus:   #a83040;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    color: var(--ink);
+    background: var(--bg-soft);
+    min-height: 100vh;
+  }
+  a { color: var(--brand); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Header bar (canonical .members-header) ──────────────── */
+  .members-header {
+    background: var(--brand);
+    padding: 18px 0;
+    color: #fff;
+  }
+  .members-header .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .members-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 500;
+  }
+  .members-header h2 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .members-header .actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .public-site-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-decoration: none;
+    opacity: 0.8;
+    padding: 6px;
+    transition: opacity 0.15s;
+  }
+  .public-site-link:hover { opacity: 1; text-decoration: none; }
+  .public-site-link svg { display: block; }
+  .logout-btn {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.4);
+    color: #fff;
+    padding: 6px 18px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .logout-btn:hover { background: rgba(255,255,255,0.15); }
+
+  /* ── Page layout ─────────────────────────────────────────── */
+  .directory-page {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 24px;
+  }
+  .page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .page-title em {
+    color: var(--brand);
+    font-style: italic;
+  }
+  .page-intro {
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1.55;
+    margin-bottom: 28px;
+    max-width: 720px;
+  }
+
+  /* ── Filter toolbar ──────────────────────────────────────── */
+  .filters-bar {
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    padding: 20px 22px;
+    margin-bottom: 26px;
+    display: grid;
+    grid-template-columns: minmax(260px, 1fr) repeat(3, minmax(140px, 200px)) auto;
+    gap: 14px;
+    align-items: end;
+  }
+  .filter-field {
+    display: flex;
+    flex-direction: column;
+  }
+  .filter-field label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+  .filter-field input,
+  .filter-field select {
+    width: 100%;
+    padding: 10px 12px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .filter-field input:focus,
+  .filter-field select:focus { border-color: var(--brand); }
+  .result-count {
+    align-self: end;
+    font-size: 13px;
+    color: var(--ink-muted);
+    padding-bottom: 12px;
+    white-space: nowrap;
+  }
+  .result-count strong { color: var(--ink); font-weight: 600; }
+  @media (max-width: 980px) {
+    .filters-bar {
+      grid-template-columns: 1fr 1fr;
+    }
+    .filter-field.search { grid-column: 1 / -1; }
+    .result-count {
+      grid-column: 1 / -1;
+      padding-bottom: 0;
+      text-align: right;
+    }
+  }
+  @media (max-width: 540px) {
+    .filters-bar { grid-template-columns: 1fr; padding: 18px; }
+    .result-count { text-align: left; }
+  }
+
+  /* ── Member grid ─────────────────────────────────────────── */
+  .member-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 18px;
+  }
+  .member-card {
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    padding: 22px 22px 20px;
+    cursor: pointer;
+    transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    font-family: inherit;
+  }
+  .member-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 2px 12px rgba(122, 20, 32, 0.06);
+    transform: translateY(-1px);
+  }
+  .member-card:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+  .member-card .card-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 12px;
+  }
+  .avatar {
+    flex-shrink: 0;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--brand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 20px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+  .avatar.lg {
+    width: 72px;
+    height: 72px;
+    font-size: 30px;
+  }
+  .member-card .card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .member-card .card-sub {
+    margin-top: 4px;
+    font-size: 13px;
+    color: var(--ink-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .house-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .house-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--ink-muted);
+    flex-shrink: 0;
+  }
+  .house-dot.jupiter { background: var(--house-jupiter); }
+  .house-dot.mercury { background: var(--house-mercury); }
+  .house-dot.neptune { background: var(--house-neptune); }
+  .house-dot.pluto   { background: var(--house-pluto); }
+  .house-dot.venus   { background: var(--house-venus); }
+  .card-divider {
+    height: 1px;
+    background: var(--rule);
+    margin: 4px 0 12px;
+  }
+  .card-meta {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .card-meta .row {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+  }
+  .card-meta .row + .row { margin-top: 4px; }
+  .card-meta .ico {
+    flex-shrink: 0;
+    color: var(--gold);
+    opacity: 0.9;
+    display: inline-flex;
+    align-items: center;
+    margin-top: 2px;
+  }
+  .card-meta .ico svg { display: block; }
+  .card-meta .row .val {
+    flex: 1;
+    min-width: 0;
+    word-wrap: break-word;
+  }
+  .self-badge {
+    display: inline-block;
+    margin-left: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding: 2px 8px;
+    border: 1px solid var(--gold);
+    border-radius: 999px;
+    vertical-align: 2px;
+  }
+
+  /* ── Empty / loading states ───────────────────────────────── */
+  .state-msg {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--ink-muted);
+    font-style: italic;
+    background: var(--bg);
+    border: 1px solid var(--rule);
+  }
+  .state-msg strong {
+    font-style: normal;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 4px;
+    font-size: 16px;
+  }
+
+  /* ── Modal ────────────────────────────────────────────────── */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 4, 8, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.18s;
+  }
+  .modal-backdrop.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .modal {
+    background: var(--bg);
+    width: 100%;
+    max-width: 640px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    position: relative;
+  }
+  .modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: none;
+    color: var(--ink-muted);
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 0.15s, color 0.15s;
+  }
+  .modal-close:hover { background: var(--bg-soft); color: var(--ink); }
+  .modal-header {
+    background: var(--bg-soft);
+    padding: 28px 32px 24px;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .modal-header .name-block { flex: 1; min-width: 0; }
+  .modal-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 4px;
+    word-wrap: break-word;
+  }
+  .modal-header .sub {
+    font-size: 14px;
+    color: var(--ink-soft);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .modal-body {
+    padding: 24px 32px 32px;
+  }
+  .modal-section + .modal-section { margin-top: 22px; }
+  .modal-section h3 {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 10px;
+  }
+  .modal-section p {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .modal-section .bio { white-space: pre-wrap; }
+  .info-row {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .info-row + .info-row { margin-top: 6px; }
+  .info-row .ilabel {
+    color: var(--ink-muted);
+    font-size: 13px;
+    width: 100px;
+    flex-shrink: 0;
+  }
+  .info-row .ival { color: var(--ink); flex: 1; word-wrap: break-word; }
+  .contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .contact-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border: 1px solid var(--rule);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    background: var(--bg);
+    text-decoration: none;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .contact-pill:hover {
+    border-color: var(--gold);
+    background: var(--bg-soft);
+    text-decoration: none;
+  }
+  .contact-pill svg { display: block; }
+  table.attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-top: 4px;
+  }
+  table.attendance-table th {
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    border-bottom: 2px solid var(--rule);
+  }
+  table.attendance-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink);
+  }
+  table.attendance-table tr:last-child td { border-bottom: none; }
+  table.attendance-table .year-cell {
+    font-weight: 600;
+    color: var(--brand);
+    width: 80px;
+  }
+  .modal-private-note {
+    background: var(--bg-soft);
+    border-left: 4px solid var(--gold);
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  /* ── Mini footer (consistent with other standalone pages) ── */
+  .mini-footer {
+    margin-top: 60px;
+    padding: 30px 24px;
+    text-align: center;
+  }
+  .mini-footer p {
+    font-size: 13px;
+    color: var(--ink-muted);
+    line-height: 1.6;
+  }
+
+  /* ── Responsive ──────────────────────────────────────────── */
+  @media (max-width: 640px) {
+    .directory-page { margin: 30px auto; }
+    .page-title { font-size: 28px; }
+    .member-grid { grid-template-columns: 1fr; gap: 14px; }
+    .modal-header { padding: 22px 22px 18px; gap: 14px; }
+    .modal-header h2 { font-size: 22px; }
+    .modal-body { padding: 20px 22px 26px; }
+    .info-row .ilabel { width: 86px; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ── Header bar ────────────────────────────────────────────── -->
+<div class="members-header">
+  <div class="wrap">
+    <h2>Timpots <em>Forever</em> — Alumni Directory</h2>
+    <div class="actions">
+      <a href="index.html" class="public-site-link" aria-label="Home" title="Home">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 10.5 12 3l9 7.5V21H3z"/>
+          <path d="M9 21v-7h6v7"/>
+        </svg>
+      </a>
+      <button class="logout-btn" onclick="handleLogout()">Logout</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Page content ──────────────────────────────────────────── -->
+<div class="directory-page">
+
+  <h1 class="page-title">Alumni <em>Directory</em></h1>
+  <p class="page-intro">
+    Find fellow Timpots. Search by name; filter by class year, house, or city; click a card for the full profile. Listings respect each member's privacy setting — <a href="profile.html">update yours</a> any time.
+  </p>
+
+  <div class="filters-bar">
+    <div class="filter-field search">
+      <label for="search">Search</label>
+      <input type="text" id="search" placeholder="Name (first, last, or preferred)…" autocomplete="off">
+    </div>
+    <div class="filter-field">
+      <label for="filter-year">At school in</label>
+      <select id="filter-year" aria-label="Filter by year at school">
+        <option value="">Any year</option>
+      </select>
+    </div>
+    <div class="filter-field">
+      <label for="filter-house">House</label>
+      <select id="filter-house" aria-label="Filter by house">
+        <option value="">Any house</option>
+        <option value="jupiter">Jupiter</option>
+        <option value="mercury">Mercury</option>
+        <option value="neptune">Neptune</option>
+        <option value="pluto">Pluto</option>
+        <option value="venus">Venus</option>
+      </select>
+    </div>
+    <div class="filter-field">
+      <label for="sort">Sort</label>
+      <select id="sort" aria-label="Sort results">
+        <option value="last_name:asc">Surname A → Z</option>
+        <option value="last_name:desc">Surname Z → A</option>
+        <option value="ending_year:desc">Most recent leavers</option>
+        <option value="ending_year:asc">Earliest leavers</option>
+      </select>
+    </div>
+    <div class="result-count" id="count">&nbsp;</div>
+  </div>
+
+  <div id="loading" class="state-msg">Loading the directory…</div>
+  <div id="empty" class="state-msg" hidden>
+    <strong>No Timpots match those filters.</strong>
+    Try clearing the search box, or widening the year range.
+  </div>
+  <div class="member-grid" id="grid"></div>
+</div>
+
+<!-- ── Detail modal ──────────────────────────────────────────── -->
+<div class="modal-backdrop" id="modal-backdrop" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-close" id="modal-close" aria-label="Close">×</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<footer class="mini-footer">
+  <p>
+    © 2026 Timpots Forever &middot; Seek Truth<br>
+    Not affiliated with Timpany School or Timpany Schools in Visakhapatnam, India
+  </p>
+</footer>
+
+<!-- ── Scripts ───────────────────────────────────────────────── -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/protect.js"></script>
+
+<script>
+  // ── Constants ──────────────────────────────────────────────
+  const GRADES = ['Pre-KG','KG','1','2','3','4','5','6','7','8','9','ICSE','11','ISC'];
+  const HOUSES = {
+    jupiter: 'Jupiter',
+    mercury: 'Mercury',
+    neptune: 'Neptune',
+    pluto:   'Pluto',
+    venus:   'Venus'
+  };
+  function gradeLabel(g) {
+    if (g === 'ICSE') return '10';
+    if (g === 'ISC')  return '12';
+    return g;
+  }
+  function escapeHtml(s) {
+    if (s === null || s === undefined) return '';
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  // ── State ──────────────────────────────────────────────────
+  let allProfiles = [];   // Latest result set from Supabase
+  let currentUserId = null;
+  let searchDebounce = null;
+  const SEARCH_DEBOUNCE_MS = 250;
+
+  // ── Populate the year dropdown (1955 → current year + 1) ───
+  (function fillYearDropdown() {
+    const sel = document.getElementById('filter-year');
+    const thisYear = new Date().getFullYear();
+    for (let y = thisYear + 1; y >= 1955; y--) {
+      const opt = document.createElement('option');
+      opt.value = String(y);
+      opt.textContent = String(y);
+      sel.appendChild(opt);
+    }
+  })();
+
+  // ── URL state sync ─────────────────────────────────────────
+  function readUrlState() {
+    const p = new URLSearchParams(window.location.search);
+    const s = document.getElementById('search');
+    const y = document.getElementById('filter-year');
+    const h = document.getElementById('filter-house');
+    const o = document.getElementById('sort');
+    if (p.has('q'))     s.value = p.get('q');
+    if (p.has('year'))  y.value = p.get('year');
+    if (p.has('house')) h.value = p.get('house');
+    if (p.has('sort'))  o.value = p.get('sort');
+  }
+  function writeUrlState() {
+    const p = new URLSearchParams();
+    const q = document.getElementById('search').value.trim();
+    const y = document.getElementById('filter-year').value;
+    const h = document.getElementById('filter-house').value;
+    const o = document.getElementById('sort').value;
+    if (q) p.set('q', q);
+    if (y) p.set('year', y);
+    if (h) p.set('house', h);
+    if (o && o !== 'last_name:asc') p.set('sort', o);
+    const qs = p.toString();
+    const newUrl = window.location.pathname + (qs ? '?' + qs : '');
+    history.replaceState(null, '', newUrl);
+  }
+
+  // ── Query Supabase ─────────────────────────────────────────
+  async function loadDirectory() {
+    const loadingEl = document.getElementById('loading');
+    const emptyEl   = document.getElementById('empty');
+    const gridEl    = document.getElementById('grid');
+    const countEl   = document.getElementById('count');
+
+    loadingEl.hidden = false;
+    emptyEl.hidden   = true;
+    gridEl.innerHTML = '';
+    countEl.innerHTML = '&nbsp;';
+
+    const { data: { session } } = await supabase.auth.getSession();
+    currentUserId = session ? session.user.id : null;
+    // No session? protect.js will redirect — but in case it doesn't load,
+    // the query below still safely hits RLS and returns 0 rows.
+
+    const searchQuery = document.getElementById('search').value.trim();
+    const yearFilter  = parseInt(document.getElementById('filter-year').value, 10);
+    const houseFilter = document.getElementById('filter-house').value;
+    const [sortCol, sortDir] = document.getElementById('sort').value.split(':');
+
+    let q = supabase
+      .from('profiles')
+      .select(`
+        id, first_name, last_name, preferred_name,
+        beginning_grade, beginning_year, ending_grade, ending_year,
+        house, city, country,
+        phone, hide_phone, linkedin_url, personal_url,
+        profession, bio,
+        visibility
+      `)
+      .is('deleted_at', null);
+
+    if (searchQuery) {
+      // Sanitize: strip filter delimiters and PostgREST wildcards entered by users
+      const safe = searchQuery.replace(/[,()*%]/g, '').trim();
+      if (safe) {
+        const pat = `%${safe}%`;
+        q = q.or(`first_name.ilike.${pat},last_name.ilike.${pat},preferred_name.ilike.${pat}`);
+      }
+    }
+    if (houseFilter) q = q.eq('house', houseFilter);
+    if (yearFilter) {
+      // "Was at school in year X" — beginning_year <= X AND ending_year >= X.
+      // Rows with null years won't match either filter and are excluded.
+      q = q.lte('beginning_year', yearFilter).gte('ending_year', yearFilter);
+    }
+    q = q.order(sortCol, { ascending: sortDir === 'asc', nullsFirst: false });
+    // Secondary sort by first name so leaver-year ties read sensibly
+    if (sortCol !== 'first_name') q = q.order('first_name', { ascending: true });
+
+    const { data, error } = await q;
+    loadingEl.hidden = true;
+
+    if (error) {
+      gridEl.innerHTML = `<div class="state-msg"><strong>Couldn't load the directory.</strong>${escapeHtml(error.message)}</div>`;
+      return;
+    }
+
+    allProfiles = data || [];
+    renderResults();
+  }
+
+  function renderResults() {
+    const gridEl  = document.getElementById('grid');
+    const emptyEl = document.getElementById('empty');
+    const countEl = document.getElementById('count');
+
+    gridEl.innerHTML = '';
+    if (!allProfiles.length) {
+      emptyEl.hidden = false;
+      countEl.innerHTML = '<strong>0</strong> Timpots';
+      return;
+    }
+    emptyEl.hidden = true;
+    countEl.innerHTML = `<strong>${allProfiles.length}</strong> ${allProfiles.length === 1 ? 'Timpot' : 'Timpots'}`;
+
+    const frag = document.createDocumentFragment();
+    allProfiles.forEach(p => frag.appendChild(buildCard(p)));
+    gridEl.appendChild(frag);
+  }
+
+  // ── Card rendering ─────────────────────────────────────────
+  function buildCard(p) {
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'member-card';
+    card.setAttribute('aria-label', `Open profile for ${displayName(p)}`);
+    card.addEventListener('click', () => openModal(p));
+
+    const initial = (p.preferred_name || p.first_name || '?').trim().charAt(0).toUpperCase() || '?';
+    const houseLabel = HOUSES[p.house] || '';
+    const houseClass = p.house || '';
+    const tenure = formatTenureShort(p);
+    const location = [p.city, p.country].filter(Boolean).join(', ');
+    const profession = p.profession || '';
+    const isSelf = p.id === currentUserId;
+
+    card.innerHTML = `
+      <div class="card-top">
+        <div class="avatar" aria-hidden="true">${escapeHtml(initial)}</div>
+        <div style="flex:1; min-width:0;">
+          <div class="card-name">${escapeHtml(displayName(p))}${isSelf ? '<span class="self-badge">You</span>' : ''}</div>
+          <div class="card-sub">
+            ${houseLabel ? `<span class="house-tag"><span class="house-dot ${escapeHtml(houseClass)}"></span>${escapeHtml(houseLabel)}</span>` : ''}
+            ${houseLabel && tenure ? `<span aria-hidden="true">·</span>` : ''}
+            ${tenure ? `<span>${escapeHtml(tenure)}</span>` : ''}
+          </div>
+        </div>
+      </div>
+      ${(location || profession) ? '<div class="card-divider"></div>' : ''}
+      <div class="card-meta">
+        ${location ? `
+          <div class="row">
+            <span class="ico">${pinIcon()}</span>
+            <span class="val">${escapeHtml(location)}</span>
+          </div>` : ''}
+        ${profession ? `
+          <div class="row">
+            <span class="ico">${briefcaseIcon()}</span>
+            <span class="val">${escapeHtml(profession)}</span>
+          </div>` : ''}
+      </div>
+    `;
+    return card;
+  }
+
+  function displayName(p) {
+    const first = p.preferred_name || p.first_name || '';
+    const last  = p.last_name || '';
+    return (first + ' ' + last).trim() || 'Anonymous Timpot';
+  }
+  function fullDisplayName(p) {
+    // For the modal: include real first name in parens when preferred_name is set
+    const last = p.last_name || '';
+    if (p.preferred_name && p.first_name && p.preferred_name !== p.first_name) {
+      return `${p.preferred_name} ${last}`.trim() + (p.first_name ? ` (${p.first_name})` : '');
+    }
+    return `${p.first_name || ''} ${last}`.trim() || 'Anonymous Timpot';
+  }
+
+  function formatTenureShort(p) {
+    if (!p.beginning_year && !p.ending_year) return '';
+    if (p.beginning_year && p.ending_year) {
+      const a = String(p.beginning_year).slice(-2);
+      const b = String(p.ending_year).slice(-2);
+      return `’${a} – ’${b}`;
+    }
+    if (p.ending_year)   return `Class of ’${String(p.ending_year).slice(-2)}`;
+    if (p.beginning_year) return `Started ’${String(p.beginning_year).slice(-2)}`;
+    return '';
+  }
+  function formatTenureLong(p) {
+    if (!p.beginning_year && !p.ending_year) return '';
+    const beg = p.beginning_year ? `${gradeLabel(p.beginning_grade) || '—'} ${p.beginning_year}` : null;
+    const end = p.ending_year    ? `${gradeLabel(p.ending_grade)    || '—'} ${p.ending_year}`    : null;
+    if (beg && end) return `${beg} → ${end}`;
+    return beg || end || '';
+  }
+
+  // ── Small inline icons (line style, currentColor) ──────────
+  function pinIcon() {
+    return `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 21s-7-7.5-7-12a7 7 0 0 1 14 0c0 4.5-7 12-7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>`;
+  }
+  function briefcaseIcon() {
+    return `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="3" y="7" width="18" height="13" rx="1.5"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 12h18"/></svg>`;
+  }
+  function linkedInIcon() {
+    return `<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
+      <path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.22 7.98H4.8V22H.22V7.98Zm7.55 0h4.4v1.93h.06c.61-1.15 2.1-2.36 4.32-2.36 4.62 0 5.47 3.04 5.47 6.99V22h-4.57v-6.93c0-1.65-.03-3.78-2.3-3.78-2.3 0-2.66 1.8-2.66 3.66V22H7.77V7.98Z"/></svg>`;
+  }
+  function globeIcon() {
+    return `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>`;
+  }
+  function phoneIcon() {
+    return `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.11L8.1 9.91a16 16 0 0 0 6 6l1.28-1.27a2 2 0 0 1 2.11-.45c.9.34 1.84.57 2.8.7A2 2 0 0 1 22 16.92Z"/></svg>`;
+  }
+
+  // ── Modal ──────────────────────────────────────────────────
+  async function openModal(p) {
+    const backdrop = document.getElementById('modal-backdrop');
+    const content  = document.getElementById('modal-content');
+
+    const initial = (p.preferred_name || p.first_name || '?').trim().charAt(0).toUpperCase() || '?';
+    const houseLabel = HOUSES[p.house] || '';
+    const houseClass = p.house || '';
+    const tenureLong  = formatTenureLong(p);
+    const tenureShort = formatTenureShort(p);
+    const location = [p.city, p.country].filter(Boolean).join(', ');
+
+    // Build contact pills
+    const pills = [];
+    if (p.linkedin_url) pills.push(`<a class="contact-pill" href="${escapeHtml(p.linkedin_url)}" target="_blank" rel="noopener noreferrer">${linkedInIcon()} LinkedIn</a>`);
+    if (p.personal_url) pills.push(`<a class="contact-pill" href="${escapeHtml(p.personal_url)}" target="_blank" rel="noopener noreferrer">${globeIcon()} Website</a>`);
+    if (p.phone && !p.hide_phone) {
+      const telHref = p.phone.replace(/[^\d+]/g, '');
+      pills.push(`<a class="contact-pill" href="tel:${escapeHtml(telHref)}">${phoneIcon()} ${escapeHtml(p.phone)}</a>`);
+    }
+
+    const isSelf = p.id === currentUserId;
+    const privacyNote = isSelf
+      ? `<div class="modal-private-note">This is your own listing. <a href="profile.html">Edit your profile</a> to change what other members see.</div>`
+      : '';
+
+    content.innerHTML = `
+      <div class="modal-header">
+        <div class="avatar lg" aria-hidden="true">${escapeHtml(initial)}</div>
+        <div class="name-block">
+          <h2 id="modal-title">${escapeHtml(fullDisplayName(p))}${isSelf ? '<span class="self-badge">You</span>' : ''}</h2>
+          <div class="sub">
+            ${houseLabel ? `<span class="house-tag"><span class="house-dot ${escapeHtml(houseClass)}"></span>${escapeHtml(houseLabel)}</span>` : ''}
+            ${houseLabel && tenureShort ? '<span aria-hidden="true">·</span>' : ''}
+            ${tenureShort ? `<span>${escapeHtml(tenureShort)}</span>` : ''}
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        ${(tenureLong || location || p.profession) ? `
+          <div class="modal-section">
+            <h3>At a glance</h3>
+            ${tenureLong ? `<div class="info-row"><span class="ilabel">Time at Timpany</span><span class="ival">${escapeHtml(tenureLong)}</span></div>` : ''}
+            ${location ? `<div class="info-row"><span class="ilabel">Lives in</span><span class="ival">${escapeHtml(location)}</span></div>` : ''}
+            ${p.profession ? `<div class="info-row"><span class="ilabel">Profession</span><span class="ival">${escapeHtml(p.profession)}</span></div>` : ''}
+          </div>` : ''}
+
+        ${p.bio ? `
+          <div class="modal-section">
+            <h3>About</h3>
+            <p class="bio">${escapeHtml(p.bio)}</p>
+          </div>` : ''}
+
+        ${pills.length ? `
+          <div class="modal-section">
+            <h3>Connect</h3>
+            <div class="contact-links">${pills.join('')}</div>
+          </div>` : ''}
+
+        <div class="modal-section" id="modal-attendance-section" hidden>
+          <h3>Year by year</h3>
+          <div id="modal-attendance-body"></div>
+        </div>
+
+        ${privacyNote}
+      </div>
+    `;
+
+    backdrop.hidden = false;
+    requestAnimationFrame(() => backdrop.classList.add('show'));
+    document.body.style.overflow = 'hidden';
+
+    // Load attendance asynchronously
+    await loadAttendance(p.id);
+  }
+
+  async function loadAttendance(profileId) {
+    const section = document.getElementById('modal-attendance-section');
+    const body    = document.getElementById('modal-attendance-body');
+    if (!section || !body) return;
+
+    const { data, error } = await supabase
+      .from('attendance_records')
+      .select('year, grade, section, class_teacher')
+      .eq('profile_id', profileId)
+      .order('year', { ascending: true });
+
+    if (error) {
+      // Likely an RLS denial because the profile is private; quietly skip
+      section.hidden = true;
+      return;
+    }
+    if (!data || !data.length) {
+      section.hidden = true;
+      return;
+    }
+
+    const rows = data.map(r => `
+      <tr>
+        <td class="year-cell">${escapeHtml(r.year)}</td>
+        <td>${escapeHtml(gradeLabel(r.grade) || '—')}</td>
+        <td>${escapeHtml(r.section || '—')}</td>
+        <td>${escapeHtml(r.class_teacher || '—')}</td>
+      </tr>
+    `).join('');
+
+    body.innerHTML = `
+      <table class="attendance-table">
+        <thead><tr><th>Year</th><th>Standard</th><th>Section</th><th>Class teacher</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    `;
+    section.hidden = false;
+  }
+
+  function closeModal() {
+    const backdrop = document.getElementById('modal-backdrop');
+    backdrop.classList.remove('show');
+    document.body.style.overflow = '';
+    setTimeout(() => { backdrop.hidden = true; }, 200);
+  }
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  document.getElementById('modal-backdrop').addEventListener('click', (e) => {
+    if (e.target.id === 'modal-backdrop') closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !document.getElementById('modal-backdrop').hidden) closeModal();
+  });
+
+  // ── Filter handlers ────────────────────────────────────────
+  document.getElementById('search').addEventListener('input', () => {
+    clearTimeout(searchDebounce);
+    searchDebounce = setTimeout(() => {
+      writeUrlState();
+      loadDirectory();
+    }, SEARCH_DEBOUNCE_MS);
+  });
+  ['filter-year', 'filter-house', 'sort'].forEach(id => {
+    document.getElementById(id).addEventListener('change', () => {
+      writeUrlState();
+      loadDirectory();
+    });
+  });
+
+  // ── Kick off ───────────────────────────────────────────────
+  function start() {
+    readUrlState();
+    loadDirectory();
+    // Trigger auth.js's user-affordance refresh (standalone-page convention)
+    document.dispatchEvent(new CustomEvent('sectionsLoaded'));
+  }
+  document.addEventListener('DOMContentLoaded', start);
+  if (document.readyState !== 'loading') start();
+</script>
+
+</body>
+</html>

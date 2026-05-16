@@ -1531,6 +1531,38 @@
     display: inline-block;
   }
 
+  /* Live indicator — sibling of .coming-soon-chip for content that
+     IS live and actively growing (e.g. the Alumni Directory). Same
+     visual treatment; the dot gently pulses to signal liveness. */
+  .live-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .live-chip::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: inline-block;
+    animation: live-pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes live-pulse {
+    0%, 100% { transform: scale(1);   opacity: 1; }
+    50%      { transform: scale(1.4); opacity: 0.55; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .live-chip::before { animation: none; }
+  }
+
   /* Disabled "more" link — looks present, signals not yet active */
   .more-soon {
     font-family: 'Source Sans 3', sans-serif;

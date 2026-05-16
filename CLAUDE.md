@@ -66,19 +66,23 @@ Then `http://localhost:8000`. Hard-refresh (Cmd+Shift+R) after edits.
 | `index.html` | public | Modular homepage. Hosts ALL site CSS. |
 | `login.html` | public | Tabbed sign-in / sign-up / forgot-password. All 3 password fields have an eye-toggle. |
 | `profile.html` | session required (`protect.js`) | One-stop alumni profile editor. Single Save button covers profile + attendance. Account & security card includes password change with read-only login email. |
-| `map.html` | public | Find Timpots map. Reads `public_alumni_map`. Leaflet + markercluster + Natural Earth borders + Seek Truth logo overlay at Vizag. Pins are house-colored (Pluto+Venus share red). Cluster click capped at zoom 6. Banner shows "N Timpots worldwide · counts by color group". |
+| `map.html` | public | Timpots Worldwide map. Reads `public_alumni_map`. Leaflet + markercluster + Natural Earth borders + Seek Truth logo overlay at Vizag. Pins are house-colored (Pluto+Venus share red). Cluster click capped at zoom 6. Banner shows "N Timpots worldwide · counts by color group". |
 | `calendar.html` | public | Hand-edited HTML event-card list (upcoming and past sections). Populate by copying an `.event-card`, editing the date / title / meta / body. Past events get the `.past` class to dim them; `<span class="event-tag">` adds a small label. |
 | `videos-photos.html` | public | Placeholder "Coming soon" — future home for alumni photos + YouTube embeds. |
+| `directory.html` | session required (`protect.js`) | Members-only searchable alumni directory. Searches by name, filters by year-at-school + house, sorts by surname or leaving year. Cards open a modal with full profile + year-by-year attendance. Reads `profiles` + `attendance_records` directly; RLS enforces visibility. |
 
 ## Navigation (`sections/static/nav.html`)
 
-Current items, in order: **Jazz · Newsletter · Memory Lane · School History · Find Timpots · Videos/Photos · Philanthropy · Calendar**.
+Current items, in order: **Jazz · Newsletter · Memory Lane · School History · Famous Timpots · Timpots Worldwide · Alumni Directory · Giving Back · Videos/Photos · Calendar**.
+
+"Alumni Directory" is the only `protected-link` nav item — the delegated handler in `index.html` (registered on `document`) redirects logged-out visitors to `login.html`. Paired next to "Timpots Worldwide" because the two are companion discovery tools (map = where; directory = who).
 
 Items previously here but removed:
 - **Reunions & Events** — renamed to "Calendar" and made public (was previously a `protected-link`).
-- **Alumni Directory** — temporarily removed. Will return as a separate `directory.html` page when built (members-only searchable list). See the build plan below.
 
-**User-affordance icon top-right** (in `masthead.html` / standalone-page headers): when signed out, links to `login.html` with the outline user icon. When signed in, links to `profile.html` with a gold circle showing the user's first initial. State is updated by `auth.js` via the `sectionsLoaded` event and `onAuthStateChange`.
+**Map page is named "Timpots Worldwide" everywhere** — nav link, `<title>`, page header, and overlay all match. Earlier copy used "Find Timpots"; all references migrated.
+
+**User-affordance icon top-right** — present on every standalone page header (`masthead.html` + all standalone `.members-header`). When signed out, links to `login.html` with the outline user icon. When signed in, links to `profile.html` with a gold circle showing the user's first initial. State is updated by `auth.js` via the `sectionsLoaded` event and `onAuthStateChange`. **Every standalone page must load `js/supabase-config.js` + `js/auth.js` and dispatch `sectionsLoaded` after `DOMContentLoaded`** for the affordance to render correctly.
 
 ## Design system
 
@@ -147,6 +151,7 @@ Items previously here but removed:
 | `privacy.html` | public | ✅ Premium | Privacy policy; card-based layout |
 | `accessibility.html` | public | ✅ Premium | Accessibility statement; card-based layout |
 | `giving-back.html` | public | ✅ Premium | Philanthropy section; card-based, modern icons |
+| `directory.html` | session required | ✅ Premium | Alumni Directory; canonical header, filter toolbar, member-card grid, profile modal with attendance table |
 
 **Design consistency achieved:**
 - All public pages use premium, high-end aesthetic
@@ -270,9 +275,30 @@ CSS rules:
 
 ---
 
-# Build plan: Alumni Directory
+# Alumni Directory (`directory.html`) — implementation reference
 
-A members-only searchable list of profiles, companion to the map. Where the map answers "who's in this city?", the directory answers "who's in the class of '90?" or "how do I find Madhavi from school?". The schema and RLS already support it; this is purely a new page + a nav link.
+Shipped 2026-05-16. Companion to the map: where the map answers "who's in this city?", the directory answers "who's in the class of '90?" Standalone page following the canonical `.members-header` pattern; gated by `protect.js`.
+
+**Filters & sort**: text search (debounced 250ms, OR-ed across `first_name` / `last_name` / `preferred_name` via `.ilike`), year picker ("at school in year X" → `beginning_year <= X AND ending_year >= X`), house dropdown, sort by surname A↔Z or leaving-year newest↔oldest. Filter state mirrored into the URL (`?q=…&year=…&house=…&sort=…`) so links are shareable. Search input sanitizes `,()*%` to prevent PostgREST filter injection.
+
+**Data**: queries `profiles` directly (not the `public_alumni_map` view) for the visibility-gated fields. RLS handles per-row access — anything `visibility='private'` belonging to another user is silently filtered out at the DB layer. The owner's own row is always returned (RLS policy on `auth.uid() = id`) and rendered with a small "You" badge.
+
+**Modal**: clicking a card opens a modal with avatar, full name, house dot + label, tenure summary (`Pre-KG 1981 → ISC 1993`), bio, contact pills (LinkedIn, personal site, phone — phone hidden if `hide_phone=true`), and a year-by-year table fetched lazily from `attendance_records` on open. Esc / backdrop click / close button all dismiss.
+
+**House dot colors** mirror `map.html`'s `colorGroup` (Pluto+Venus share red, Mercury yellow, Jupiter blue, Neptune green) — kept as CSS custom properties at the top of the page for easy override.
+
+**Touchpoints**: nav link (`<a class="protected-link" data-dest="directory.html">` in `sections/static/nav.html`), homepage panel (`sections/dynamic/directory-events.html` — heading is itself the link), footer link (in `sections/static/footer.html`). All three use the dormant `.protected-link` delegated handler at the bottom of `index.html`, which checks session and either opens the directory or redirects to `login.html`.
+
+**Future extensions** (not built):
+- Avatars/photos beyond the initial-circle (needs Cloudflare R2 storage).
+- Pagination — currently loads all matching rows in one shot. Add `.range(0, 29)` + "Load more" if the alumni count grows past a few hundred.
+- Co-attendance filter ("alumni at school the same years as me") — would need a join through `attendance_records` with overlap logic.
+
+---
+
+<!-- ARCHIVED build plan kept below for historical reference — feel free to delete -->
+<details>
+<summary>Original build plan (archived)</summary>
 
 ## What you're building
 
@@ -410,12 +436,14 @@ What could push it longer:
 - Co-attendance filter ("who was at Timpany the same years as me") — requires joining `attendance_records` with overlap logic.
 - Iterating on the visual design beyond a first pass.
 
+</details>
+
 ---
 
 ## Incomplete items
 
 **Pages not yet built:**
-- `directory.html` — Alumni Directory (full build plan above, ~1.5 hrs). The homepage Directory panel and the footer link both show a "(coming soon)" treatment until this exists.
+- (none — `directory.html` shipped 2026-05-16)
 
 **Calendar — Option C (Supabase-backed events, ~3 hrs):**
 - Today's `calendar.html` uses Option B for member-gating: hand-edited HTML cards where each `.event-card` has a `.member-only` block hidden by default, revealed only when a Supabase session exists (script at the bottom of `calendar.html` adds `body.is-signed-in`). The gated HTML is **still in page source**, so it must never contain real PII (phone numbers, personal emails, exact addresses with minors). The `events@timpotsforever.org` forwarder is the safe RSVP channel.
@@ -460,10 +488,13 @@ Companion utilities in the same stylesheet:
 - `.footer-col li.coming-soon-li` + `.cs-tag` — muted footer item with "(coming soon)" suffix
 - `.event-item.is-placeholder` — placeholder variant of the homepage events panel
 
+**Distinct sibling: `.is-sample`** — for content that is illustrative / mockup / not real (vs. `.coming-soon-chip` which is for future-real content). Currently defined in `giving-back.html` only. Renders a full-width gold banner across the top of any card carrying the class, with white uppercase letter-spaced "Sample" text. Implementation is a `::before` pseudo-element + extra `padding-top` on the host. Used on `giving-back.html`'s placeholder Featured Cause card and the four fictional alumni story cards. Promote to the shared `index.html` stylesheet if/when other pages need it.
+
 ---
 
 ## Completed (May 2026 consistency sweep)
 
+- ✅ **Alumni Directory shipped (2026-05-16)** — new `directory.html` standalone page (canonical `.members-header`, gated by `protect.js`). Filters: text search across first/last/preferred name, "at school in year X" range filter on tenure, house dropdown, sort by surname or leaving-year. URL state mirrors filters for shareable links; search input sanitizes filter-delimiter chars to prevent PostgREST injection. Cards show avatar-initial, name, house tag with color dot, tenure short-form, city, profession. Click opens a modal with tenure summary, bio, contact pills (LinkedIn / website / phone, hidden if `hide_phone=true`), and a year-by-year attendance table lazily fetched from `attendance_records`. Owner's own row carries a "You" badge. Wired into three touchpoints: nav (`sections/static/nav.html`, paired next to "Timpots Worldwide"), homepage panel (`sections/dynamic/directory-events.html`, "Coming Soon" chip removed, heading is now the link), footer (`sections/static/footer.html`, replaces the `coming-soon-li` placeholder). All three use the `.protected-link` delegated handler in `index.html`.
 - ✅ Modern line-style icons across all sections (social, stories, hero)
 - ✅ Canonical `.members-header` pattern on every standalone page
 - ✅ Card-based layout pattern in all legal pages (terms, privacy, accessibility)
@@ -488,11 +519,22 @@ Companion utilities in the same stylesheet:
 - ✅ **Mobile hero "How It Began" no longer clipped (2026-05-15)** — at ≤720px, `.hero` was locked to `height: 460px` with `overflow: hidden`, clipping the multi-line dek's top when bottom-aligned. Changed to `height: auto; min-height: 460px` and added `padding-top: 40px` on `.hero-content`. Desktop layout unchanged.
 - ✅ **Footer Alumni Directory link styling matched siblings (2026-05-15)** — `.coming-soon-li` was inheriting `--ink-muted` (#767676) at default size with 0.75 opacity, looking visibly darker/smaller than the regular `.footer-col a` links. Now uses `--footer-text` at 13px with opacity 1; only the small italic `.cs-tag` "(coming soon)" stays muted.
 - ✅ **Calendar member-gating — Option B (2026-05-15)** — `calendar.html` now hides venue / RSVP / organizer details from logged-out visitors. Each meetup card carries a `.member-only` block (hidden by default via CSS) and a `.member-cta` "Sign in to see details" line (shown by default). A small script at the bottom of the page calls `supabase.auth.getSession()` and, if signed in, adds `body.is-signed-in` (which flips the visibility via CSS) and hides the page-level `#public-gating-note`. The gated HTML is still in page source — see the Option C note in "Incomplete items" for the server-side replacement. Cloudflare Email Routing has a new `events@timpotsforever.org` address that all RSVP / contact links route through (avoids putting personal phones or emails into HTML).
+- ✅ **Profile birthday field + autosave (2026-05-15/16)** — `profiles` table gained `birth_month smallint` + `birth_day smallint` (both nullable, with check constraints). `profile.html` shows a "Birthday" card with Month/Day dropdowns; the Day dropdown caps dynamically at 28/29/30/31 based on month (no year collected, Feb shows 29). Help text: "we use this just to wish you a happy birthday in *The Timpany Times* newsletter or on the website." Plus: autosave runs every 30s when the form has unsaved edits and required fields (first/last name) are present. Silent mode shows "Auto-saving…" → "✓ Auto-saved" in the save-status text; errors show "⚠ Auto-save failed" without disrupting with a red banner. `isSaving` guards both manual and auto saves from colliding. `isDirty` flips on any form input/change, clears on successful save.
+- ✅ **Year-by-year grade labels show "10"/"12"** (2026-05-16) — Both the Beginning/Ending standard dropdowns and the year-by-year attendance grade dropdowns now show "10" (for DB value `ICSE`) and "12" (for DB value `ISC`). DB enum values unchanged. The `gradeLabel()` helper in `profile.html` is the single source of truth for the display.
+- ✅ **Calendar entries — Timpots Meetup + Inaugural Debate (2026-05-15)** — Added monthly Timpots Meetup entries to `calendar.html` for the second Sunday of every month from June through December 2026 (7 entries, tagged "Monthly", organized by Monisha H., RSVP via `events@timpotsforever.org`). The Jeyaraja Rao Memorial Debate Competition's inaugural year is **July 4, 2026** (moved from a placeholder Aug 15 2027). Homepage "Reunions & Events" panel now shows the real Jul 4 date.
+- ✅ **"Jeyaraja Rao" spelling scrub (2026-05-15)** — Cleaned a misspelling in `sections/dynamic/jazz.html` ("Jeya Raja Rao" → "Jeyaraja Rao"). All other references across `jazz.html`, `school-history.html`, `memory-lane.html`, `calendar.html`, `hero.html`, `give.html`, `directory-events.html` were already correct.
+- ✅ **Top-10 audit pass (2026-05-16)** — Acted on 6 of the top-10 findings from the design/language/UX audit:
+  - **#1 Sample banner on placeholder content** — Added a new `.is-sample::before` utility to `giving-back.html` that paints a full-width gold "Sample" banner across the top of any card. Applied to the Featured Cause card (placeholder cause name) and the four fictional alumni story cards (Priya / Rajesh / Anjali / Vikram). Removes credibility risk of mockup data being mistaken for real Timpots.
+  - **#4 User-affordance on every standalone page** — Added the sign-in icon ⇄ gold-initial circle pattern from `map.html` to 11 more pages: `calendar.html`, `jazz.html`, `school-history.html`, `memory-lane.html`, `videos-photos.html`, `newsletter.html`, `famous-timpots.html`, `giving-back.html`, `terms.html`, `privacy.html`, `accessibility.html`. Each page now loads `js/supabase-config.js` + `js/auth.js` and dispatches `sectionsLoaded` on `DOMContentLoaded`. Members now see their auth state on every page (previously only on map + homepage).
+  - **#5 Map page → "Timpots Worldwide"** — Renamed the page name consistently: `map.html`'s `<title>` and header h2 changed from "Find Timpots" to "Timpots Worldwide" (matching the existing overlay and nav link). The "Find Timpots" reference in `profile.html`'s privacy card was also updated.
+  - **#7 Dead "Learn More" link removed** — `giving-back.html` had a `<a href="#">Learn More</a>` button on the Featured Cause card that did nothing. Removed.
+  - **#8 Inline footer on 8 standalone pages** — Added the canonical 1-paragraph footer (© Timpots Forever · Seek Truth + not-affiliated disclaimer) to `jazz.html`, `memory-lane.html`, `school-history.html`, `famous-timpots.html`, `videos-photos.html`, `newsletter.html`, `calendar.html`, `profile.html`. Now all 12 standalone pages have a consistent footer. (Note: this footer does NOT include privacy/terms/accessibility links — the audit recommended adding them, but we deferred to avoid touching the 4 pages that already had the existing footer pattern. Add as a follow-up if desired.)
+  - **#10 `rel="noopener noreferrer"` on external links** — Added to all 9 `target="_blank"` links across `terms.html`, `privacy.html`, `accessibility.html` (Supabase/Cloudflare/Resend privacy policies in legal pages; W3C/WCAG/WebAIM in accessibility).
+- 📝 **Skipped from the same audit pass** (intentionally, per owner decision): #2 history-band Kakinada origin claim left as is; #3 newsletter rebrand to *The Timpany Times* not pushed through `newsletter.html` itself; #6 videos-photos intro mentioning "videos" left; #9 `login.html` keeping "Login" verb.
 
 **Next priorities:**
-1. Build `directory.html` (Alumni Directory) using `profile.html` as the design template
-2. Add real social media URLs / handles to `sections/dynamic/social.html` and remove `is-coming-soon` class once channels go live
-3. Upload `Jazz Message.mp4` to YouTube and embed on `videos-photos.html`
+1. Add real social media URLs / handles to `sections/dynamic/social.html` and remove `is-coming-soon` class once channels go live
+2. Upload `Jazz Message.mp4` to YouTube and embed on `videos-photos.html`
 
 ## Phase 2 (other features not yet built)
 
