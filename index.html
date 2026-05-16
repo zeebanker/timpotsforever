@@ -1508,7 +1508,7 @@
   }
 
   /* ════════════════════════════════════════════════════════════
-     TOUR EMBED STYLES — temporary. Delete this block to retire.
+     TOUR EMBED STYLES (v2) — temporary. Delete this block to retire.
      ════════════════════════════════════════════════════════════ */
   .tour-promo {
     background: linear-gradient(135deg, #2a0810 0%, var(--brand-dark) 50%, #3a0c14 100%);
@@ -1518,7 +1518,7 @@
   }
   .tour-promo-inner {
     display: grid;
-    grid-template-columns: minmax(260px, 420px) 1fr;
+    grid-template-columns: minmax(260px, 440px) 1fr;
     gap: 36px;
     align-items: center;
   }
@@ -1635,8 +1635,6 @@
     .tour-poster { max-width: 520px; margin: 0 auto; }
     .tour-play-icon { width: 54px; height: 54px; }
   }
-
-  /* Modal — full-screen lightbox for tour.html via iframe */
   .tour-modal {
     position: fixed;
     inset: 0;
@@ -1796,26 +1794,26 @@
 <div id="section-nav"></div>
 
 <!-- ════════════════════════════════════════════════════════════
-     TOUR EMBED — temporary banner promoting tour.html.
+     TOUR EMBED (v2) — temporary banner promoting tour.html.
      To remove the entire feature, delete (1) this block,
      (2) the TOUR EMBED MODAL block near the bottom of <body>,
      and (3) the TOUR EMBED STYLES block in the <style> above.
      ════════════════════════════════════════════════════════════ -->
 <section class="tour-promo" aria-labelledby="tour-promo-title">
   <div class="wrap tour-promo-inner">
-    <button class="tour-poster" type="button" aria-label="Play the 3-minute tour" onclick="openTourModal()">
-      <img src="images/tour/01-masthead.png" alt="" loading="lazy">
+    <button class="tour-poster" type="button" aria-label="Play the guided tour" onclick="openTourModal()">
+      <img src="images/tour/jazz.png" alt="" loading="lazy">
       <span class="tour-poster-overlay">
         <span class="tour-play-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
         </span>
-        <span class="tour-poster-label">Play</span>
+        <span class="tour-poster-label">Play the tour</span>
       </span>
     </button>
     <div class="tour-promo-copy">
       <div class="tour-promo-eyebrow">New here?</div>
-      <h2 class="tour-promo-title" id="tour-promo-title">A 3-minute tour of <em>Timpots Forever</em>.</h2>
-      <p class="tour-promo-text">A quick visual walk through what's on the site — from Jazz's dedication, to the world map, to the alumni directory and the events Timpots are organising.</p>
+      <h2 class="tour-promo-title" id="tour-promo-title">A narrated tour of <em>Timpots Forever</em>.</h2>
+      <p class="tour-promo-text">Four minutes, section by section — Jazz's tribute, the world map, the alumni directory, the calendar, and everything in between. Sound recommended; captions on the whole way.</p>
       <div class="tour-promo-actions">
         <button class="tour-cta" type="button" onclick="openTourModal()">Watch the tour ▸</button>
         <a class="tour-share" href="tour.html" target="_blank" rel="noopener" title="Open the standalone tour page (shareable)">Open in a new tab ↗</a>
@@ -1966,12 +1964,12 @@
 </script>
 
 <!-- ════════════════════════════════════════════════════════════
-     TOUR EMBED MODAL — temporary. Delete this block to retire.
+     TOUR EMBED MODAL (v2) — temporary. Delete this block to retire.
      ════════════════════════════════════════════════════════════ -->
 <div class="tour-modal" id="tour-modal" role="dialog" aria-modal="true" aria-label="Take a tour of Timpots Forever">
   <div class="tour-modal-frame-wrap">
     <button class="tour-modal-close" type="button" onclick="closeTourModal()" aria-label="Close tour">Close ✕</button>
-    <iframe id="tour-modal-frame" src="about:blank" title="Timpots Forever 3-minute tour" allow="autoplay" referrerpolicy="no-referrer"></iframe>
+    <iframe id="tour-modal-frame" src="about:blank" title="Timpots Forever narrated tour" allow="autoplay" referrerpolicy="no-referrer"></iframe>
   </div>
 </div>
 <script>
