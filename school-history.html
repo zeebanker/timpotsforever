@@ -202,6 +202,33 @@
     line-height: 1.7;
     color: var(--ink);
   }
+  .autobio-quote {
+    background: #fff;
+    border-left: 3px solid var(--gold);
+    padding: 20px 24px 18px;
+    margin: 14px 0 18px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+  .autobio-quote cite {
+    display: block;
+    margin-top: 12px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-style: normal;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+  }
+  .autobio-quote cite em {
+    font-style: italic;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--ink-soft);
+  }
 
   /* ── Crest transition callout ────────────────────────── */
   .crest-callout {
@@ -261,6 +288,33 @@
     .crest-figure img { width: 140px; height: 140px; }
     .crest-figure figcaption { margin-top: 8px; }
     .crest-arrow { transform: rotate(90deg); font-size: 26px; }
+  }
+
+  /* ── Photo callout (single captioned image) ──────────── */
+  .photo-callout {
+    margin: 22px 0 8px;
+    text-align: center;
+  }
+  .photo-callout img {
+    width: 100%;
+    max-width: 720px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+  }
+  .photo-callout figcaption {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 13.5px;
+    color: var(--ink-muted);
+    margin-top: 12px;
+    line-height: 1.55;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+    font-style: italic;
   }
 
   /* ── Teachers directory ──────────────────────────────── */
@@ -471,7 +525,7 @@
 <section class="hero">
   <div class="wrap">
     <h1>School <em>History</em></h1>
-    <p>Founded in 1931 by Rev. A.E. Timpany of the Canadian Baptist Mission — what began as a small mission school grew, under Miss. Mercy Jeyaraja Rao's stewardship, into a Visakhapatnam landmark whose alumni call themselves Timpots wherever in the world they land.</p>
+    <p>Founded by Rev. A.V. Timpany (1840–1885) in Kakinada around 1880 and relocated to Visakhapatnam in 1931 — what began as the Anglo-Indian Protestant Middle School next to St. John's Church grew, under Dr. Mercy Jeyaraja Rao's forty-eight-year stewardship, into a Visakhapatnam landmark whose alumni call themselves Timpots wherever in the world they land.</p>
   </div>
 </section>
 
@@ -479,15 +533,20 @@
   <div class="wrap">
     <h2>Key <em>Milestones</em></h2>
     <ol class="timeline">
-        <li><span class="ts-year">1931</span><span class="ts-event">School founded by Rev. A.E. Timpany under the Canadian Baptist Mission, in its earliest days known by other names.</span></li>
-        <li><span class="ts-year">1954</span><span class="ts-event">Miss. Mercy Jeyaraja Rao joins as Headmistress, with Ms. Clark as the CBM Director and Principal.</span></li>
-        <li><span class="ts-year">1962–63</span><span class="ts-event">Around this time, Miss. Jeyaraja Rao takes charge as Principal from Ms. Clark; the school comes to be known as Timpany.</span></li>
-        <li><span class="ts-year">1964–65</span><span class="ts-event">The institution moves to its new campus at Asilmetta / Uplands.</span></li>
+        <li><span class="ts-year">c. 1880</span><span class="ts-event">Rev. A.V. Timpany founds the school in Kakinada under the Canadian Baptist Mission.</span></li>
+        <li><span class="ts-year">1882</span><span class="ts-event">The original Kakinada school building (still standing today, home to the A.V. Timpany Memorial Library) is constructed.</span></li>
+        <li><span class="ts-year">1885</span><span class="ts-event">Rev. A.V. Timpany dies of cholera in Kakinada on 19 February.</span></li>
+        <li><span class="ts-year">1931</span><span class="ts-event">The school relocates to Visakhapatnam, where the Canadian Baptist Mission houses it in the Sunday School building next to St. John's Church as the Anglo-Indian Protestant Middle School &mdash; locally nicknamed &ldquo;Rabbit Warren.&rdquo;</span></li>
+        <li><span class="ts-year">1 Jul 1954</span><span class="ts-event">Mrs. Mercy Jeyaraja Rao joins as a teacher of grades four and five, at a monthly salary of Rs. 120 (US&nbsp;$24). The school has seventy students on its rolls; she will serve for forty-eight years.</span></li>
+        <li><span class="ts-year">1 Jan 1959</span><span class="ts-event">Jazz becomes the first Indian Headmistress of the school.</span></li>
+        <li><span class="ts-year">1964</span><span class="ts-event">The Center for Special Education opens — among the school's first programs beyond the standard curriculum.</span></li>
+        <li><span class="ts-year">1964–65</span><span class="ts-event">The Canadian Baptist Mission builds a larger building on its property in Waltair Uplands and the school moves into it; on registration day, parents lining the two approach roads bring traffic to a halt.</span></li>
         <li><span class="ts-year">1965</span><span class="ts-event">The first ISC batch graduates — including Pramila David and Suguna Kannan, the first ISC topper.</span></li>
         <li><span class="ts-year">21 Jan 1970</span><span class="ts-event">Mrs. Harshalatha Chiranjeevi joins as a Biology teacher; she will serve the school for fifty years across all three campuses.</span></li>
-        <li><span class="ts-year">1975</span><span class="ts-event">The CBM Compound's “Ladies Bungalow” is inaugurated as the primary / junior school.</span></li>
+        <li><span class="ts-year">1975</span><span class="ts-event">The CBM Compound's &ldquo;Ladies Bungalow&rdquo; is inaugurated as the primary / junior school.</span></li>
         <li><span class="ts-year">1976</span><span class="ts-event">The last Senior Cambridge batch (11-year curriculum) passes out.</span></li>
         <li><span class="ts-year">1993</span><span class="ts-event">Steel City School — Timpany's branch in Ukkunagaram — opens.</span></li>
+        <li><span class="ts-year">2002</span><span class="ts-event">Dr. Mercy Jeyaraja Rao retires after 48 years of service. At her retirement Timpany comprises three campuses serving more than 3,000 students from KG through grade twelve.</span></li>
         <li><span class="ts-year">2006</span><span class="ts-event">After Pluto loses planetary status, the Pluto House is renamed Venus.</span></li>
     </ol>
   </div>
@@ -498,20 +557,48 @@
     <h1 class="section-title">The <em>Story</em></h1>
     <p class="section-intro">Drawn from recollections shared by alumni in the Timpots Forever group chat.</p>
       <section class="story-section">
-        <h2 class="story-h2">Origins</h2>
-        <p>Timpany School in Visakhapatnam (Vizag) traces its origins to the Canadian Baptist Mission (CBM) and the work of the Reverend Timpany. Mrudula tells the group that “Rev Timpany started the school in 1931.” In its earliest years, the school went by other names. Damu (who joined in 1959) recalls that what is now Timpany was then “the Anglo Indian Primary Middle School,” with classes from Nursery to 1st standard located close to Soldierpet (an area still known by that name to long-time residents). “St. John's was in Thomson Street,” he says — meaning Std 3 and above were taught inside the St. John's Church premises on Thompson Street, near the head post office and one-town police station. Banashree Bose Bhadra remembers that “when I joined the school in 1962 in grade 2 … it was St. John's school.” Damu thinks the school was renamed Timpany around 1963; Chris recalls the name “Timpots” being in circulation as early as the early 1960s.</p>
+        <h2 class="story-h2">Rev. A.V. Timpany</h2>
+        <p>Reverend Americus Vespucius (A.V.) Timpany (1840–1885) was a pioneering Canadian Baptist missionary who dedicated his life to serving in India — and the namesake of our school.</p>
+        <p><strong>Early life.</strong> Born in Vienna, Ontario, on 21 December 1840, he studied at the Canadian Literary Institute in Woodstock.</p>
+        <p><strong>Missionary calling.</strong> In October 1867, he and his wife Jane became the first overseas missionaries commissioned by the Baptists of Ontario and Quebec (CBOQ).</p>
+        <p><strong>Work in India.</strong> Arriving in 1868, he spent years pioneering Baptist missions and establishing churches. In 1872, he co-founded a theological seminary in Ramapatnam to train local pastors.</p>
+        <p><strong>Legacy.</strong> He tragically died of cholera in Kakinada, India, on 19 February 1885. His legacy lives on through his missionary descendants and the Timpany School in Visakhapatnam.</p>
+        <figure class="photo-callout">
+          <img src="images/kakinada-original-school.jpeg" alt="A collage of the original Timpany School building in Kakinada: old wooden desks, the A.V. Timpany Memorial Library sign, the pink-and-blue arched school building exterior, the original classroom interior, a bronze plaque with portrait reliefs, and a doorway marked CLASS ROOM.">
+          <figcaption>An early Timpany School building built in 1882 in Kakinada. It was later moved to Visakhapatnam in 1931.</figcaption>
+        </figure>
       </section>
       <section class="story-section">
-        <h2 class="story-h2">The Campuses</h2>
-        <p>The institution then moved to its new campus at Asilmetta / Uplands. Annapurna Banerjee, who joined in 3rd standard with “five students in the 9th standard,” remembers that her batch shifted to the new campus the following year — sometimes Miss. Jeyaraja Rao would ride to school with her family. Mahesh Allam joined KG in 1966 at the new building. Mrudula notes that the old Dutch-looking bungalow within CBM Compound (the “Ladies Bungalow,” as William Edwin clarifies — built by the Canadian Baptist missionaries, not the Dutch) was later inaugurated as the primary / junior school; Shankar Mathur places that inauguration around 1975, when his batch was in XI.</p>
+        <h2 class="story-h2">The Anglo-Indian Protestant Middle School</h2>
+        <p>Much of what we know about Timpany's early years in Visakhapatnam comes from Dr. Mercy Jeyaraja Rao's autobiography, <em>My Story</em>. When she joined as a young teacher in 1954, the institution then operating in Vizag was the <strong>Anglo-Indian Protestant Middle School</strong> &mdash; a small Canadian Baptist Mission school locally nicknamed <strong>&ldquo;Rabbit Warren.&rdquo;</strong> It was housed in the Sunday School building next to St. John's Church in Old Town Vizag: three medium-sized rooms for grades seven through nine, three small rooms for the elementary grades, and two classes handled by one teacher each.</p>
+        <p>Jazz had not intended to teach there. Her father had told the school's Canadian manager, <strong>Miss Hellyer</strong>, that his daughter would not be interested in teaching &mdash; but Miss Hellyer came to the family's home one Sunday and asked why a Christian father did not want his daughter to work in a Christian school. The day Jazz arrived home from her final examination, Miss Hellyer rang the doorbell and asked if she would report to work the following Monday. Jazz, in her own words, could not say no.</p>
+        <blockquote class="autobio-quote">
+          On July 1, 1954, my career began as teacher of grades four and five for a monthly salary of Rs. 120/= (US&nbsp;$24). That day I looked around and revolted at the thought of working in that setting. The first three nights I wept and could not imagine continuing there.
+          <cite>&mdash; Dr. Mercy Jeyaraja Rao, <em>My Story</em></cite>
+        </blockquote>
+        <p>The school had seventy students on its rolls. Her father, hearing of her unhappiness, offered to write her resignation; Jazz drafted it that night, but she did not sleep. By morning she had, in her telling, submitted to God's will and decided to stay &mdash; &ldquo;forty-eight years of sheer joy and fulfillment awaited me.&rdquo; She would remain at Timpany until her retirement in 2002.</p>
+      </section>
+      <section class="story-section">
+        <h2 class="story-h2">From Old Town to Waltair Uplands</h2>
+        <p>Enrollment grew quickly. In Jazz's account, the school's seventy students rose to <strong>120 in a single year</strong>, with applications from Indian families steadily increasing. The Department of Education had originally prescribed a minimum ratio for the admission of Indian students; that rule was soon relaxed, and admission opened to all regardless of caste, faith, or social status. The school refused to give in to pressure from those who felt entitled by status or religion, and parents who doubted their child's results were welcome to inspect the answer scripts.</p>
+        <p>As the Sunday School building began bursting its seams, the school built <strong>four additional rooms on the property of Union Chapel</strong>. Then the Canadian Baptist Mission constructed a larger building on its own property in <strong>Waltair Uplands</strong>, and the school moved into it &mdash; the campus alumni today know as Asilmetta / Uplands. On registration day at the new location, parents began lining the two roads leading to the school in the early hours; the traffic police called to ask that something be done to clear the roads, and the staff worked long and hard to expedite the process. Annapurna Banerjee remembers shifting to the new campus the year after she joined in third standard; Mahesh Allam joined KG in 1966 at the new building. Years later, in 1975, the old bungalow within the CBM Compound &mdash; the &ldquo;Ladies Bungalow,&rdquo; built by the Canadian Baptist missionaries &mdash; was inaugurated as the primary / junior school.</p>
       </section>
       <section class="story-section">
         <h2 class="story-h2">Leadership</h2>
-        <p>Damu mentions that Miss. Jeyaraja Rao joined the school as Headmistress in 1954 (with Ms. Clark, the CBM Director, as Principal); the following year, around 1962/63, she took charge as Principal from Ms. Clark. Lucy Rachel recalls Jazz becoming Principal a year after she joined Class 3. Piyush (“Mickey”) Nair says his mother Mrs. Pushpalata Nair joined Timpany at the old town location, likely 1963/64. Mrs. Harshalatha Chiranjeevi — who served the school for fifty years across all three campuses (Teacher 14 years, Vice Principal 8, Principal 8, Director 4) — joined as a teacher on 21 January 1970, when the new Asilmetta site was, as she puts it, “almost a jungle. Now of course it's a concrete jungle.” Steel City School, the Timpany branch in Ukkunagaram, opened in 1993; Banashree taught there briefly.</p>
+        <p>Across her forty-eight years, Jazz served the school in four successive roles: <strong>Headmistress, Principal, Executive Director, and General Director</strong>. On <strong>January 1, 1959</strong>, she became the <em>first Indian Headmistress</em> of the school, her monthly salary rising by five dollars. She continued to teach English literature to the top two classes alongside her administrative work. Among long-serving teachers who shaped the school alongside her, Mrs. Harshalatha Chiranjeevi &mdash; who served Timpany for fifty years across all three campuses (Teacher 14 years, Vice Principal 8, Principal 8, Director 4) &mdash; joined as a Biology teacher on 21 January 1970, when the new Asilmetta site was, as she puts it, &ldquo;almost a jungle. Now of course it's a concrete jungle.&rdquo; Steel City School, the Timpany branch in Ukkunagaram, opened in 1993; Banashree taught there briefly.</p>
       </section>
       <section class="story-section">
-        <h2 class="story-h2">Co-Education &amp; the Vizag Circuit</h2>
-        <p>By the late 1960s the school had become co-educational on the Vizag Christian-school circuit alongside St. Aloysius (boys), St. Joseph's (girls) and the Fort Convent — Timpany, as Neelu Murthy notes, “was the only co-ed convent in town.” Boys who travelled from Waltair junction to Vizagapatam station on the Raipur Passenger train called themselves Timpots even then (Chris).</p>
+        <h2 class="story-h2">A Co-Educational School by Choice</h2>
+        <p>Timpany's co-ed character was a deliberate decision, not a happy accident. As Jazz writes:</p>
+        <blockquote class="autobio-quote">
+          Why was it a co-educational school? I studied in a girls' school and found it difficult to fit into a co-educational college. We made a conscious decision to be a co-ed school and to receive no funds from the government or from any agency. Students paid a small fee, and the staff worked for lower salaries and invested their best to prepare students to be world citizens.
+          <cite>&mdash; Dr. Mercy Jeyaraja Rao, <em>My Story</em></cite>
+        </blockquote>
+        <p>By the late 1960s, Timpany stood on the Vizag Christian-school circuit alongside St. Aloysius (boys), St. Joseph's (girls) and the Fort Convent &mdash; &ldquo;the only co-ed convent in town,&rdquo; as Neelu Murthy notes. Boys who travelled from Waltair junction to Vizagapatam station on the Raipur Passenger train called themselves Timpots even then (Chris).</p>
+      </section>
+      <section class="story-section">
+        <h2 class="story-h2">Beyond the Standard Curriculum</h2>
+        <p>Jazz also opened the school to learners well beyond its standard intake. In <strong>1964</strong> she founded the <strong>Center for Special Education</strong> for children with special needs &mdash; sending two teachers away to be trained &mdash; and over the years added personality courses for women, adult education for the school's support staff, and English classes for mothers and other interested ladies at Steel City School. In her words, &ldquo;the way these precious children blossomed was amazing.&rdquo; The love students showered on the Special Education children was, she writes, heartfelt: they often brought them gifts and birthday goodies.</p>
       </section>
       <section class="story-section">
         <h2 class="story-h2">Sports Firsts</h2>
