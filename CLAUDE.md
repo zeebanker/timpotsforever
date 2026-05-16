@@ -152,7 +152,6 @@ Items previously here but removed:
 | `accessibility.html` | public | ✅ Premium | Accessibility statement; card-based layout |
 | `giving-back.html` | public | ✅ Premium | Philanthropy section; card-based, modern icons |
 | `directory.html` | session required | ✅ Premium | Alumni Directory; canonical header, filter toolbar, member-card grid, profile modal with attendance table |
-| `tour.html` | public | ✅ Premium | Temporary 4-minute narrated tour of the site — uses browser TTS, animated garnet pointer over screenshots, numbered dot callouts, and CTA pulse-rings. Shareable as a standalone link AND embedded on the homepage via modal. Marked for eventual removal — see "Tour embed (temporary)" section below. |
 
 **Design consistency achieved:**
 - All public pages use premium, high-end aesthetic
@@ -269,69 +268,6 @@ CSS rules:
 - Header h2: font-weight 500, font-size 22px, em color var(--gold)
 - Public site link: opacity-based hover (0.8 → 1.0), 6px padding, no circle background
 
-## Tour embed (temporary — rebuilt 2026-05-16 as "v2")
-
-`tour.html` is a self-contained, narrated, auto-advancing walkthrough of the site (10 slides × ~22s with TTS = ~4 min). Built for sharing via WhatsApp/email and embedding on the homepage. Designed to be retired easily.
-
-**Structure of each slide** (this is the *v2* design that replaced the original screenshot-only carousel):
-- A nav bar across the top of the frame shows all 10 site nav items; the one being narrated is highlighted in gold with a glowing underline. Items not covered by the tour (Newsletter, Videos/Photos) appear dimmed.
-- Below the nav: a 16:10 frame showing the page screenshot for that nav item.
-- A garnet-themed SVG **pointer** animates between waypoints inside the screenshot, synced to the narration's estimated duration. Each waypoint can have a tap-ring effect.
-- One or more **numbered dots** (gold ¹ ² ³) flag secondary items. They fade in early in the slide and stay visible.
-- Slides whose narration name a clear next-step CTA get a **pulse-ring** with a label tab (e.g. "Email us", "Sign in") that appears at ~78 % of the estimated narration duration.
-- A caption strip below the frame shows the narration text in sync (accessibility + mute fallback).
-
-**Narration** is delivered via the browser's **Web Speech API** (`SpeechSynthesisUtterance`). Voice picked in this priority order: `en-IN` female → `en-GB`/`en-AU`/`en-US` female → first available `en-*` voice → fallback. The page has a **Start gate** (full-screen splash with "Start tour ▸" button) to satisfy the autoplay-after-gesture requirement on all browsers. If TTS isn't available *or* the user picks "Watch silently with captions", slides auto-advance on a word-count-derived timer instead.
-
-**Slides covered** (curated 8 of 10 nav items + welcome + closer):
-1. Welcome (opener — title card, pointer sweeps across the nav bar)
-2. Jazz → `jazz.html`
-3. Memory Lane → `memory-lane.html`
-4. School History → `school-history.html`
-5. Famous Timpots → `famous-timpots.html` (CTA: *Email us*)
-6. Timpots Worldwide → `map.html`
-7. Alumni Directory → `directory.html` (uses demo mock screenshot since the live page is auth-gated)
-8. Giving Back → `giving-back.html` (CTA: *Mock cause* — flags the SAMPLE banner)
-9. Calendar → `calendar.html` (CTA: *Sign in*)
-10. Get started (closer — title card with Sign up free + Replay tour)
-
-**Files involved:**
-- `tour.html` — the slideshow page. Standalone; works at `https://timpotsforever.org/tour.html`.
-- `images/tour/jazz.png`, `memory-lane.png`, `school-history.png`, `famous-timpots.png`, `map.png`, `directory.png`, `giving-back.png`, `calendar.png`, `login.png` — the 9 page screenshots.
-- Three blocks in `index.html`, each fenced by `═══ TOUR EMBED ═══` comment markers:
-  1. **`TOUR EMBED STYLES (v2)`** — inside `<style>` (CSS for the homepage promo band + modal).
-  2. **`TOUR EMBED (v2)`** — the promo banner `<section>` between `#section-nav` and `#section-jazz`.
-  3. **`TOUR EMBED MODAL (v2)`** — the fullscreen lightbox `<div>` + `openTourModal()`/`closeTourModal()` script, just above `</body>`.
-
-**Editing narration / pointer positions:** All content lives in the `SLIDES = [...]` array at the top of the `<script>` block in `tour.html`. Each slide has `narration` (TTS text + caption), `pointer` (array of `{t, x, y}` waypoints; `t` is fraction of narration duration), `dots` (array of `{x, y, label}`), and optional `cta` (`{x, y, w, h, label}`). Coordinates are normalized 0..1 over the screenshot area; multiply by the rendered frame size at runtime, which means they're resolution-independent and respond to window resize.
-
-**Word-count → duration heuristic:** `estimateMs = max(8000, words * 380)`. Pointer animation timing and CTA show-time are derived from this. TTS still drives auto-advance via `onend`, so if speech runs longer than the estimate (rare), the slide just lingers until speech ends.
-
-**TTS pronunciation gotchas:** browsers commonly mispronounce "Jeyaraja", "Timpany", and "ICSE". The narration spells them out phonetically where it matters (e.g. *"July 4th, 2026"* rather than *"July 4, 2026"*) but a more thorough pass using SSML or pre-recorded audio is a future enhancement if quality matters more.
-
-**To remove the tour entirely:**
-1. Delete `tour.html`.
-2. Delete the `images/tour/` directory.
-3. In `index.html`, delete the three blocks fenced by `TOUR EMBED` comment markers (CSS, promo band, modal).
-4. Drop the `tour.html` row from the Pages table in this CLAUDE.md and this whole section.
-
-That's it. There are no other dependencies — `nav.html`, `footer.html`, and the homepage sections are untouched.
-
-**How the screenshots were made** (for regeneration):
-- Started the local server (`python3 -m http.server 8765`).
-- Created a temporary `_wrap.html` that loads any URL in a 1280×800 iframe and scrolls it to a configurable Y position (so headless Chrome can capture below-the-fold sections).
-- Ran headless Chrome (`/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --headless --window-size=1280,800 --screenshot=… ?path=…&y=…`) for each scene.
-- For the Alumni Directory (which requires auth), a temporary `_demo_directory.html` with hardcoded mock cards (Anand Reddy, Bharath Kumar, Chandana Iyer with "You" badge, Deepak Nair, Madhavi Rao, Rajiv Menon) stood in for the live page.
-- Both `_wrap.html` and `_demo_directory.html` were deleted after capture.
-
-**Tour interaction details:**
-- Pauseable via the play/pause button or space bar. Arrow keys for prev/next. Esc exits to the homepage.
-- "Sound on / Muted" toggle in the header lets the user silence TTS without leaving the tour (captions stay on).
-- Final slide is a title card with "Sign up free" + "Replay tour" buttons.
-- The homepage embed opens `tour.html` inside an iframe modal (so the user stays on the homepage). The "Open in a new tab ↗" link below the CTA is for sharing the standalone URL.
-- Honors `prefers-reduced-motion` — kills pointer/dot transitions and CTA pulse animation.
-
----
 
 ## Stale stuff to ignore
 
