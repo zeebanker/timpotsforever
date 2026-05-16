@@ -383,6 +383,29 @@
     border-radius: 2px;
     transition: border-color 0.15s;
   }
+
+  /* "Sample" banner overlay — marks placeholder/illustrative content */
+  .is-sample {
+    position: relative;
+    padding-top: calc(20px + 32px); /* base padding + banner room */
+  }
+  .featured-cause.is-sample {
+    padding-top: calc(30px + 32px);
+  }
+  .is-sample::before {
+    content: "Sample";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    background: var(--gold);
+    color: #fff;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 7px 12px;
+  }
   .story-card:hover {
     border-color: var(--gold);
   }
@@ -440,6 +463,46 @@
     .categories { grid-template-columns: 1fr; }
     .stories-grid { grid-template-columns: 1fr; }
   }
+
+  /* ── User affordance (sign-in icon ⇄ gold-initial circle when signed in) ── */
+  .user-affordance {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 6px 10px;
+    opacity: 0.9;
+    transition: opacity 0.15s;
+  }
+  .user-affordance:hover { opacity: 1; }
+  .user-affordance .user-icon { width: 22px; height: 22px; flex-shrink: 0; }
+  .user-affordance .user-initial {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--brand-dark);
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0;
+    text-transform: none;
+    flex-shrink: 0;
+  }
+  .user-affordance.signed-in .user-icon    { display: none; }
+  .user-affordance.signed-in .user-initial { display: inline-flex; }
+  @media (max-width: 640px) {
+    .user-affordance { padding: 6px; }
+    .user-affordance .user-label { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -453,6 +516,13 @@
           <path d="M3 10.5 12 3l9 7.5V21H3z"/>
           <path d="M9 21v-7h6v7"/>
         </svg>
+      </a>
+      <a href="login.html" class="user-affordance" id="user-affordance" aria-label="Sign in">
+        <svg class="user-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="8" r="4"/>
+          <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>
+        </svg>
+        <span class="user-label">Sign in</span>
       </a>
     </div>
   </div>
@@ -470,7 +540,7 @@
     <p style="margin-top: 14px;">Whether you're already making an impact or thinking about where your passion lies, this space is for sharing ideas, learning from fellow alumni, and discovering how we can support each other&#x2019;s visions for a better world.</p>
   </div>
 
-  <div class="featured-cause">
+  <div class="featured-cause is-sample">
     <h2>Featured Cause</h2>
     <p class="card-help">A cause championed by one of our alumni, updated quarterly.</p>
 
@@ -478,7 +548,6 @@
     <div class="led-by">Led by [Alumnus Name] · Class of [Year]</div>
     <p>This is where the featured cause story goes. A brief description of what the cause is about, why it matters, and how alumni can get involved — whether through support, volunteering, advocacy, or simply learning more.</p>
     <p>Each quarter, we spotlight a cause championed by one of our alumni. If you&#x2019;re spearheading something meaningful and want to share it with the Timpots community, let us know!</p>
-    <a href="#">Learn More</a>
   </div>
 
   <div class="form-section" id="suggest-section">
@@ -580,22 +649,22 @@
   <h2>Alumni Making a Difference</h2>
   <p>Meet fellow Timpots alumni who are actively engaged in causes they believe in.</p>
   <div class="stories-grid">
-    <div class="story-card">
+    <div class="story-card is-sample">
       <div class="name">Priya Sharma</div>
       <div class="category">Education Access</div>
       <p>Founded a nonprofit providing scholarships to first-generation college students. &#x201C;I wanted to give back the opportunity I was given.&#x201D;</p>
     </div>
-    <div class="story-card">
+    <div class="story-card is-sample">
       <div class="name">Rajesh Kumar</div>
       <div class="category">Environment &amp; Sustainability</div>
       <p>Leads a reforestation initiative in India, partnering with local communities to plant 100,000 trees by 2027.</p>
     </div>
-    <div class="story-card">
+    <div class="story-card is-sample">
       <div class="name">Anjali Menon</div>
       <div class="category">Arts &amp; Culture</div>
       <p>Curates cultural exchange programs connecting Indian and diaspora artists. Believes art builds bridges across communities.</p>
     </div>
-    <div class="story-card">
+    <div class="story-card is-sample">
       <div class="name">Vikram Patel</div>
       <div class="category">Health &amp; Wellness</div>
       <p>Volunteers as a doctor with Doctors Without Borders, providing medical care in underserved regions.</p>
@@ -689,6 +758,17 @@
       block: 'start'
     });
   }
+</script>
+
+
+<!-- ── Masthead auth UI sync ── -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/auth.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.dispatchEvent(new CustomEvent('sectionsLoaded'));
+  });
 </script>
 
 </body>
