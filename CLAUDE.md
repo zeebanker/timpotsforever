@@ -152,6 +152,7 @@ Items previously here but removed:
 | `accessibility.html` | public | ✅ Premium | Accessibility statement; card-based layout |
 | `giving-back.html` | public | ✅ Premium | Philanthropy section; card-based, modern icons |
 | `directory.html` | session required | ✅ Premium | Alumni Directory; canonical header, filter toolbar, member-card grid, profile modal with attendance table |
+| `tour.html` | public | ✅ Premium | Temporary 3-minute auto-advancing slideshow tour of the site. Shareable as a standalone link AND embedded on the homepage via modal. Marked for eventual removal — see "Tour embed (temporary)" section below. |
 
 **Design consistency achieved:**
 - All public pages use premium, high-end aesthetic
@@ -267,6 +268,42 @@ CSS rules:
 - Responsive breakpoint: 640px max-width
 - Header h2: font-weight 500, font-size 22px, em color var(--gold)
 - Public site link: opacity-based hover (0.8 → 1.0), 6px padding, no circle background
+
+## Tour embed (temporary — built 2026-05-16)
+
+`tour.html` is a self-contained, auto-advancing slideshow walkthrough of the site (11 slides × ~16s = ~3 min). Built for sharing via WhatsApp/email and embedding on the homepage. Designed to be retired easily.
+
+**Files involved:**
+- `tour.html` — the slideshow page. Standalone; works at `https://timpotsforever.org/tour.html`.
+- `images/tour/01-masthead.png` … `11-signup.png` — the 11 screenshots. Generated from headless Chrome captures of the live site via a temporary iframe wrapper (now deleted). To regenerate, see "How the screenshots were made" below.
+- Three blocks in `index.html`, each fenced by `═══ TOUR EMBED ═══` comment markers:
+  1. **`TOUR EMBED STYLES`** — inside `<style>` (CSS for the homepage promo band + modal).
+  2. **`TOUR EMBED`** — the promo banner `<section>` between `#section-nav` and `#section-jazz`.
+  3. **`TOUR EMBED MODAL`** — the fullscreen lightbox `<div>` + `openTourModal()`/`closeTourModal()` script, just above `</body>`.
+
+**To remove the tour entirely:**
+1. Delete `tour.html`.
+2. Delete the `images/tour/` directory.
+3. In `index.html`, delete the three blocks fenced by `TOUR EMBED` comment markers (CSS, promo band, modal).
+4. Drop the `tour.html` row from the Pages table in this CLAUDE.md and this whole section.
+
+That's it. There are no other dependencies — `nav.html`, `footer.html`, and the sections are untouched.
+
+**How the screenshots were made** (for regeneration):
+- Started the local server (`python3 -m http.server 8765`).
+- Created a temporary `_wrap.html` that loads any URL in a 1280×800 iframe and scrolls it to a configurable Y position (so headless Chrome can capture below-the-fold sections).
+- Ran headless Chrome (`/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --headless --window-size=1280,800 --screenshot=… ?path=…&y=…`) for each scene.
+- For the Alumni Directory (slide 5, which requires auth), a temporary `_demo_directory.html` with hardcoded mock cards (Anand Reddy, Bharath Kumar, Chandana Iyer with "You" badge, Deepak Nair, Madhavi Rao, Rajiv Menon) stood in for the live page.
+- Both `_wrap.html` and `_demo_directory.html` were deleted after capture.
+
+**Tour interaction details:**
+- Auto-advances at 16s/slide; pauseable (space bar or button), arrow keys for prev/next, Esc to exit.
+- Progress dots at the top fill as the current slide plays.
+- Final slide reveals a garnet end-card with `Sign up free` and `Explore the site` CTAs.
+- The homepage embed opens `tour.html` inside an iframe modal (so the user stays on the homepage). The "Open in a new tab ↗" link below the CTA is for sharing the standalone URL.
+- Honors `prefers-reduced-motion` — kills slide fades and progress-bar animation.
+
+---
 
 ## Stale stuff to ignore
 

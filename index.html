@@ -1507,6 +1507,183 @@
     font-size: 13px;
   }
 
+  /* ════════════════════════════════════════════════════════════
+     TOUR EMBED STYLES — temporary. Delete this block to retire.
+     ════════════════════════════════════════════════════════════ */
+  .tour-promo {
+    background: linear-gradient(135deg, #2a0810 0%, var(--brand-dark) 50%, #3a0c14 100%);
+    padding: 36px 0;
+    color: #fff;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .tour-promo-inner {
+    display: grid;
+    grid-template-columns: minmax(260px, 420px) 1fr;
+    gap: 36px;
+    align-items: center;
+  }
+  .tour-poster {
+    position: relative;
+    display: block;
+    width: 100%;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+    transition: transform 0.2s;
+  }
+  .tour-poster:hover { transform: translateY(-2px); }
+  .tour-poster img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    object-position: top center;
+  }
+  .tour-poster-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.45) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background 0.2s;
+  }
+  .tour-poster:hover .tour-poster-overlay { background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 100%); }
+  .tour-play-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--brand-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 22px rgba(0,0,0,0.4);
+  }
+  .tour-play-icon svg { margin-left: 3px; }
+  .tour-poster-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+  }
+  .tour-promo-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-bright);
+    margin-bottom: 10px;
+  }
+  .tour-promo-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 500;
+    color: #fff;
+    line-height: 1.18;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+  .tour-promo-title em { color: var(--gold-bright); font-style: italic; }
+  .tour-promo-text {
+    font-size: 15px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.78);
+    margin-bottom: 20px;
+    max-width: 560px;
+  }
+  .tour-promo-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .tour-cta {
+    background: var(--gold);
+    color: var(--brand-dark);
+    border: 0;
+    padding: 12px 26px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .tour-cta:hover { background: var(--gold-bright); }
+  .tour-share {
+    color: rgba(255,255,255,0.78);
+    font-size: 13px;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding-bottom: 1px;
+  }
+  .tour-share:hover { color: #fff; border-color: #fff; text-decoration: none; }
+  @media (max-width: 820px) {
+    .tour-promo { padding: 26px 0; }
+    .tour-promo-inner { grid-template-columns: 1fr; gap: 22px; }
+    .tour-promo-title { font-size: 24px; }
+    .tour-poster { max-width: 520px; margin: 0 auto; }
+    .tour-play-icon { width: 54px; height: 54px; }
+  }
+
+  /* Modal — full-screen lightbox for tour.html via iframe */
+  .tour-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 2, 4, 0.92);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .tour-modal.open { display: flex; }
+  .tour-modal-frame-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 1180px;
+    height: 92vh;
+    background: #1a0608;
+  }
+  .tour-modal iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+  .tour-modal-close {
+    position: absolute;
+    top: -50px;
+    right: 0;
+    background: none;
+    border: 1px solid rgba(255,255,255,0.4);
+    color: #fff;
+    padding: 8px 18px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .tour-modal-close:hover { background: rgba(255,255,255,0.12); }
+  @media (max-width: 820px) {
+    .tour-modal { padding: 12px; }
+    .tour-modal-frame-wrap { height: calc(100vh - 70px); }
+    .tour-modal-close { top: -42px; padding: 6px 14px; }
+  }
+  /* ════ end TOUR EMBED STYLES ════ */
+
   /* ============ COMING-SOON utilities ============
      Shared chip + states used across placeholder cards / sections.
      ============================================ */
@@ -1617,6 +1794,37 @@
 <!-- Section containers with IDs for loader script -->
 <div id="section-masthead"></div>
 <div id="section-nav"></div>
+
+<!-- ════════════════════════════════════════════════════════════
+     TOUR EMBED — temporary banner promoting tour.html.
+     To remove the entire feature, delete (1) this block,
+     (2) the TOUR EMBED MODAL block near the bottom of <body>,
+     and (3) the TOUR EMBED STYLES block in the <style> above.
+     ════════════════════════════════════════════════════════════ -->
+<section class="tour-promo" aria-labelledby="tour-promo-title">
+  <div class="wrap tour-promo-inner">
+    <button class="tour-poster" type="button" aria-label="Play the 3-minute tour" onclick="openTourModal()">
+      <img src="images/tour/01-masthead.png" alt="" loading="lazy">
+      <span class="tour-poster-overlay">
+        <span class="tour-play-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+        </span>
+        <span class="tour-poster-label">Play</span>
+      </span>
+    </button>
+    <div class="tour-promo-copy">
+      <div class="tour-promo-eyebrow">New here?</div>
+      <h2 class="tour-promo-title" id="tour-promo-title">A 3-minute tour of <em>Timpots Forever</em>.</h2>
+      <p class="tour-promo-text">A quick visual walk through what's on the site — from Jazz's dedication, to the world map, to the alumni directory and the events Timpots are organising.</p>
+      <div class="tour-promo-actions">
+        <button class="tour-cta" type="button" onclick="openTourModal()">Watch the tour ▸</button>
+        <a class="tour-share" href="tour.html" target="_blank" rel="noopener" title="Open the standalone tour page (shareable)">Open in a new tab ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ════ end TOUR EMBED ════ -->
+
 <div id="section-jazz"></div>
 <div id="section-hero"></div>
 <div id="section-stories"></div>
@@ -1756,6 +1964,39 @@
     window.location.href = session ? link.dataset.dest : 'login.html';
   });
 </script>
+
+<!-- ════════════════════════════════════════════════════════════
+     TOUR EMBED MODAL — temporary. Delete this block to retire.
+     ════════════════════════════════════════════════════════════ -->
+<div class="tour-modal" id="tour-modal" role="dialog" aria-modal="true" aria-label="Take a tour of Timpots Forever">
+  <div class="tour-modal-frame-wrap">
+    <button class="tour-modal-close" type="button" onclick="closeTourModal()" aria-label="Close tour">Close ✕</button>
+    <iframe id="tour-modal-frame" src="about:blank" title="Timpots Forever 3-minute tour" allow="autoplay" referrerpolicy="no-referrer"></iframe>
+  </div>
+</div>
+<script>
+  function openTourModal() {
+    const modal = document.getElementById('tour-modal');
+    const frame = document.getElementById('tour-modal-frame');
+    frame.src = 'tour.html';
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeTourModal() {
+    const modal = document.getElementById('tour-modal');
+    const frame = document.getElementById('tour-modal-frame');
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+    frame.src = 'about:blank';
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && document.getElementById('tour-modal').classList.contains('open')) closeTourModal();
+  });
+  document.getElementById('tour-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'tour-modal') closeTourModal();
+  });
+</script>
+<!-- ════ end TOUR EMBED MODAL ════ -->
 
 </body>
 </html>
