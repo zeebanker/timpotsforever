@@ -841,6 +841,55 @@
     color: var(--white);
   }
 
+  .feature-band.volunteer {
+    background: var(--bg-soft);
+    border-top: 4px solid var(--brand);
+  }
+  .volunteer .band-chip { color: var(--brand); }
+  .volunteer .band-title { color: var(--ink); }
+  .volunteer .band-title em { color: var(--brand); }
+  .volunteer .band-text { color: var(--ink-soft); }
+  .volunteer .band-link { color: var(--brand); border-color: var(--brand); }
+  .volunteer-viz {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--gold);
+    aspect-ratio: auto;
+    display: flex;
+    align-items: center;
+    padding: 28px 32px;
+  }
+  .volunteer-roles {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    width: 100%;
+  }
+  @media (min-width: 540px) {
+    .volunteer-roles { grid-template-columns: 1fr 1fr; }
+  }
+  .volunteer-roles li {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 14.5px;
+    line-height: 1.4;
+    color: var(--ink);
+    padding-left: 18px;
+    position: relative;
+  }
+  .volunteer-roles li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+
   .band-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -1620,6 +1669,7 @@
 
 <div id="section-jazz"></div>
 <div id="section-hero"></div>
+<div id="section-volunteer"></div>
 <div id="section-stories"></div>
 <div id="section-newsletter"></div>
 <div id="section-directory-events"></div>
@@ -1636,6 +1686,7 @@
     { id: 'nav', path: 'sections/static/nav.html', name: 'Navigation' },
     { id: 'jazz', path: 'sections/dynamic/jazz.html', name: 'Jazz Memorial' },
     { id: 'hero', path: 'sections/dynamic/hero.html', name: 'Featured Story' },
+    { id: 'volunteer', path: 'sections/dynamic/volunteer.html', name: 'Volunteer' },
     { id: 'stories', path: 'sections/dynamic/stories.html', name: 'Stories' },
     { id: 'newsletter', path: 'sections/dynamic/newsletter-callout.html', name: 'Newsletter' },
     { id: 'directory-events', path: 'sections/dynamic/directory-events.html', name: 'Directory & Events' },
