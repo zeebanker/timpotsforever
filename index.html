@@ -315,7 +315,7 @@
   /* ============ HERO ============ */
   .hero {
     position: relative;
-    height: 560px;
+    min-height: 560px;
     overflow: hidden;
     background: var(--ink);
   }
@@ -432,12 +432,12 @@
     position: relative;
     z-index: 1;
     width: 100%;
-    padding: 40px 30px;
+    padding: 36px 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 28px;
+    gap: 32px;
   }
   .hero-mark {
     display: flex;
@@ -446,17 +446,15 @@
     gap: 14px;
     text-align: center;
   }
-  .hero-mark-emblem {
+  .hero-mark-icon {
     display: block;
-    width: 88px;
-    height: 88px;
-    background-color: var(--gold-bright);
-    -webkit-mask: url('images/logo.png') no-repeat center / contain;
-            mask: url('images/logo.png') no-repeat center / contain;
+    width: 38px;
+    height: 38px;
+    color: var(--gold-bright);
   }
   .hero-mark-name {
     font-family: 'Playfair Display', serif;
-    font-size: 22px;
+    font-size: 26px;
     font-weight: 500;
     line-height: 1.1;
     color: #fff;
@@ -470,18 +468,6 @@
     width: 60%;
     height: 1px;
     background: rgba(240, 197, 121, 0.35);
-  }
-  .hero-mark-masthead {
-    font-family: 'Playfair Display', serif;
-    font-size: 28px;
-    font-weight: 500;
-    line-height: 1.1;
-    color: #fff;
-    letter-spacing: 0.01em;
-  }
-  .hero-mark-masthead em {
-    font-style: italic;
-    color: var(--gold-bright);
   }
 
   @media (max-width: 900px) {
@@ -559,6 +545,10 @@
   .stories-row {
     padding: 60px 0 70px;
     background: var(--bg);
+  }
+  .stories-row.newsletter-section {
+    padding-top: 0;
+    padding-bottom: 80px;
   }
 
   .stories-grid {
@@ -977,16 +967,6 @@
     color: #d24a4a;
     font-size: 13px;
     letter-spacing: 0.02em;
-  }
-  .plutonian-dot {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #d24a4a;
-    margin-right: 5px;
-    vertical-align: 0;
-    box-shadow: 0 0 6px rgba(210, 74, 74, 0.6);
   }
   .volunteer-viz {
     background: #fff;
@@ -1796,7 +1776,7 @@
 <div id="section-footer"></div>
 
 <div class="plutonian-credit">
-  Conceived, designed, developed and sponsored by a <span class="plutonian-dot" aria-hidden="true"></span><em>Plutonian</em>.
+  Conceived, designed, developed and sponsored by a <em>Plutonian</em>.
 </div>
 
 <script>
