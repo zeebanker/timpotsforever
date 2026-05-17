@@ -428,25 +428,60 @@
     pointer-events: none;
   }
 
-  .hero-portrait-silhouette {
-    width: 140px;
-    height: 140px;
-    opacity: 0.5;
-    margin-top: -40px;
+  .hero-marks {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
   }
-
-  .hero-portrait::after {
-    content: 'Featured Alumna';
-    position: absolute;
-    bottom: 22px;
-    left: 0;
-    right: 0;
+  .hero-mark {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
     text-align: center;
+  }
+  .hero-mark-emblem {
+    display: block;
+    width: 88px;
+    height: 88px;
+    background-color: var(--gold-bright);
+    -webkit-mask: url('images/logo.png') no-repeat center / contain;
+            mask: url('images/logo.png') no-repeat center / contain;
+  }
+  .hero-mark-name {
     font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.1;
+    color: #fff;
+    letter-spacing: 0.01em;
+  }
+  .hero-mark-name em {
     font-style: italic;
-    font-size: 14px;
     color: var(--gold-bright);
-    letter-spacing: 0.06em;
+  }
+  .hero-marks-divider {
+    width: 60%;
+    height: 1px;
+    background: rgba(240, 197, 121, 0.35);
+  }
+  .hero-mark-masthead {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.1;
+    color: #fff;
+    letter-spacing: 0.01em;
+  }
+  .hero-mark-masthead em {
+    font-style: italic;
+    color: var(--gold-bright);
   }
 
   @media (max-width: 900px) {
