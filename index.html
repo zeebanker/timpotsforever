@@ -516,6 +516,27 @@
 
   .hero-byline span { color: var(--gold-bright); }
 
+  /* ============ STORIES INTRO BANNER ============ */
+  .stories-intro {
+    background: var(--brand);
+    padding: 56px 0 48px;
+    text-align: center;
+  }
+  .stories-intro-art {
+    display: block;
+    width: 100%;
+    max-width: 720px;
+    aspect-ratio: 612 / 204;
+    margin: 0 auto;
+    background-color: var(--gold-bright);
+    -webkit-mask: url('images/teamwork-line.png') center/contain no-repeat;
+            mask: url('images/teamwork-line.png') center/contain no-repeat;
+  }
+  @media (max-width: 640px) {
+    .stories-intro { padding: 40px 0 32px; }
+    .stories-intro-art { max-width: 92%; }
+  }
+
   /* ============ STORIES ROW ============ */
   .stories-row {
     padding: 60px 0 70px;
