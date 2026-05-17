@@ -568,7 +568,21 @@
     background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 60%, var(--garnet-darkest) 100%);
   }
   .card-image.c2 {
-    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 50%, var(--leather-border) 100%);
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 60%, var(--garnet-darkest) 100%);
+  }
+  .card-art.classroom {
+    width: 72%;
+    aspect-ratio: 980 / 700;
+    background-color: var(--gold-bright);
+    -webkit-mask: url('images/classroom-line.png') center/contain no-repeat;
+            mask: url('images/classroom-line.png') center/contain no-repeat;
+  }
+  .card-art.teacher {
+    width: 56%;
+    aspect-ratio: 1 / 1;
+    background-color: var(--gold-bright);
+    -webkit-mask: url('images/teacher-line.png') center/contain no-repeat;
+            mask: url('images/teacher-line.png') center/contain no-repeat;
   }
   .card-image.c3 {
     background: linear-gradient(135deg, var(--leather) 0%, var(--leather-mid) 50%, var(--leather-dark) 100%);
@@ -878,37 +892,15 @@
     aspect-ratio: auto;
     display: flex;
     align-items: center;
-    padding: 28px 32px;
+    justify-content: center;
+    padding: 32px 28px;
   }
-  .volunteer-roles {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-    width: 100%;
-  }
-  @media (min-width: 540px) {
-    .volunteer-roles { grid-template-columns: 1fr 1fr; }
-  }
-  .volunteer-roles li {
-    font-family: 'Source Sans 3', sans-serif;
-    font-size: 14.5px;
-    line-height: 1.4;
-    color: var(--ink);
-    padding-left: 18px;
-    position: relative;
-  }
-  .volunteer-roles li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 8px;
-    width: 6px;
-    height: 6px;
-    background: var(--gold);
-    border-radius: 50%;
+  .volunteer-hands {
+    width: 78%;
+    aspect-ratio: 484 / 522;
+    background-color: var(--brand);
+    -webkit-mask: url('images/hands-line.png') center/contain no-repeat;
+            mask: url('images/hands-line.png') center/contain no-repeat;
   }
 
   .band-grid {
