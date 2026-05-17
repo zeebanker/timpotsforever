@@ -232,9 +232,9 @@
 
   /* ── Crest transition callout ────────────────────────── */
   .crest-callout {
-    background: var(--bg-warm);
+    background: var(--bg-soft);
     border: 1px solid var(--rule);
-    border-left: 3px solid var(--gold);
+    border-left: 3px solid var(--brand);
     padding: 26px 28px 22px;
     margin: 18px 0 6px;
     border-radius: 2px;
@@ -252,17 +252,33 @@
     margin: 0;
     flex: 0 0 auto;
   }
-  .crest-figure img {
-    width: 170px;
-    height: 170px;
-    object-fit: contain;
+  .crest-art {
     display: block;
     margin: 0 auto;
+    background-color: var(--brand);
+    -webkit-mask-position: center;
+            mask-position: center;
+    -webkit-mask-size: contain;
+            mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+  }
+  .crest-art.old {
+    width: 170px;
+    height: 170px;
+    -webkit-mask-image: url('images/crest-old.svg');
+            mask-image: url('images/crest-old.svg');
+  }
+  .crest-art.new {
+    width: 220px;
+    height: 110px;
+    -webkit-mask-image: url('images/crest-new.svg');
+            mask-image: url('images/crest-new.svg');
   }
   .crest-figure figcaption {
     font-family: 'Source Sans 3', sans-serif;
     font-size: 12px;
-    color: var(--ink-muted);
+    color: var(--gold);
     margin-top: 10px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -285,7 +301,8 @@
   @media (max-width: 640px) {
     .crest-callout { padding: 22px 20px 18px; }
     .crest-grid { flex-direction: column; gap: 12px; }
-    .crest-figure img { width: 140px; height: 140px; }
+    .crest-art.old { width: 140px; height: 140px; }
+    .crest-art.new { width: 180px; height: 90px; }
     .crest-figure figcaption { margin-top: 8px; }
     .crest-arrow { transform: rotate(90deg); font-size: 26px; }
   }
@@ -612,12 +629,12 @@
         <div class="crest-callout">
           <div class="crest-grid">
             <figure class="crest-figure">
-              <img src="images/crest-old.jpg" alt="Timpany School's original shield-style crest — a lighthouse flanked by a TS monogram and an open book, ringed by waves and the motto 'Seek Truth'">
+              <div class="crest-art old" role="img" aria-label="Timpany School's original shield-style crest — a lighthouse flanked by a TS monogram and an open book, ringed by waves and the motto 'Seek Truth'"></div>
               <figcaption>Pre-1979</figcaption>
             </figure>
             <div class="crest-arrow" aria-hidden="true">&rarr;</div>
             <figure class="crest-figure">
-              <img src="images/crest-new.png" alt="Timpany School's current emblem — an open book bearing 'Seek Truth' with a flame above and waves below">
+              <div class="crest-art new" role="img" aria-label="Timpany School's current emblem — an open book bearing 'Seek Truth' with a flame above and waves below"></div>
               <figcaption>c. 1979 onward</figcaption>
             </figure>
           </div>
