@@ -881,6 +881,34 @@
   .volunteer .band-text { color: var(--ink-soft); }
   .volunteer .band-link { color: var(--brand); border-color: var(--brand); }
 
+  .feature-band.services {
+    background: var(--bg);
+    border-top: 4px solid var(--gold);
+  }
+  .services .band-chip { color: var(--gold); }
+  .services .band-title { color: var(--ink); }
+  .services .band-title em { color: var(--brand); }
+  .services .band-text { color: var(--ink-soft); }
+  .services .band-link { color: var(--brand); border-color: var(--brand); }
+  .services-viz {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .services-mark {
+    width: 160px;
+    height: 160px;
+    color: var(--brand);
+    background: var(--bg-soft);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 22px;
+  }
+  .services-mark svg { width: 100%; height: 100%; display: block; }
+
   .feature-band.whats-next {
     background: var(--bg);
     border-top: 4px solid var(--gold);
@@ -1751,6 +1779,7 @@
 <div id="section-hero"></div>
 <div id="section-whats-next"></div>
 <div id="section-volunteer"></div>
+<div id="section-services"></div>
 <div id="section-stories"></div>
 <div id="section-newsletter"></div>
 <div id="section-directory-events"></div>
@@ -1773,6 +1802,7 @@
     { id: 'hero', path: 'sections/dynamic/hero.html', name: 'Featured Story' },
     { id: 'whats-next', path: 'sections/dynamic/whats-next.html', name: 'Where We Are Headed' },
     { id: 'volunteer', path: 'sections/dynamic/volunteer.html', name: 'Volunteer' },
+    { id: 'services', path: 'sections/dynamic/services.html', name: 'Timpots @ Work' },
     { id: 'stories', path: 'sections/dynamic/stories.html', name: 'Stories' },
     { id: 'newsletter', path: 'sections/dynamic/newsletter-callout.html', name: 'Newsletter' },
     { id: 'directory-events', path: 'sections/dynamic/directory-events.html', name: 'Directory & Events' },

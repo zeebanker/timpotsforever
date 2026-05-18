@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timpots @ Work — Timpots Forever</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,500;1,700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand: #7a1420;
+    --brand-dark: #4a0810;
+    --ink: #1a1a1a;
+    --ink-soft: #555;
+    --ink-muted: #888;
+    --bg: #fff;
+    --bg-soft: #f7f4ee;
+    --rule: #e5e0d4;
+    --gold: #b5894a;
+    --gold-bright: #f0c579;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    color: var(--ink);
+    background: var(--bg-soft);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Header bar ─────────────────────────────────────────── */
+  .members-header { background: var(--brand); padding: 18px 0; color: #fff; }
+  .members-header .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .members-header h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 500; }
+  .members-header h2 em { font-style: italic; color: var(--gold); }
+  .members-header .actions { display: flex; align-items: center; gap: 14px; }
+  .public-site-link { display: inline-flex; align-items: center; justify-content: center; color: #fff; text-decoration: none; opacity: 0.8; padding: 6px; transition: opacity 0.15s; }
+  .public-site-link:hover { opacity: 1; }
+  .public-site-link svg { display: block; }
+
+  /* ── Page layout ────────────────────────────────────────── */
+  .services-page {
+    max-width: 760px;
+    margin: 50px auto;
+    padding: 0 24px;
+    flex: 1;
+  }
+  .page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .page-title em { color: var(--brand); font-style: italic; }
+  .page-intro {
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1.55;
+    margin-bottom: 28px;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  p {
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 18px;
+    color: var(--ink-soft);
+  }
+
+  /* ── Cards & sections ───────────────────────────────────── */
+  .card,
+  .intro-card,
+  .steps-section,
+  .form-section,
+  .fineprint-card {
+    background: #fff;
+    border: 1px solid var(--rule);
+    padding: 30px 32px;
+    margin-bottom: 24px;
+  }
+  .intro-card p { color: var(--ink-soft); margin-bottom: 14px; font-size: 14.5px; line-height: 1.6; }
+  .intro-card p:last-child { margin-bottom: 0; }
+  .intro-card em { color: var(--brand); font-style: italic; }
+  .intro-card strong { color: var(--ink); font-weight: 600; }
+  .card-help {
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  /* ── How-it-works steps ─────────────────────────────────── */
+  .steps-section h2 em { color: var(--brand); font-style: italic; }
+  .steps-section { margin-bottom: 24px; }
+  .steps-section > h2 { margin-bottom: 18px; font-size: 22px; }
+  .steps-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  @media (min-width: 640px) {
+    .steps-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .step-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--brand);
+    color: #fff;
+    border-radius: 50%;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .step-card h3 { font-size: 15px; color: var(--brand); margin-bottom: 4px; }
+  .step-card p { font-size: 13.5px; line-height: 1.55; margin-bottom: 0; }
+
+  /* ── Form ───────────────────────────────────────────────── */
+  .form-section h2 em { color: var(--brand); font-style: italic; }
+  .form-group { display: flex; flex-direction: column; margin-bottom: 18px; }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  @media (min-width: 540px) {
+    .form-row { grid-template-columns: 1fr 1fr; }
+  }
+  .form-row .form-group { margin-bottom: 0; }
+  .form-group label,
+  .form-row label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+    display: block;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea,
+  .form-row input,
+  .form-row select {
+    width: 100%;
+    padding: 10px 12px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 15px;
+    color: var(--ink);
+    background: #fff;
+    border: 1px solid var(--rule);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus,
+  .form-row input:focus,
+  .form-row select:focus { border-color: var(--brand); }
+  .form-group textarea { min-height: 90px; resize: vertical; line-height: 1.5; }
+  .field-hint {
+    display: block;
+    font-size: 12px;
+    color: var(--ink-muted);
+    margin-top: 6px;
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+  .optional-tag {
+    text-transform: none;
+    font-weight: 400;
+    color: var(--ink-muted);
+    letter-spacing: 0;
+  }
+
+  /* ── Reference sub-block ────────────────────────────────── */
+  .reference-block {
+    background: var(--bg-soft);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+  }
+  .reference-block .ref-title {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--brand);
+    margin-bottom: 10px;
+  }
+  .reference-block .form-row { margin-bottom: 0; }
+  .reference-block .form-group { margin-bottom: 12px; }
+  .reference-block .form-group:last-child { margin-bottom: 0; }
+  .references-help {
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-bottom: 14px;
+    line-height: 1.55;
+  }
+
+  .submit-btn {
+    background: var(--brand);
+    color: #fff;
+    border: none;
+    padding: 12px 28px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.15s, opacity 0.15s;
+  }
+  .submit-btn:hover { background: var(--brand-dark); }
+  .submit-btn:disabled { opacity: 0.6; cursor: wait; }
+
+  /* ── Form states (AJAX) ─────────────────────────────────── */
+  .form-error {
+    display: none;
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    color: #991b1b;
+    padding: 12px 14px;
+    font-size: 13px;
+    margin-bottom: 16px;
+    border-radius: 2px;
+    line-height: 1.5;
+  }
+  .thank-you-state {
+    display: none;
+    text-align: center;
+    padding: 24px 12px 12px;
+    animation: fadeIn 0.4s ease-out;
+  }
+  .thank-you-icon { width: 64px; height: 64px; margin: 0 auto 20px; color: var(--gold); }
+  .thank-you-state h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .thank-you-state h3 em { font-style: italic; color: var(--brand); }
+  .thank-you-state p {
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    max-width: 460px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .thank-you-state .reset-link {
+    display: inline-block;
+    color: var(--brand);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--brand);
+    padding-bottom: 2px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .thank-you-state .reset-link:hover { opacity: 0.7; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .form-hidden { display: none !important; }
+
+  /* ── Fine-print card ────────────────────────────────────── */
+  .fineprint-card {
+    background: var(--bg-soft);
+    border-left: 4px solid var(--gold);
+  }
+  .fineprint-card h3 {
+    font-size: 15px;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .fineprint-card h3 em { font-style: italic; color: var(--brand); }
+  .fineprint-card p { font-size: 13.5px; line-height: 1.6; margin-bottom: 12px; }
+  .fineprint-card p:last-child { margin-bottom: 0; }
+  .fineprint-card strong { color: var(--ink); font-weight: 600; }
+
+  a { color: var(--brand); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  footer {
+    margin-top: 60px;
+    border-top: 1px solid var(--rule);
+    padding-top: 40px;
+    text-align: center;
+  }
+  footer p { font-size: 13px; color: var(--ink-muted); }
+
+  @media (max-width: 640px) {
+    .services-page { padding: 0 20px; }
+    .page-title { font-size: 28px; }
+    .card, .intro-card, .steps-section, .form-section, .fineprint-card { padding: 24px 20px; }
+  }
+
+  /* ── User affordance ────────────────────────────────────── */
+  .user-affordance {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 6px 10px;
+    opacity: 0.9;
+    transition: opacity 0.15s;
+  }
+  .user-affordance:hover { opacity: 1; }
+  .user-affordance .user-icon { width: 22px; height: 22px; flex-shrink: 0; }
+  .user-affordance .user-initial {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--brand-dark);
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0;
+    text-transform: none;
+    flex-shrink: 0;
+  }
+  .user-affordance.signed-in .user-icon { display: none; }
+  .user-affordance.signed-in .user-initial { display: inline-flex; }
+  @media (max-width: 640px) {
+    .user-affordance { padding: 6px; }
+    .user-affordance .user-label { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="members-header">
+  <div class="wrap">
+    <h2><span style="color: #fff;">Timpots</span> <em>Forever</em> <span style="color: #fff;">— Timpots @ Work</span></h2>
+    <div class="actions">
+      <a href="index.html" class="public-site-link" aria-label="Home" title="Home">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 10.5 12 3l9 7.5V21H3z"/>
+          <path d="M9 21v-7h6v7"/>
+        </svg>
+      </a>
+      <a href="login.html" class="user-affordance" id="user-affordance" aria-label="Sign in">
+        <svg class="user-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="8" r="4"/>
+          <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>
+        </svg>
+        <span class="user-label">Sign in</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="services-page">
+
+  <h1 class="page-title">Timpots <em>@ Work</em>.</h1>
+  <p class="page-intro">
+    Promote your business or service to the alumni community &mdash; on the house.
+  </p>
+
+  <div class="intro-card">
+    <p>Many Timpots build remarkable businesses, practices and ventures. <strong>Timpots @ Work</strong> is a place to share what you do with the alumni community, and an open invitation to fellow Timpots looking for trusted talent.</p>
+    <p><strong>Placement is free for all Timpots.</strong> No fees. No commissions. No advertising. This is a community-built directory of what our alumni are creating in the world &mdash; nothing more.</p>
+    <p><strong>Timpots only.</strong> To keep this a trusted alumni resource, listings are limited to Timpany alumni. We may ask one or two known Timpots to vouch for your business before we publish &mdash; please fill in the reference fields below to help us move quickly.</p>
+  </div>
+
+  <section class="steps-section">
+    <h2>How it <em>works</em></h2>
+    <div class="steps-grid">
+
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3>Submit your listing</h3>
+        <p>Fill in the short form below. Tell us what you do, who you do it for, and how people can reach you.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3>We review</h3>
+        <p>A member of the alumni group checks the submission &mdash; alumni status, basic fit, accurate contact info. References, if provided, help us move faster.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3>It goes live</h3>
+        <p>Your listing appears on the Timpots @ Work directory, browsable by category and location. Update or remove it any time by emailing us.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="form-section" id="signup-section">
+    <div id="form-view">
+      <h2>Submit <em>your listing</em></h2>
+      <p class="card-help">Tell us about your business or service. Fields marked required are the minimum we need; the rest help us write a stronger listing. We&rsquo;ll be in touch within a week.</p>
+
+      <div class="form-error" id="form-error"></div>
+
+      <form action="https://formspree.io/f/xgodbgkw" method="POST" id="services-form">
+        <input type="hidden" name="_subject" value="Timpots @ Work listing — Timpots Forever">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Your name</label>
+            <input type="text" id="name" name="name" required autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" required autocomplete="email">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="batch">Year / batch at Timpany</label>
+          <input type="text" id="batch" name="batch" placeholder="e.g. ISC 1990, or Pre-KG 1981 – ISC 1993" required>
+          <span class="field-hint">Helps us verify alumni status. A graduating year or your year range at Timpany.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="business-name">Business / service name</label>
+          <input type="text" id="business-name" name="business-name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="category">Category</label>
+          <select id="category" name="category" required>
+            <option value="">Choose a category…</option>
+            <option value="Professional services">Professional services (law, accounting, consulting)</option>
+            <option value="Healthcare & wellness">Healthcare &amp; wellness</option>
+            <option value="Technology & engineering">Technology &amp; engineering</option>
+            <option value="Creative & design">Creative &amp; design</option>
+            <option value="Education & coaching">Education &amp; coaching</option>
+            <option value="Hospitality & food">Hospitality &amp; food</option>
+            <option value="Retail & goods">Retail &amp; goods</option>
+            <option value="Real estate">Real estate</option>
+            <option value="Finance & investing">Finance &amp; investing</option>
+            <option value="Trades & home services">Trades &amp; home services</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="tagline">One-line description</label>
+          <input type="text" id="tagline" name="tagline" maxlength="140" placeholder="A single sentence &mdash; what you do, in plain language." required>
+          <span class="field-hint">Up to 140 characters. This is the headline alumni will read first.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Longer description <span class="optional-tag">(optional)</span></label>
+          <textarea id="description" name="description" maxlength="600" placeholder="A paragraph or two on what you offer, who you serve, what makes your work distinctive."></textarea>
+          <span class="field-hint">Up to 600 characters.</span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="website">Website / booking URL <span class="optional-tag">(optional)</span></label>
+            <input type="url" id="website" name="website" placeholder="https://">
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone / WhatsApp <span class="optional-tag">(optional)</span></label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Business address</label>
+          <p class="references-help">Where your business operates. City and country are required; the rest is optional and helps alumni find you if you have a walk-in location.</p>
+
+          <div class="form-group">
+            <label for="address1">Street address <span class="optional-tag">(optional)</span></label>
+            <input type="text" id="address1" name="address1" autocomplete="address-line1">
+          </div>
+
+          <div class="form-group">
+            <label for="address2">Apartment, suite, unit <span class="optional-tag">(optional)</span></label>
+            <input type="text" id="address2" name="address2" autocomplete="address-line2">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="city">City</label>
+              <input type="text" id="city" name="city" required autocomplete="address-level2">
+            </div>
+            <div class="form-group">
+              <label for="state">State / Province / Region <span class="optional-tag">(optional)</span></label>
+              <input type="text" id="state" name="state" autocomplete="address-level1">
+            </div>
+          </div>
+
+          <div class="form-row" style="margin-bottom: 0;">
+            <div class="form-group">
+              <label for="postal">Postal / ZIP code <span class="optional-tag">(optional)</span></label>
+              <input type="text" id="postal" name="postal" autocomplete="postal-code">
+            </div>
+            <div class="form-group">
+              <label for="country">Country</label>
+              <input type="text" id="country" name="country" required autocomplete="country-name">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Timpot references</label>
+          <p class="references-help">Two known Timpots who can vouch for your business. Optional, but providing one or two references helps us publish your listing faster.</p>
+
+          <div class="reference-block">
+            <div class="ref-title">Reference 1 <span class="optional-tag">(optional)</span></div>
+            <div class="form-group">
+              <label for="ref1-name">Name</label>
+              <input type="text" id="ref1-name" name="ref1-name">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="ref1-phone">Phone</label>
+                <input type="tel" id="ref1-phone" name="ref1-phone">
+              </div>
+              <div class="form-group">
+                <label for="ref1-email">Email</label>
+                <input type="email" id="ref1-email" name="ref1-email">
+              </div>
+            </div>
+          </div>
+
+          <div class="reference-block">
+            <div class="ref-title">Reference 2 <span class="optional-tag">(optional)</span></div>
+            <div class="form-group">
+              <label for="ref2-name">Name</label>
+              <input type="text" id="ref2-name" name="ref2-name">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="ref2-phone">Phone</label>
+                <input type="tel" id="ref2-phone" name="ref2-phone">
+              </div>
+              <div class="form-group">
+                <label for="ref2-email">Email</label>
+                <input type="email" id="ref2-email" name="ref2-email">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Anything else? <span class="optional-tag">(optional)</span></label>
+          <textarea id="message" name="message" placeholder="Anything else we should know &mdash; a backstory, a particular Timpot connection, special offers for fellow alumni, etc."></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submit-btn">Submit Listing</button>
+      </form>
+    </div>
+
+    <div class="thank-you-state" id="thank-you-view">
+      <svg class="thank-you-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+        <polyline points="22 4 12 14.01 9 11.01"/>
+      </svg>
+      <h3>Thank <em>you</em></h3>
+      <p>
+        We&rsquo;ve got your submission. A member of the alumni group will review it within a week and be in touch &mdash; usually by email. Questions any time at <a href="mailto:admin@timpotsforever.org">admin@timpotsforever.org</a>.
+      </p>
+      <a class="reset-link" onclick="resetServicesForm()">Submit another listing</a>
+    </div>
+  </div>
+
+  <div class="fineprint-card">
+    <h3>What this is, and <em>isn&rsquo;t</em></h3>
+    <p>Timpots @ Work is a community service &mdash; <strong>not a paid directory, not a referral business, not affiliated with any commercial platform.</strong> We do not collect fees, take commissions, or rank listings by sponsorship. Listings are vetted only for alumni status and basic accuracy. Quality of work, prices, and any business dealings are entirely between you and the listed alumnus.</p>
+    <p><strong>Removal.</strong> Email <a href="mailto:admin@timpotsforever.org?subject=Timpots%20%40%20Work%20listing%20%E2%80%94%20remove%20or%20update">admin@timpotsforever.org</a> to update or remove your listing at any time.</p>
+    <p>See also our <a href="terms.html#non-commercial">Non-Commercial Purpose</a> in the Terms &amp; Conditions.</p>
+  </div>
+
+  <footer>
+    <p>
+      &copy; 2026 Timpots Forever &middot; Seek Truth<br>
+      Timpots Forever is an independent alumni and friends community initiative and is not affiliated with, sponsored by, endorsed by, or officially connected with Timpany School or its management. References to Timpany School are historical and descriptive only.
+    </p>
+  </footer>
+</div>
+
+<script>
+  /* ── Timpots @ Work form: AJAX submission to Formspree ─────────
+     Same pattern as volunteer.html / giving-back.html: posts via
+     fetch() with JSON Accept header so Formspree responds with
+     JSON instead of redirecting. */
+  (function () {
+    const form = document.getElementById('services-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const errorBox = document.getElementById('form-error');
+    const formView = document.getElementById('form-view');
+    const thankYouView = document.getElementById('thank-you-view');
+    if (!form) return;
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      errorBox.style.display = 'none';
+      errorBox.textContent = '';
+      submitBtn.disabled = true;
+      const originalLabel = submitBtn.textContent;
+      submitBtn.textContent = 'Sending…';
+
+      try {
+        const data = new FormData(form);
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          formView.classList.add('form-hidden');
+          thankYouView.style.display = 'block';
+          document.getElementById('signup-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          const result = await response.json().catch(function () { return {}; });
+          const msg = (result && result.errors && result.errors.map(function (er) { return er.message; }).join('. '))
+            || 'Something went wrong. Please try again, or email admin@timpotsforever.org.';
+          errorBox.textContent = msg;
+          errorBox.style.display = 'block';
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalLabel;
+        }
+      } catch (err) {
+        errorBox.textContent = 'Could not reach the server. Please check your connection and try again.';
+        errorBox.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalLabel;
+      }
+    });
+  })();
+
+  function resetServicesForm () {
+    const form = document.getElementById('services-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const formView = document.getElementById('form-view');
+    const thankYouView = document.getElementById('thank-you-view');
+    if (!form) return;
+    form.reset();
+    thankYouView.style.display = 'none';
+    formView.classList.remove('form-hidden');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Submit Listing';
+    document.getElementById('signup-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+</script>
+
+<!-- ── Masthead auth UI sync ── -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/auth.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.dispatchEvent(new CustomEvent('sectionsLoaded'));
+  });
+</script>
+
+</body>
+</html>
