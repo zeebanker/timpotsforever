@@ -308,6 +308,55 @@
   .fineprint-card p:last-child { margin-bottom: 0; }
   .fineprint-card strong { color: var(--ink); font-weight: 600; }
 
+  /* ── Quick rules card ───────────────────────────────────── */
+  .rules-card {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--brand);
+    padding: 30px 32px;
+    margin-bottom: 24px;
+  }
+  .rules-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .rules-card h3 em { font-style: italic; color: var(--brand); }
+  .rules-card ul { list-style: none; margin: 0 0 16px; padding: 0; }
+  .rules-card li {
+    padding: 8px 0 8px 26px;
+    position: relative;
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+  .rules-card li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 14px;
+    width: 14px;
+    height: 14px;
+    background-color: var(--gold);
+    -webkit-mask: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") no-repeat center / contain;
+            mask: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") no-repeat center / contain;
+  }
+  .rules-card li strong { color: var(--ink); font-weight: 600; }
+  .rules-card .full-rules {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--brand);
+    border-bottom: 1px solid var(--brand);
+    padding-bottom: 2px;
+  }
+  .rules-card .full-rules:hover { text-decoration: none; opacity: 0.7; }
+
   a { color: var(--brand); text-decoration: none; }
   a:hover { text-decoration: underline; }
 
@@ -605,6 +654,19 @@
     <p>Timpots @ Work is a community service &mdash; <strong>not a paid directory, not a referral business, not affiliated with any commercial platform.</strong> We do not collect fees, take commissions, or rank listings by sponsorship. Listings are vetted only for alumni status and basic accuracy. Quality of work, prices, and any business dealings are entirely between you and the listed alumnus.</p>
     <p><strong>Removal.</strong> Email <a href="mailto:admin@timpotsforever.org?subject=Timpots%20%40%20Work%20listing%20%E2%80%94%20remove%20or%20update">admin@timpotsforever.org</a> to update or remove your listing at any time.</p>
     <p>See also our <a href="terms.html#non-commercial">Non-Commercial Purpose</a> in the Terms &amp; Conditions.</p>
+  </div>
+
+  <div class="rules-card">
+    <h3>Ground <em>rules</em></h3>
+    <ul>
+      <li><strong>Timpots only.</strong> One listing per business. Real businesses, honest claims.</li>
+      <li><strong>Nothing illegal, predatory, or aimed at minors</strong> &mdash; no MLMs, gambling, adult content, or unlicensed regulated services.</li>
+      <li><strong>We review every listing.</strong> We can decline, edit, or remove any listing at any time.</li>
+      <li><strong>Inclusion isn&rsquo;t endorsement.</strong> We don&rsquo;t vouch for quality &mdash; deal directly with the listed Timpot.</li>
+      <li><strong>No spamming.</strong> Don&rsquo;t use the directory to harvest, pitch, or market to fellow alumni.</li>
+      <li><strong>Easy to leave.</strong> Update, remove, or report a concern by emailing <a href="mailto:admin@timpotsforever.org">admin@timpotsforever.org</a>.</li>
+    </ul>
+    <a href="terms.html#services-rules" class="full-rules">Read the full rules &rarr;</a>
   </div>
 
   <footer>
